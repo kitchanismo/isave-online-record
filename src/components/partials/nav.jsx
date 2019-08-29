@@ -11,7 +11,7 @@ const Nav = props => {
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <h5 className="text-white">
+          <h5 className="text-white mt-1">
             <span className="text-warning">i</span>SAVE: Online Record
             Management System
           </h5>
