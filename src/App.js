@@ -11,9 +11,9 @@ const App = () => {
     <React.Fragment>
       <Nav />
       <ToastContainer autoClose={3000} />
-      <main className="container">
+      <div className="container">
         <Routes />
-      </main>
+      </div>
     </React.Fragment>
   )
 }
