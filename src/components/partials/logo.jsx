@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 const Logo = () => {
   return (
     <React.Fragment>
-      <div className="logo mt-2 border border-warning" />
+      <div className="logo mt-2 border border-secondary" />
 
       <style jsx="">{`
         .logo {

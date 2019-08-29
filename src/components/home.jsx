@@ -5,6 +5,7 @@ import Branch from './branch'
 import Agent from './agent'
 import Users from './users'
 import Reports from './reports'
+import Footer from './partials/footer'
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
               if (menu.reports) return <Reports />
             }}
           </SideMenu>
+          <Footer></Footer>
         </div>
       </div>
     </React.Fragment>

@@ -242,7 +242,7 @@ const Agent = () => {
                       <button className="btn btn-primary btn-block" name="back">
                         Add Client
                       </button>
-                      <div className="logo mt-4 border border-warning" />
+                      <div className="logo mt-4 border border-secondary" />
                     </div>
                   </React.Fragment>
                 )
@@ -253,7 +253,7 @@ const Agent = () => {
 
         <style jsx="">{`
           .dashboard {
-            border-radius: 0px 7px 7px 0;
+            border-radius: 0px 7px 0 0;
           }
           .col-6 {
             padding: 0;

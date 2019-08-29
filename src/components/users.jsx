@@ -42,18 +42,13 @@ const Users = props => {
       label: 'Actions',
       content: () => (
         <div className="row pl-2 pt-1">
-          <span className="badge badge-primary">
-            {/* <span className="fa fa-pencil mr-1" /> */}
-            VIEW
-          </span>
-          <span className="badge badge-warning">
-            {/* <span className="fa fa-pencil mr-1" /> */}
-            EDIT
-          </span>
-          <span className="badge badge-danger" name="delete">
-            {/* <span className="fa fa-trash mr-1" /> */}
-            DELETE
-          </span>
+          <div className="d-flex justify-content-around">
+            <span className="badge badge-primary">VIEW</span>
+            <span className="badge badge-warning">EDIT</span>
+            <span className="badge badge-danger" name="delete">
+              DELETE
+            </span>
+          </div>
         </div>
       )
     }
@@ -133,30 +128,32 @@ const Users = props => {
             sortColumn={sortColumn}
             onSort={handleSort}
           />
-          <ul className="pagination">
-            <li className="page-item disabled">
-              <a className="page-link">Previous</a>
-            </li>
-            <li className="page-item active">
-              <a className="page-link">
-                <span className="sr-only">(current)</span>1
-              </a>
-            </li>
-            <li className="page-item">
-              <a className="page-link">2</a>
-            </li>
-            <li className="page-item">
-              <a className="page-link">3</a>
-            </li>
-            <li className="page-item">
-              <a className="page-link">Next</a>
-            </li>
-          </ul>
+          <div className="d-flex justify-content-end">
+            <ul className="pagination">
+              <li className="page-item disabled">
+                <a className="page-link">Previous</a>
+              </li>
+              <li className="page-item active">
+                <a className="page-link">
+                  <span className="sr-only">(current)</span>1
+                </a>
+              </li>
+              <li className="page-item">
+                <a className="page-link">2</a>
+              </li>
+              <li className="page-item">
+                <a className="page-link">3</a>
+              </li>
+              <li className="page-item">
+                <a className="page-link">Next</a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <style jsx="">{`
           .dashboard {
-            border-radius: 0px 7px 7px 0;
+            border-radius: 0px 7px 0 0;
           }
           .col-4 {
             padding: 0;

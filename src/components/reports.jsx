@@ -13,7 +13,7 @@ const Reports = () => {
 
         <style jsx="">{`
           .dashboard {
-            border-radius: 0px 7px 7px 0;
+            border-radius: 0px 7px 0 0;
           }
         `}</style>
       </main>

@@ -79,7 +79,7 @@ const SideMenu = props => {
             border: 0.5px solid gray;
           }
           .side-menu {
-            border-radius: 7px 0 0 7px;
+            border-radius: 7px 0 0 0;
           }
         `}</style>
       </nav>
