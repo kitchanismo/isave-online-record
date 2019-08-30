@@ -7,6 +7,7 @@ const Nav = props => {
   const handleLogout = async () => {
     await auth.logout()
   }
+
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -38,7 +39,9 @@ const Nav = props => {
                   <i className="fa fa-user text-warning" />
                   <li className="nav-item">
                     <NavLink className="nav-link active" to="/home">
-                      {capitalize(auth.getCurrentUser().username)}
+                      {capitalize(auth.getCurrentUser().username) +
+                        ' - ' +
+                        capitalize(auth.getCurrentUser().position)}
                     </NavLink>
                   </li>
                   <li className="nav-item">

@@ -136,7 +136,8 @@ const Users = props => {
             sortColumn={sortColumn}
             onSort={handleSort}
           />
-          <Paginate />
+          {users.length === 0 && <h6>Loading ...</h6>}
+          {users.length > 0 && <Paginate />}
         </div>
 
         <style jsx="">{`
