@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Link, a } from 'react-router-dom'
-const SideMenu = props => {
+import withAuth from '../hoc/withAuth'
+
+const SideMenu = ({ auth, ...props }) => {
   const [menu, setMenu] = useState({
     dashboard: 'active',
     branch: '',
@@ -44,14 +45,17 @@ const SideMenu = props => {
                 Agent
               </a>
             </li>
-            <li className="nav-item">
-              <a
-                onClick={() => navigate('users')}
-                className={`nav-link text-white ${menu.users}`}
-              >
-                Users
-              </a>
-            </li>
+            {auth.isAdminOrManager() && (
+              <li className="nav-item">
+                <a
+                  onClick={() => navigate('users')}
+                  className={`nav-link text-white ${menu.users}`}
+                >
+                  Users
+                </a>
+              </li>
+            )}
+
             <hr></hr>
             <li className="nav-item">
               <a
@@ -74,6 +78,7 @@ const SideMenu = props => {
           a:hover {
             color: gray !important;
           }
+
           hr {
             margin-top: 3;
             border: 0.5px solid gray;
@@ -88,4 +93,4 @@ const SideMenu = props => {
   )
 }
 
-export default SideMenu
+export default withAuth(SideMenu)

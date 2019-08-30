@@ -1,7 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Table from './partials/table'
+import { UserContext } from '../context'
+import Paginate from './paginate'
+import CustomModal from './partials/modal'
+import { verifyUser } from '../services/userService'
 
 const Users = props => {
+  const {
+    state: { users, pageNum, start, end },
+    onDelete,
+    onRefresh,
+    onPageChange,
+    onSort,
+    onSearch,
+    onSetStart,
+    onSetEnd
+  } = useContext(UserContext)
+
+  const [selectedUser, setSelectedUser] = useState({})
+
+  const [sortColumn, setSortColumn] = useState({ path: 'name', order: 'asc' })
+
   const columns = [
     {
       path: 'id',
@@ -12,8 +31,9 @@ const Users = props => {
       label: 'Username'
     },
     {
-      path: 'fullname',
-      label: 'Fullname'
+      key: 'fullname',
+      label: 'Fullname',
+      content: user => `${user.lastname}, ${user.firstname}`
     },
 
     {
@@ -21,19 +41,23 @@ const Users = props => {
       label: 'Position'
     },
     {
-      path: 'branch',
-      label: 'Branch'
+      key: 'branch',
+      label: 'Branch',
+      content: ({ branch }) => (branch ? branch.name : '')
     },
     {
       key: 'status',
       label: 'Status',
-      content: ({ status }) => (
+      content: ({ status, ...user }) => (
         <span
-          className={`badge badge-${
-            status === 'verified' ? 'success' : 'danger'
-          }`}
+          onClick={async e => {
+            if (status === 1) return
+            setSelectedUser(user)
+            await toggle(e)
+          }}
+          className={`badge badge-${status === 1 ? 'success' : 'danger'}`}
         >
-          {status}
+          {status === 1 ? 'active' : 'inactive'}
         </span>
       )
     },
@@ -53,66 +77,50 @@ const Users = props => {
       )
     }
   ]
+  const [modal, setModal] = useState(false)
 
-  const users = [
-    {
-      id: 1,
-      username: 'admin',
-      email: 'admin@gmail.com',
-      fullname: 'juan dela cruz',
-      codeNo: '353353',
-      position: 'admin',
-      branch: 'bacolod',
-      status: 'verified'
-    },
-    {
-      id: 2,
-      username: 'cardo',
-      email: 'manager@gmail.com',
-      fullname: 'cardo dalisay',
-      codeNo: '35445443',
-      position: 'manager',
-      branch: 'makati',
-      status: 'verified'
-    },
-    {
-      id: 3,
-      username: 'peterpan',
-      email: 'sales@gmail.com',
-      fullname: 'pater pan',
-      codeNo: '355443',
-      position: 'sales',
-      branch: 'makati',
-      status: 'unverify'
-    },
-    {
-      id: 4,
-      username: 'pdfdfrpan',
-      email: 'sadfs@gmail.com',
-      fullname: 'patedfan',
-      codeNo: '355443',
-      position: 'sales',
-      branch: 'makati',
-      status: 'verified'
-    },
-    {
-      id: 5,
-      username: 'fgfgpan',
-      email: 'sadgfs@gmail.com',
-      fullname: 'patedfan',
-      codeNo: '355443',
-      position: 'sales',
-      branch: 'makati',
-      status: 'unverify'
+  const toggle = async ({ target }) => {
+    setModal(modal => !modal)
+
+    if (target && target.name === 'primary') {
+      await verifyUser(selectedUser.id)
+      setSelectedUser({})
+      onRefresh()
     }
-  ]
+  }
 
-  const handleSort = () => {}
+  const renderModal = () => {
+    return (
+      <CustomModal
+        title="iSave"
+        modal={modal}
+        toggle={toggle}
+        label={`Activate ${selectedUser.username}?`}
+        primary={{ type: 'primary', label: 'CONFIRM' }}
+        className="modal-dialog-centered"
+      />
+    )
+  }
 
-  const [sortColumn, setSortColumn] = useState({ path: 'name', order: 'asc' })
+  const doDelete = async anime => {
+    if (!(await onDelete(anime))) {
+      onPageChange(pageNum - 1)
+      if (start > 1) {
+        onSetStart(start - 1)
+      }
+      onSetEnd(end - 1)
+      return
+    }
+    onRefresh()
+  }
 
+  const handleSort = sortColumn => {
+    onSort(sortColumn)
+    setSortColumn(sortColumn)
+  }
   return (
     <React.Fragment>
+      {renderModal()}
       <main
         role="main"
         className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"
@@ -128,27 +136,7 @@ const Users = props => {
             sortColumn={sortColumn}
             onSort={handleSort}
           />
-          <div className="d-flex justify-content-end">
-            <ul className="pagination">
-              <li className="page-item disabled">
-                <a className="page-link">Previous</a>
-              </li>
-              <li className="page-item active">
-                <a className="page-link">
-                  <span className="sr-only">(current)</span>1
-                </a>
-              </li>
-              <li className="page-item">
-                <a className="page-link">2</a>
-              </li>
-              <li className="page-item">
-                <a className="page-link">3</a>
-              </li>
-              <li className="page-item">
-                <a className="page-link">Next</a>
-              </li>
-            </ul>
-          </div>
+          <Paginate />
         </div>
 
         <style jsx="">{`

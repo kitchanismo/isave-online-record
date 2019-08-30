@@ -33,3 +33,13 @@ export async function getManagers(branchId) {
       })
     })
 }
+
+export function getPagedUsers(num, limit, username = '') {
+  return http
+    .get(`/api/users/page/${num}?limit=${limit}&username=${username}`)
+    .then(data => data.data.data)
+}
+
+export function verifyUser(id) {
+  return http.get(`/api/users/verify/${id}`).then(data => data.data.data)
+}

@@ -10,7 +10,7 @@ const App = () => {
   return (
     <React.Fragment>
       <Nav />
-      <ToastContainer autoClose={3000} />
+      <ToastContainer autoClose={5000} />
       <div className="container">
         <Routes />
       </div>

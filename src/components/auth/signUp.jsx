@@ -130,7 +130,7 @@ const SignUp = ({ auth, ...props }) => {
     try {
       await auth.signUp(user)
 
-      toast.success('Welcome, ' + capitalize(username))
+      toast.success('Successfully created!')
 
       setUser({
         username: '',
@@ -142,9 +142,8 @@ const SignUp = ({ auth, ...props }) => {
         codeNo: '',
         confirmPassword: ''
       })
-      setErrors(_errors)
 
-      props.history.replace('/')
+      setErrors(_errors)
     } catch ({ response }) {
       if (response && response.status === 400) {
         toast.error(response.data.status.errors)
@@ -200,7 +199,7 @@ const SignUp = ({ auth, ...props }) => {
                         )}
                     </div>
                     <div className="col-4 p-4">
-                      {renderInput('username', 'Username', {
+                      {renderInput('username', 'Username', 'text', {
                         onBlur: handleCheckUser
                       })}
                       {renderInput('email', 'Email', 'email')}
@@ -221,6 +220,10 @@ const SignUp = ({ auth, ...props }) => {
                       >
                         Back
                       </button>
+                      <p className="text-primary p-2 ">
+                        *Note: Account needs to verify by admin or manager to
+                        activate
+                      </p>
                     </div>
                   </div>
                 </React.Fragment>

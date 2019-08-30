@@ -1,7 +1,7 @@
 {
-  "appUrl": "https://isave-online-record.herokuapp.com",
+  "appUrl": "https://isave-online-record.herokuapp.com/",
   "pagination": {
-    "perPage": 3,
+    "perPage": 10,
     "pageNumbers": 3
   }
 }
