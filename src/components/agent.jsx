@@ -202,7 +202,7 @@ const Agent = () => {
           <div className="col-6">
             <div className="mb-5">
               <Chart
-                type="line"
+                type="bar"
                 options={optionsSales}
                 series={series}
                 width="400"
@@ -210,7 +210,7 @@ const Agent = () => {
             </div>
             <div className="">
               <Chart
-                type="line"
+                type="bar"
                 options={optionsGPA}
                 series={series}
                 width="400"
@@ -218,7 +218,7 @@ const Agent = () => {
             </div>
             <div className="">
               <Chart
-                type="line"
+                type="bar"
                 options={optionsFSF}
                 series={series}
                 width="400"
