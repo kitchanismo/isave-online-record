@@ -33,6 +33,7 @@ const Users = props => {
       label: 'Username'
     },
     {
+      path: 'lastname',
       key: 'fullname',
       label: 'Fullname',
       content: user => `${user.lastname}, ${user.firstname}`
@@ -43,11 +44,13 @@ const Users = props => {
       label: 'Position'
     },
     {
+      path: 'branch.name',
       key: 'branch',
       label: 'Branch',
       content: ({ branch }) => (branch ? branch.name : '')
     },
     {
+      path: 'status',
       key: 'status',
       label: 'Status',
       content: ({ status, ...user }) => (
