@@ -9,7 +9,7 @@ const Logo = () => {
         .logo {
           width: 100%;
           height: 100%;
-          border-radius: 7px 0 0 7px;
+          border-radius: 5px 0 0 5px;
           background-color: #343a40;
         }
       `}</style>

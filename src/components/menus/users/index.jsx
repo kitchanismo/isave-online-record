@@ -78,9 +78,11 @@ const Users = props => {
                 VIEW
               </button>
             </Link>
-            <button className="btn btn-sm btn-outline-warning ml-1">
-              EDIT
-            </button>
+            <Link to={`/users/edit/${user.id}`}>
+              <button className="btn btn-sm btn-outline-warning ml-1">
+                EDIT
+              </button>
+            </Link>
             <button
               onClick={e => {
                 setSelectedUser(user)
@@ -143,7 +145,6 @@ const Users = props => {
         primary={{ type: 'danger', label: 'ARCHIVE' }}
       />
     )
-    
   }
 
   const doDelete = async user => {

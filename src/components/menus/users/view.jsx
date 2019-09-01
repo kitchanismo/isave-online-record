@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { getUser } from './../../../services/userService'
 import { cap } from '../../../services/utilsService'
+import { appUrl } from '../../../config.json'
 
 const ViewUser = props => {
   const { id } = props.match.params
   const [user, setUser] = useState({})
 
   useEffect(() => {
-    getUser(id).then(data => {
-      setUser(data)
-    })
+    getUser(id)
+      .then(data => {
+        setUser(data)
+      })
+      .catch(() => props.history.replace('/not-found'))
   }, [])
+
+  const isAgent = () => {
+    return user.position !== 'manager' && user.position !== 'admin'
+  }
   return (
     <React.Fragment>
       <main
@@ -21,12 +28,19 @@ const ViewUser = props => {
           <h1 className="h2">User Overview</h1>
         </div>
 
-        <div className="row">
+        <div className="row mb-3">
           <div className="col-4 pr-0">
-            <div className="photo"></div>
-
             <div className="card" style={{ width: 'auto' }}>
-              <img src="public/logo.png" className="card-img-top" alt="" />
+              <img
+                style={{
+                  padding: '10%',
+                  backgroundColor: '#343a40',
+                  height: '303px'
+                }}
+                src={`${appUrl}/user.png`}
+                className="card-img-top"
+                alt=""
+              />
               <div className="card-body">
                 <h5 className="card-title">{`${cap(user.lastname)}, ${cap(
                   user.firstname
@@ -87,6 +101,15 @@ const ViewUser = props => {
                   Code Number:{' '}
                   <span className="text-secondary">{cap(user.codeNo)}</span>
                 </p>
+                <br></br>
+                {isAgent() && (
+                  <p className="card-subtitle">
+                    Under by:{' '}
+                    <span className="text-secondary">
+                      {cap(user.agent ? user.agent.manager : '') + ' - manager'}
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -95,11 +118,6 @@ const ViewUser = props => {
         <style jsx="">{`
           .dashboard {
             border-radius: 0px 7px 0 0;
-          }
-          .photo {
-            width: auto;
-            height: 303px;
-            background-color: #343a40;
           }
         `}</style>
       </main>

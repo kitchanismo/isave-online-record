@@ -8,6 +8,7 @@ import Reports from './menus/reports'
 import Footer from './common/footer'
 import UserProvider from '../providers/userProvider'
 import ViewUser from './menus/users/view'
+import EditUser from './menus/users/edit'
 
 const Home = ({ menu, sub, ...props }) => {
   return (
@@ -21,7 +22,7 @@ const Home = ({ menu, sub, ...props }) => {
             {menu === 'users' && (
               <React.Fragment>
                 {sub === 'viewUser' && <ViewUser {...props} />}
-                {sub === 'editUser' && <h1>editForm</h1>}
+                {sub === 'editUser' && <EditUser {...props} />}
                 {!sub && (
                   <UserProvider>
                     <Users {...props} />

@@ -143,6 +143,10 @@ const SignUp = ({ auth, ...props }) => {
         confirmPassword: ''
       })
 
+      setSelectedPosition({})
+      setSelectedBranch({})
+      setSelectedManager({})
+
       setErrors(_errors)
     } catch ({ response }) {
       if (response && response.status === 400) {
@@ -166,7 +170,7 @@ const SignUp = ({ auth, ...props }) => {
             {({ renderInput, renderSelect, renderButton }) => {
               return (
                 <React.Fragment>
-                  <div className="row mt-3 mb-3">
+                  <div className="row mt-3 mb-3 border border-secondary">
                     <div className="side-content col-4"></div>
                     <div className="col-4 pl-3 pr-2 pt-3">
                       {renderInput('firstname', 'Firstname')}
@@ -200,15 +204,21 @@ const SignUp = ({ auth, ...props }) => {
                         )}
                     </div>
                     <div className="col-4 pl-2 pr-3 pt-3">
-                      {renderInput('username', 'Username', 'text', {
+                      {renderInput('username', 'Username', 'text', 'fa-user', {
                         onBlur: handleCheckUser
                       })}
-                      {renderInput('email', 'Email', 'email')}
-                      {renderInput('password', 'Password', 'password')}
+                      {renderInput('email', 'Email', 'email', 'fa-envelope')}
+                      {renderInput(
+                        'password',
+                        'Password',
+                        'password',
+                        'fa-key'
+                      )}
                       {renderInput(
                         'confirmPassword',
                         'Confirm Password',
-                        'password'
+                        'password',
+                        'fa-key'
                       )}
                       {renderButton('Sign Up', null, 'Signing in...', true)}
                       <button
