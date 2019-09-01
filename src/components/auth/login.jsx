@@ -3,8 +3,8 @@ import Joi from 'joi-browser'
 import { cap } from '../../services/utilsService'
 import { toast } from 'react-toastify'
 import withAuth from '../hoc/withAuth'
-import Form from '../partials/form'
-import Logo from '../partials/logo'
+import Form from '../common/form'
+import Logo from '../common/logo'
 
 const Login = ({ auth, ...props }) => {
   const [user, setUser] = useState({ username: '', password: '' })

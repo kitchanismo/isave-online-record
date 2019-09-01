@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Table from '../../partials/table'
+import Table from '../../common/table'
 import { UserContext } from '../../../context'
-import Paginate from '../../partials/paginate'
-import CustomModal from '../../partials/modal'
+import Paginate from '../../common/paginate'
+import CustomModal from '../../common/modal'
 import { verifyUser } from '../../../services/userService'
-import SearchForm from '../../partials/searchForm'
+import SearchForm from '../../common/searchForm'
 import { pagination } from '../../../config.json'
 import { Link } from 'react-router-dom'
 
@@ -71,7 +71,7 @@ const Users = props => {
       key: 'actions',
       label: 'Actions',
       content: user => (
-        <div className="row pl-2 pt-1">
+        <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-around">
             <Link to={`/users/${user.id}`}>
               <button className="btn btn-sm btn-outline-primary ml-1">
@@ -82,10 +82,14 @@ const Users = props => {
               EDIT
             </button>
             <button
+              onClick={e => {
+                setSelectedUser(user)
+                toggleDelete(e).then(data => data)
+              }}
               className="btn btn-sm btn-outline-danger ml-1"
               name="delete"
             >
-              DELETE
+              ARCHIVE
             </button>
           </div>
         </div>
@@ -105,6 +109,18 @@ const Users = props => {
     }
   }
 
+  const [modalDelete, setModalDelete] = useState(false)
+
+  const toggleDelete = async ({ target }) => {
+    setModalDelete(modalDelete => !modalDelete)
+    if (target && target.name === 'primary') {
+      console.log(selectedUser)
+      await doDelete(selectedUser)
+      setSelectedUser({})
+      onRefresh()
+    }
+  }
+
   const renderModal = () => {
     return (
       <CustomModal
@@ -117,8 +133,21 @@ const Users = props => {
     )
   }
 
-  const doDelete = async anime => {
-    if (!(await onDelete(anime))) {
+  const renderModalDelete = () => {
+    return (
+      <CustomModal
+        title="iSave"
+        modal={modalDelete}
+        toggle={toggleDelete}
+        label={`Archive ${selectedUser.username}?`}
+        primary={{ type: 'danger', label: 'ARCHIVE' }}
+      />
+    )
+    
+  }
+
+  const doDelete = async user => {
+    if (!(await onDelete(user))) {
       onPageChange(pageNum - 1)
       if (start > 1) {
         onSetStart(start - 1)
@@ -146,6 +175,7 @@ const Users = props => {
   return (
     <React.Fragment>
       {renderModal()}
+      {renderModalDelete()}
       <main
         role="main"
         className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"

@@ -1,11 +1,11 @@
 import React, { Component, useState, useEffect } from 'react'
 import Joi from 'joi-browser'
-import Form from '../partials/form'
+import Form from '../common/form'
 import { getBranches, getManagers } from '../../services/userService'
 import { toast } from 'react-toastify'
 import { cap } from '../../services/utilsService'
 import withAuth from './../hoc/withAuth'
-import WorkPosition from './../partials/workPosition'
+import WorkPosition from './../common/workPosition'
 
 const SignUp = ({ auth, ...props }) => {
   const [user, setUser] = useState({

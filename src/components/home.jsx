@@ -1,11 +1,11 @@
 import React, { useState, memo } from 'react'
-import SideMenu from './partials/sideMenu'
+import SideMenu from './common/sideMenu'
 import Dashboard from './menus/dashboard'
 import Branch from './menus/branch'
 import Agent from './menus/agent'
 import Users from './menus/users/index'
 import Reports from './menus/reports'
-import Footer from './partials/footer'
+import Footer from './common/footer'
 import UserProvider from '../providers/userProvider'
 import ViewUser from './menus/users/view'
 

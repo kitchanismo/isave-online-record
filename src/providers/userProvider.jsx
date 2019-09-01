@@ -3,7 +3,7 @@ import usePagination from '../hooks/usePagination'
 import { UserContext } from '../context'
 import { pagination } from '../config.json'
 import { sortBy } from '../services/utilsService'
-import { getPagedUsers } from '../services/userService'
+import { getPagedUsers, deleteUser } from '../services/userService'
 import {
   SET_REFRESH,
   SET_ITEMS,
@@ -34,8 +34,8 @@ const UserProvider = props => {
       const _users = originalUsers.filter(a => a.id !== user.id)
 
       dispatch({ type: SET_ITEMS, payload: _users })
-
-      // await deleteAnime(user.id)
+      console.log('hit3', user.id)
+      await deleteUser(user.id)
       return _users.length > 0
     } catch (error) {
       dispatch({ type: SET_ITEMS, payload: originalUsers })

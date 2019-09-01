@@ -51,3 +51,8 @@ export function statusCount() {
 export function getUser(id) {
   return http.get(`/api/users/${id}`).then(data => data.data.user)
 }
+
+export function deleteUser(id) {
+  console.log(id)
+  return http.delete(`/api/users/${id}`).then(data => data.data)
+}
