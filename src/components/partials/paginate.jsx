@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../context'
-import { createArray } from '../services/utilsService'
-import { pagination } from '../config.json'
+import { UserContext } from '../../context'
+import { createArray } from '../../services/utilsService'
+import { pagination } from '../../config.json'
 
 const Paginate = props => {
   const { pageNumbers: PAGE_NUMBERS } = pagination

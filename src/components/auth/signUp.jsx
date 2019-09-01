@@ -3,7 +3,7 @@ import Joi from 'joi-browser'
 import Form from '../partials/form'
 import { getBranches, getManagers } from '../../services/userService'
 import { toast } from 'react-toastify'
-import { capitalize } from '../../services/utilsService'
+import { cap } from '../../services/utilsService'
 import withAuth from './../hoc/withAuth'
 import WorkPosition from './../partials/workPosition'
 
@@ -166,8 +166,9 @@ const SignUp = ({ auth, ...props }) => {
             {({ renderInput, renderSelect, renderButton }) => {
               return (
                 <React.Fragment>
-                  <div className="row mt-5">
-                    <div className="col-4 p-4 offset-2">
+                  <div className="row mt-3 mb-3">
+                    <div className="side-content col-4"></div>
+                    <div className="col-4 pl-3 pr-2 pt-3">
                       {renderInput('firstname', 'Firstname')}
                       {renderInput('middlename', 'Middlename')}
                       {renderInput('lastname', 'Lastname')}
@@ -198,7 +199,7 @@ const SignUp = ({ auth, ...props }) => {
                           managers
                         )}
                     </div>
-                    <div className="col-4 p-4">
+                    <div className="col-4 pl-2 pr-3 pt-3">
                       {renderInput('username', 'Username', 'text', {
                         onBlur: handleCheckUser
                       })}
@@ -234,6 +235,14 @@ const SignUp = ({ auth, ...props }) => {
           <style jsx="">{`
             .col-4 {
               padding: 0;
+            }
+            .row {
+              background-color: white;
+              border-radius: 7px;
+            }
+            .side-content {
+              background-color: #343a40;
+              border-radius: 7px 0 0 7px;
             }
           `}</style>
         </React.Fragment>

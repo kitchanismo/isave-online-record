@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Joi from 'joi-browser'
-import { capitalize } from '../../services/utilsService'
+import { cap } from '../../services/utilsService'
 import { toast } from 'react-toastify'
 import withAuth from '../hoc/withAuth'
 import Form from '../partials/form'
@@ -22,8 +22,8 @@ const Login = ({ auth, ...props }) => {
   const handleSubmit = async (e, data) => {
     try {
       await auth.login(data)
-      toast.success(`Welcome, ${capitalize(data.username)}`)
-      props.history.replace('/home')
+      toast.success(`Welcome, ${cap(data.username)}`)
+      props.history.replace('/')
     } catch ({ response }) {
       if (response && response.status === 401) {
         toast.error(response.data.status.errors)
@@ -37,11 +37,11 @@ const Login = ({ auth, ...props }) => {
 
   return (
     <React.Fragment>
-      <div className="row mt-5">
-        <div className="offset-2 col-4 mr-2">
+      <div className="row mt-5 border border-secondary">
+        <div className="col-8 p-0">
           <Logo />
         </div>
-        <div className="col-4 ml-2">
+        <div className="col-4 p-3">
           <h1>Login</h1>
           <Form
             data={{ data: user, setData: setUser }}
@@ -70,8 +70,12 @@ const Login = ({ auth, ...props }) => {
         </div>
       </div>
       <style jsx="">{`
-        .col-4 {
-          padding: 0;
+        .row {
+          border-radius: 7px;
+          background-color: white;
+        }
+        .col-8 {
+          border-radius: 7px;
         }
       `}</style>
     </React.Fragment>

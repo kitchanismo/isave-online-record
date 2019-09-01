@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import auth from '../../services/authService'
-import { capitalize } from '../../services/utilsService'
+import { cap } from '../../services/utilsService'
 
 const Nav = props => {
   const handleLogout = async () => {
@@ -39,9 +39,9 @@ const Nav = props => {
                   <i className="fa fa-user text-warning" />
                   <li className="nav-item">
                     <NavLink className="nav-link active" to="/home">
-                      {capitalize(auth.getCurrentUser().username) +
+                      {cap(auth.getCurrentUser().username) +
                         ' - ' +
-                        capitalize(auth.getCurrentUser().position)}
+                        cap(auth.getCurrentUser().position)}
                     </NavLink>
                   </li>
                   <li className="nav-item">

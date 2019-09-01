@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import Chart from 'react-apexcharts'
-import Form from './partials/form'
+import Form from '../partials/form'
 import Joi from 'joi-browser'
-import Logo from './partials/logo'
+import Logo from '../partials/logo'
 
 const Agent = () => {
   const [optionsSales, setOptionsSales] = useState({

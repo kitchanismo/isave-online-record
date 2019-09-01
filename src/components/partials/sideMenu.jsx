@@ -1,69 +1,58 @@
-import React, { useState } from 'react'
+import React from 'react'
 import withAuth from '../hoc/withAuth'
+import { NavLink } from 'react-router-dom'
 
 const SideMenu = ({ auth, ...props }) => {
-  const [menu, setMenu] = useState({
-    dashboard: 'active',
-    branch: '',
-    agent: '',
-    users: '',
-    reports: ''
-  })
-
-  const navigate = menu => {
-    setMenu({ [menu]: 'active' })
-  }
-
   return (
     <React.Fragment>
       <nav className="side-menu col-md-2 d-none d-md-block bg-dark">
         <div className="sidebar-sticky">
           <ul className="nav flex-column mb-2 mt-2">
             <li className="nav-item">
-              <a
+              <NavLink
                 name="dashboard"
-                onClick={() => navigate('dashboard')}
-                className={`nav-link text-white ${menu.dashboard}`}
+                to="/dashboard"
+                className={`nav-link text-white `}
               >
                 Dashboard
-              </a>
+              </NavLink>
             </li>
             <hr></hr>
             <li className="nav-item">
-              <a
-                onClick={() => navigate('branch')}
-                className={`nav-link text-white ${menu.branch}`}
+              <NavLink
+                name="branch"
+                to="/branches"
+                className={`nav-link text-white `}
               >
                 Branch
-              </a>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <a
-                onClick={() => navigate('agent')}
-                className={`nav-link text-white ${menu.agent}`}
+              <NavLink
+                name="agents"
+                to="/agents"
+                className={`nav-link text-white `}
               >
                 Agent
-              </a>
+              </NavLink>
             </li>
             {auth.isAdminOrManager() && (
               <li className="nav-item">
-                <a
-                  onClick={() => navigate('users')}
-                  className={`nav-link text-white ${menu.users}`}
-                >
+                <NavLink to="/users" className={`nav-link text-white `}>
                   Users
-                </a>
+                </NavLink>
               </li>
             )}
 
             <hr></hr>
             <li className="nav-item">
-              <a
-                onClick={() => navigate('reports')}
-                className={`nav-link text-white ${menu.reports}`}
+              <NavLink
+                name="reports"
+                to="/reports"
+                className={`nav-link text-white`}
               >
                 Reports
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -76,7 +65,7 @@ const SideMenu = ({ auth, ...props }) => {
             cursor: pointer;
           }
           a:hover {
-            color: gray !important;
+            color: #ddd !important;
           }
 
           hr {
@@ -88,7 +77,7 @@ const SideMenu = ({ auth, ...props }) => {
           }
         `}</style>
       </nav>
-      {props.children({ menu })}
+      {props.children}
     </React.Fragment>
   )
 }

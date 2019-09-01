@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
-import Table from './partials/table'
-import { UserContext } from '../context'
-import Paginate from './paginate'
-import CustomModal from './partials/modal'
-import { verifyUser } from '../services/userService'
-import SearchForm from './partials/searchForm'
-import { pagination } from '../config.json'
+import Table from '../../partials/table'
+import { UserContext } from '../../../context'
+import Paginate from '../../partials/paginate'
+import CustomModal from '../../partials/modal'
+import { verifyUser } from '../../../services/userService'
+import SearchForm from '../../partials/searchForm'
+import { pagination } from '../../../config.json'
+import { Link } from 'react-router-dom'
 
 const Users = props => {
   const {
@@ -36,7 +37,7 @@ const Users = props => {
       path: 'lastname',
       key: 'fullname',
       label: 'Fullname',
-      content: user => `${user.lastname}, ${user.firstname}`
+      content: user => `${user.firstname}, ${user.middlename} ${user.lastname}`
     },
 
     {
@@ -69,12 +70,14 @@ const Users = props => {
     {
       key: 'actions',
       label: 'Actions',
-      content: () => (
+      content: user => (
         <div className="row pl-2 pt-1">
           <div className="d-flex justify-content-around">
-            <button className="btn btn-sm btn-outline-primary ml-1">
-              VIEW
-            </button>
+            <Link to={`/users/${user.id}`}>
+              <button className="btn btn-sm btn-outline-primary ml-1">
+                VIEW
+              </button>
+            </Link>
             <button className="btn btn-sm btn-outline-warning ml-1">
               EDIT
             </button>
@@ -149,26 +152,23 @@ const Users = props => {
       >
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
           <h1 className="h2">Users Management</h1>
-          <span className="h5">
+          <span className="h6">
             Total:
-            <span className="h5 text-primary"> {total} </span>
+            <span className="h6 text-secondary">{total}</span>
           </span>
-          <span className="h5">
+          <span className="h6">
             Active:
-            <span className="h5 text-success">{statusCount.active}</span>
+            <span className="h6 text-secondary">{statusCount.active}</span>
           </span>
-          <span className="h5">
+          <span className="h6 ">
             Unverify:
-            <span className="h5 text-danger">{statusCount.unverify}</span>
+            <span className="h6 text-secondary">{statusCount.unverify}</span>
           </span>
         </div>
 
         <div className="col-12">
           <div className="mb-3">
-            <SearchForm
-              handleSearch={handleSearch}
-              placeholder="Search username, firstname, middlename or lastname"
-            />
+            <SearchForm handleSearch={handleSearch} placeholder="Search here" />
           </div>
 
           <Table

@@ -47,3 +47,7 @@ export function verifyUser(id) {
 export function statusCount() {
   return http.get(`/api/users/status-count`).then(data => data.data.data)
 }
+
+export function getUser(id) {
+  return http.get(`/api/users/${id}`).then(data => data.data.user)
+}

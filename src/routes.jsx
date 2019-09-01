@@ -12,11 +12,39 @@ import GuestRoute from './components/partials/guestRoute'
 const Routes = () => {
   return (
     <Switch>
-      <AuthRoute path="/home" component={Home} />
+      {/* <AuthRoute path="/home" component={Home} /> */}
+      <AuthRoute
+        path="/dashboard"
+        render={props => <Home {...props} menu="dashboard" />}
+      />
+      <AuthRoute
+        path="/branches"
+        render={props => <Home {...props} menu="branches" />}
+      />
+      <AuthRoute
+        path="/agents"
+        render={props => <Home {...props} menu="agents" />}
+      />
+      <AuthRoute
+        path="/users/edit/:id"
+        render={props => <Home {...props} menu="users" sub="editUser" />}
+      />
+      <AuthRoute
+        path="/users/:id"
+        render={props => <Home {...props} menu="users" sub="viewUser" />}
+      />
+      <AuthRoute
+        path="/users"
+        render={props => <Home {...props} menu="users" />}
+      />
+      <AuthRoute
+        path="/reports"
+        render={props => <Home {...props} menu="reports" />}
+      />
       <GuestRoute path="/login" component={Login} />
       <GuestRoute path="/sign-up" component={SignUp} />
       <Route path="/not-found" component={NotFound} />>
-      <Redirect from="/" exact to="/home" />
+      <Redirect from="/" exact to="/dashboard" />
       <Redirect to="/not-found" />
     </Switch>
   )
