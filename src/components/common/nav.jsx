@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router-dom'
 import auth from '../../services/authService'
 import { cap } from '../../services/utilsService'
 
+import { theme } from '../../config.json'
+
 const Nav = props => {
   const handleLogout = async () => {
     await auth.logout()
@@ -13,7 +15,7 @@ const Nav = props => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <h5 className="text-white mt-1">
-            <span className="text-warning">i</span>SAVE: Online Record
+            <span style={{ color: theme.color }}>i</span>SAVE: Online Record
             Management System
           </h5>
           <button

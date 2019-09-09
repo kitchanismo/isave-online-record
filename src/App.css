@@ -2,10 +2,51 @@
   padding: 0;
   margin: 0;
 }
+
+body,
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'Montserrat', sans-serif;
   font-size: 0.875rem;
-  background-color: gold !important;
+  background-image: linear-gradient(to right top, #004d7a, #008793, #00bf72);
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.btn {
+  border: 0px solid transparent !important;
+}
+
+.btn:focus,
+.btn.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem rgba(152, 189, 228, 0.25);
+}
+
+.btn-grad-primary {
+  background-image: linear-gradient(to right top, #845ec2 40%, #ff6f91 100%);
+
+  color: white !important;
+}
+
+.btn-grad-primary:hover {
+  background-image: linear-gradient(to right top, #845ec2 20%, #ff6f91 100%);
+}
+
+.btn-grad-secondary {
+  background-image: linear-gradient(to right top, #02aab0 40%, #00cdac 100%);
+
+  color: white !important;
+}
+
+.btn-grad-secondary:hover {
+  background-image: linear-gradient(to right top, #02aab0 20%, #00cdac 100%);
 }
 
 /* .fa {

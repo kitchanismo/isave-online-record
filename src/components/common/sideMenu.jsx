@@ -1,6 +1,7 @@
 import React from 'react'
 import withAuth from '../hoc/withAuth'
 import { NavLink } from 'react-router-dom'
+import { theme } from '../../config.json'
 
 const SideMenu = ({ auth, ...props }) => {
   return (
@@ -58,7 +59,7 @@ const SideMenu = ({ auth, ...props }) => {
         </div>
         <style jsx="">{`
           .active {
-            color: gold !important;
+            color: ${theme.color} !important;
             cursor: hand;
           }
           .nav-link {
