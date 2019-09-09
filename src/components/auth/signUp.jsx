@@ -39,11 +39,7 @@ const SignUp = ({ auth, isForManager, ...props }) => {
   const [branches, setBranches] = useState([])
 
   useEffect(() => {
-    const url = isForManager ? '/api/branches/available' : '/api/branches/taken'
-
-    getBranches(url).then(branches => {
-      setBranches(branches)
-    })
+    fetchBranches(isForManager, setBranches)
   }, [])
 
   const [selectedPosition, setSelectedPosition] = useState(null)
@@ -171,6 +167,8 @@ const SignUp = ({ auth, isForManager, ...props }) => {
       setSelectedPosition({})
       setSelectedBranch({})
 
+      fetchBranches(isForManager, setBranches)
+
       setErrors(_errors)
     } catch ({ response }) {
       if (response && (response.status === 400 || response.status === 401)) {
@@ -276,3 +274,9 @@ const SignUp = ({ auth, isForManager, ...props }) => {
 }
 
 export default withWorkPosition(withAuth(SignUp))
+function fetchBranches(isForManager, setBranches) {
+  const url = isForManager ? '/api/branches/available' : '/api/branches/taken'
+  getBranches(url).then(branches => {
+    setBranches(branches)
+  })
+}

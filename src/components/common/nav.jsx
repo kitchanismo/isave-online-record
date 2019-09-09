@@ -15,8 +15,8 @@ const Nav = props => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <h5 className="text-white mt-1">
-            <span style={{ color: theme.color }}>i</span>SAVE: Online Record
-            Management System
+            <span style={{ color: theme.secondary }}>i</span>
+            SAVE: Online Record Management System
           </h5>
           <button
             className="navbar-toggler"
@@ -42,7 +42,7 @@ const Nav = props => {
                   <li className="nav-item">
                     <NavLink className="nav-link active" to="/home">
                       {cap(auth.getCurrentUser().username) +
-                        ' - ' +
+                        ' | ' +
                         cap(auth.getCurrentUser().position)}
                     </NavLink>
                   </li>

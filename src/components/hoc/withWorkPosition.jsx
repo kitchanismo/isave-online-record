@@ -14,7 +14,7 @@ const withWorkPosition = Component => {
           <h2>Sign-up for</h2>
           <br></br>
           <button
-            className="btn btn-grad btn-block"
+            className="btn btn-grad-primary btn-block"
             onClick={() => {
               setHasChoosen(true)
               setForManager(true)
@@ -24,7 +24,7 @@ const withWorkPosition = Component => {
           </button>
 
           <button
-            className="btn btn-grad btn-block"
+            className="btn btn-grad-secondary btn-block"
             onClick={() => {
               setHasChoosen(true)
               setForManager(false)

@@ -15,6 +15,7 @@ const SideMenu = ({ auth, ...props }) => {
                 to="/dashboard"
                 className={`nav-link text-white `}
               >
+                {/* <span className="fa fa-line-chart mr-2"></span> */}
                 Dashboard
               </NavLink>
             </li>
@@ -25,6 +26,7 @@ const SideMenu = ({ auth, ...props }) => {
                 to="/branches"
                 className={`nav-link text-white `}
               >
+                {/* <span className="fa fa-node"></span> Branch */}
                 Branch
               </NavLink>
             </li>
@@ -40,6 +42,7 @@ const SideMenu = ({ auth, ...props }) => {
             {auth.isAdminOrManager() && (
               <li className="nav-item">
                 <NavLink to="/users" className={`nav-link text-white `}>
+                  {/* <span className="fa fa-users mr-2"></span> */}
                   Users
                 </NavLink>
               </li>
@@ -52,6 +55,7 @@ const SideMenu = ({ auth, ...props }) => {
                 to="/reports"
                 className={`nav-link text-white`}
               >
+                {/* <span className="fa fa-file-text mr-2"></span> */}
                 Reports
               </NavLink>
             </li>
@@ -59,7 +63,7 @@ const SideMenu = ({ auth, ...props }) => {
         </div>
         <style jsx="">{`
           .active {
-            color: ${theme.color} !important;
+            color: ${theme.secondary} !important;
             cursor: hand;
           }
           .nav-link {

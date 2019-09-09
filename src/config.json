@@ -5,5 +5,5 @@
     "perPage": 10,
     "pageNumbers": 3
   },
-  "theme": { "color": "#00bf72" }
+  "theme": { "primary": "#a178df", "secondary": "#00bf72" }
 }

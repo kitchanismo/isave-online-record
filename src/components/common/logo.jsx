@@ -1,9 +1,22 @@
-import React, { Component } from 'react'
-
+import React, { Component, useState } from 'react'
+import AliceCarousel from 'react-alice-carousel'
+import 'react-alice-carousel/lib/alice-carousel.css'
+import { appUrl } from '../../config.json'
 const Logo = () => {
+  const items = [
+    { id: 1, src: `${appUrl}/user.png` },
+    { id: 2, src: `${appUrl}/edit.png` },
+    { id: 3, src: `${appUrl}/login.png` }
+  ]
+
+  const getGalleryItems = () =>
+    items.map(i => <img src={i.src} key={i.id}></img>)
+
+  const [galleryItems, setGalleryItems] = useState(getGalleryItems())
+
   return (
     <React.Fragment>
-      <div className="logo" />
+      <div className="logo">{/* <AliceCarousel items={galleryItems} /> */}</div>
 
       <style jsx="">{`
         .logo {
