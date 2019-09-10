@@ -20,16 +20,18 @@ const SideMenu = ({ auth, ...props }) => {
               </NavLink>
             </li>
             <hr></hr>
-            <li className="nav-item">
-              <NavLink
-                name="branch"
-                to="/branches"
-                className={`nav-link text-white `}
-              >
-                {/* <span className="fa fa-node"></span> Branch */}
-                Branch
-              </NavLink>
-            </li>
+            {auth.isAdmin() && (
+              <li className="nav-item">
+                <NavLink
+                  name="branch"
+                  to="/branches"
+                  className={`nav-link text-white `}
+                >
+                  {/* <span className="fa fa-node"></span> Branch */}
+                  Branch
+                </NavLink>
+              </li>
+            )}
             <li className="nav-item">
               <NavLink
                 name="agents"

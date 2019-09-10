@@ -24,6 +24,14 @@ export async function getBranches(url) {
     })
 }
 
+export function isBranchTaken(name) {
+  return http.get('/api/branches/is-taken?name=' + name).then(data => data.data)
+}
+
+export function addBranch(branch) {
+  return http.post('/api/branches', branch).then(data => data.data)
+}
+
 export async function getManager(branchId) {
   // http.setJwt(auth.jwt())
   return await http
