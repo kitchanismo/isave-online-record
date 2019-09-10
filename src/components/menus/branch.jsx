@@ -6,7 +6,7 @@ import Form from './../common/form'
 import { isBranchTaken, addBranch } from './../../services/userService'
 
 const Branch = () => {
-  const [user, setUser] = useState({ name: '', address: '', contact: '' })
+  const [branch, setBranch] = useState({ name: '', address: '', contact: '' })
   const [errors, setErrors] = useState({})
 
   const schema = {
@@ -27,8 +27,9 @@ const Branch = () => {
 
     try {
       await addBranch(data)
-      toast.success(`Welcome, ${cap(data.name)}`)
+      toast.success(`Saved`)
       setErrors({})
+      setBranch({ name: '', address: '', contact: '' })
     } catch ({ response }) {
       if (response && response.status === 401) {
         toast.error(response.data.status.errors)
@@ -40,7 +41,7 @@ const Branch = () => {
     const { isTaken } = await isBranchTaken(input.value)
 
     const _errors = { ...errors }
-    console.log(isTaken, _errors)
+
     if (isTaken) {
       _errors[input.name] = `"${input.value}" is taken`
     }
@@ -64,7 +65,7 @@ const Branch = () => {
           <div className="col-4 side-content"></div>
           <div className="col-8 p-4">
             <Form
-              data={{ data: user, setData: setUser }}
+              data={{ data: branch, setData: setBranch }}
               errors={{ errors, setErrors }}
               onSubmit={handleSubmit}
               schema={schema}
