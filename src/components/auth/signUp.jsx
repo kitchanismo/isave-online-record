@@ -164,8 +164,8 @@ const SignUp = ({ auth, isForManager, ...props }) => {
         confirmPassword: ''
       })
 
-      setSelectedPosition({})
-      setSelectedBranch({})
+      setSelectedPosition(null)
+      setSelectedBranch(null)
 
       fetchBranches(isForManager, setBranches)
 
