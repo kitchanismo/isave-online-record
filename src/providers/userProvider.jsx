@@ -1,5 +1,7 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import usePagination from '../hooks/usePagination'
+import useUnverify from '../hooks/useUnverify'
+
 import { UserContext } from '../context'
 import { pagination } from '../config.json'
 import { sortBy } from '../services/utilsService'
@@ -34,7 +36,7 @@ const UserProvider = props => {
       const _users = originalUsers.filter(a => a.id !== user.id)
 
       dispatch({ type: SET_ITEMS, payload: _users })
-      console.log('hit3', user.id)
+
       await deleteUser(user.id)
       return _users.length > 0
     } catch (error) {

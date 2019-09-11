@@ -9,11 +9,18 @@ import 'react-toastify/dist/ReactToastify.css'
 const App = () => {
   return (
     <React.Fragment>
-      <Nav />
-      <ToastContainer autoClose={5000} />
-      <div className="container">
-        <Routes />
-      </div>
+      <Nav>
+        {({ onRefreshUnverify }) => {
+          return (
+            <React.Fragment>
+              <ToastContainer autoClose={5000} />
+              <div className="container">
+                <Routes onRefreshUnverify={onRefreshUnverify} />
+              </div>
+            </React.Fragment>
+          )
+        }}
+      </Nav>
     </React.Fragment>
   )
 }

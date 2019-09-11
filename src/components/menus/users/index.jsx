@@ -9,7 +9,7 @@ import { pagination } from '../../../config.json'
 import { Link } from 'react-router-dom'
 import Spinner from '../../common/spinner'
 
-const Users = props => {
+const Users = ({ onRefreshUnverify, ...props }) => {
   const {
     state: { total, users, pageNum, start, end, notFound, statusCount },
     onDelete,
@@ -114,6 +114,7 @@ const Users = props => {
       await verifyUser(selectedUser.id)
       setSelectedUser({})
       onRefresh()
+      onRefreshUnverify()
     }
   }
 
@@ -122,9 +123,9 @@ const Users = props => {
   const toggleDelete = async ({ target }) => {
     setModalDelete(modalDelete => !modalDelete)
     if (target && target.name === 'primary') {
-      console.log(selectedUser)
       await doDelete(selectedUser)
       setSelectedUser({})
+      onRefreshUnverify()
       onRefresh()
     }
   }
@@ -189,18 +190,6 @@ const Users = props => {
       >
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
           <h1 className="h2">Users Management</h1>
-          {/* <span className="h6">
-            Total:
-            <span className="h6 text-secondary">{total}</span>
-          </span>
-          <span className="h6">
-            Active:
-            <span className="h6 text-secondary">{statusCount.active}</span>
-          </span>
-          <span className="h6 ">
-            Unverify:
-            <span className="h6 text-secondary">{statusCount.unverify}</span>
-          </span> */}
         </div>
 
         <div className="col-12">

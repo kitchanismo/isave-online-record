@@ -11,8 +11,7 @@ import {
   SEARCH_ITEMS,
   SET_START,
   SET_END,
-  SET_NOT_FOUND,
-  SET_STATUS_COUNT
+  SET_NOT_FOUND
 } from './types'
 
 const reducer = (state, action) => {
@@ -36,8 +35,6 @@ const reducer = (state, action) => {
       return { ...state, title: payload }
     case SET_NOT_FOUND:
       return { ...state, notFound: payload }
-    case SET_STATUS_COUNT:
-      return { ...state, statusCount: payload }
     default:
       return state
   }
@@ -52,7 +49,6 @@ const usePagination = ({
 }) => {
   const initialState = {
     items: [],
-    statusCount: {},
     pageNum: 1,
     pages: 0,
     total: 0,
@@ -73,7 +69,6 @@ const usePagination = ({
         dispatch({ type: SET_ITEMS, payload: response[data] })
         dispatch({ type: SET_PAGES, payload: response[pages] })
         dispatch({ type: SET_TOTAL, payload: response[total] })
-        dispatch({ type: SET_STATUS_COUNT, payload: response['statusCount'] })
         dispatch({ type: SET_NOT_FOUND, payload: false })
       })
       .catch(({ response }) => {

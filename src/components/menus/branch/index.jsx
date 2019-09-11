@@ -31,7 +31,7 @@ const Branch = () => {
 
         <style jsx="">{`
           .dashboard {
-            border-radius: 0px 7px 0 0;
+            border-radius: 0px 5px 0 0;
           }
           .row {
             background-color: white;

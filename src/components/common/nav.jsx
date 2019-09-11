@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import auth from '../../services/authService'
 import { cap } from '../../services/utilsService'
-
+import useUnverify from '../../hooks/useUnverify'
 import { theme } from '../../config.json'
 
 const Nav = props => {
+  const { unverify, setRefresh: setRefreshUnverify } = useUnverify()
+
   const handleLogout = async () => {
     await auth.logout()
   }
+
+  const onRefreshUnverify = () => setRefreshUnverify(u => !u)
 
   return (
     <React.Fragment>
@@ -39,6 +43,9 @@ const Nav = props => {
                   <i className="fa fa-key text-success mr-3"></i>
                   <i className="fa fa-exclamation-triangle text-danger mr-3"></i>
                   <i className="fa fa-user text-warning" />
+                  <span className="badge badge-sm badge-danger mb-4">
+                    {unverify}
+                  </span>
                   <li className="nav-item">
                     <NavLink className="nav-link active" to="/home">
                       {cap(auth.getCurrentUser().username) +
@@ -78,6 +85,7 @@ const Nav = props => {
           }
         `}</style>
       </nav>
+      {props.children({ onRefreshUnverify })}
     </React.Fragment>
   )
 }

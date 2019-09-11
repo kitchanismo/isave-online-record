@@ -6,7 +6,7 @@ import withAuth from '../hoc/withAuth'
 import Form from '../common/form'
 import Logo from '../common/logo'
 
-const Login = ({ auth, ...props }) => {
+const Login = ({ auth, onRefreshUnverify, ...props }) => {
   const [user, setUser] = useState({ username: '', password: '' })
   const [errors, setErrors] = useState({})
 
@@ -24,6 +24,7 @@ const Login = ({ auth, ...props }) => {
       await auth.login(data)
       toast.success(`Welcome, ${cap(data.username)}`)
       props.history.replace('/')
+      onRefreshUnverify()
     } catch ({ response }) {
       if (response && response.status === 401) {
         toast.error(response.data.status.errors)

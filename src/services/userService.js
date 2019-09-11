@@ -63,6 +63,11 @@ export function getUser(id) {
   return http.get(`/api/users/${id}`).then(data => data.data.user)
 }
 
+export function getUnverifyUser() {
+  http.setJwt(auth.jwt())
+  return http.get(`/api/users/unverify`).then(data => data.data.unverify)
+}
+
 export function deleteUser(id) {
   http.setJwt(auth.jwt())
   return http.delete(`/api/users/${id}`).then(data => data.data)
