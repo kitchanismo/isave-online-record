@@ -106,6 +106,7 @@ const SideMenu = ({ auth, ...props }) => {
             border-radius: 3px !important;
             padding-top: 10px;
             padding-bottom: 10px;
+            border: 1px solid #343a40:
           }
           .dropdown-item {
             font-size: 14px;

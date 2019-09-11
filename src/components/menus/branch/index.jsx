@@ -18,7 +18,7 @@ const Branch = () => {
           <h1 className="h2">Branch</h1>
         </div>
 
-        <div className="row ml-2 mr-2">
+        <div className="row ml-2 mr-2 mb-4">
           <div className="col-8 side-content pt-4">
             <Spinner isLoaded={branches.length > 0} className="spinner">
               <TableBranch branches={branches} setBranches={setBranches} />
