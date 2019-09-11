@@ -53,7 +53,10 @@ const SideMenu = ({ auth, ...props }) => {
               to="/reports"
               className="nav-link text-white "
             >
-              Reports <span className="fa fa-angle-down ml-1"></span>
+              Reports{' '}
+              <span
+                className={`fa fa-angle-${!toggle ? 'down' : 'up'} ml-1`}
+              ></span>
             </NavLink>
             {toggle && (
               <div className="dropdown">
@@ -97,9 +100,10 @@ const SideMenu = ({ auth, ...props }) => {
             border: 0.5px solid gray;
           }
           .side-menu {
-            border-radius: 7px 0 0 0;
+            border-radius: 5px 0 0 0;
           }
           .dropdown {
+            margin-left: 30px;
             padding-right: 0 !important;
             background-color: white;
             z-index: 2 !important;

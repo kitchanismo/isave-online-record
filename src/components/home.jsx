@@ -14,7 +14,7 @@ const Home = ({ menu, sub, ...props }) => {
   return (
     <React.Fragment>
       <div className="container-fluid">
-        <div className="row">
+        <div className="row" style={{ backgroundColor: 'transparent' }}>
           <SideMenu>
             {menu === 'dashboard' && <Dashboard {...props} />}
             {menu === 'branches' && <Branch {...props} />}
