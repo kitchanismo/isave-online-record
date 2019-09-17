@@ -9,13 +9,15 @@ import NotFound from './components/common/notFound'
 import AuthRoute from './components/common/authRoute'
 import GuestRoute from './components/common/guestRoute'
 
-const Routes = ({ onRefreshUnverify }) => {
+const Routes = ({ unverify }) => {
   return (
     <Switch>
       {/* <AuthRoute path="/home" component={Home} /> */}
       <AuthRoute
         path="/dashboard"
-        render={props => <Home {...props} menu="dashboard" />}
+        render={props => (
+          <Home {...props} unverify={unverify} menu="dashboard" />
+        )}
       />
       <AuthRoute
         path="/branches"
@@ -24,6 +26,11 @@ const Routes = ({ onRefreshUnverify }) => {
       <AuthRoute
         path="/agents"
         render={props => <Home {...props} menu="agents" />}
+      />
+      <AuthRoute
+        isAdmin
+        path="/users/new"
+        render={props => <Home {...props} menu="users" sub="newUser" />}
       />
       <AuthRoute
         isAdminOrManager
@@ -38,9 +45,7 @@ const Routes = ({ onRefreshUnverify }) => {
       <AuthRoute
         path="/users"
         isAdminOrManager
-        render={props => (
-          <Home {...props} menu="users" onRefreshUnverify={onRefreshUnverify} />
-        )}
+        render={props => <Home {...props} menu="users" unverify={unverify} />}
       />
       <AuthRoute
         path="/reports"
@@ -48,9 +53,7 @@ const Routes = ({ onRefreshUnverify }) => {
       />
       <GuestRoute
         path="/login"
-        render={props => (
-          <Login {...props} onRefreshUnverify={onRefreshUnverify}></Login>
-        )}
+        render={props => <Login {...props} unverify={unverify}></Login>}
       />
       <GuestRoute path="/sign-up" component={SignUp} />
       <Route path="/not-found" component={NotFound} />>

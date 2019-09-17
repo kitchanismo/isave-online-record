@@ -2,25 +2,26 @@ import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import auth from '../../services/authService'
 import { cap } from '../../services/utilsService'
-import useUnverify from '../../hooks/useUnverify'
 import { theme } from '../../config.json'
+import { UserContext } from './../../context'
 
 const Nav = props => {
-  const { unverify, setRefresh: setRefreshUnverify } = useUnverify()
+  const {
+    state: { unverify },
+    onSetStatus
+  } = useContext(UserContext)
 
   const handleLogout = async () => {
     await auth.logout()
   }
-
-  const onRefreshUnverify = () => setRefreshUnverify(u => !u)
 
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <h5 className="text-white mt-1">
-            _<span style={{ color: theme.secondary }}>i</span>
-            SAVE_: Online Record Management System
+            <span style={{ color: theme.secondary }}>COCOLIFE </span>: HYBRID
+            MANAGEMENT INFORMATION SYSTEM
           </h5>
           <button
             className="navbar-toggler"
@@ -40,11 +41,13 @@ const Nav = props => {
             <ul className="navbar-nav">
               {auth.isValidUser() && (
                 <React.Fragment>
-                  <i className="fa fa-key text-success mr-3"></i>
-                  <i className="fa fa-exclamation-triangle text-danger mr-3"></i>
-                  <i className="fa fa-user text-warning" />
+                  <Link
+                    onClick={() => onSetStatus(0)}
+                    to="/users"
+                    className="fa fa-user text-white"
+                  />
                   <span className="badge badge-sm badge-danger mb-4">
-                    {unverify}
+                    {unverify ? unverify : ''}
                   </span>
                   <li className="nav-item">
                     <NavLink className="nav-link active" to="/home">
@@ -83,9 +86,12 @@ const Nav = props => {
           .fa {
             margin-top: 12px !important;
           }
+
+          i {
+            cursor: pointer;
+          }
         `}</style>
       </nav>
-      {props.children({ onRefreshUnverify })}
     </React.Fragment>
   )
 }

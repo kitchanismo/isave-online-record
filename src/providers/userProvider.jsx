@@ -12,7 +12,8 @@ import {
   SET_PAGENUM,
   SEARCH_ITEMS,
   SET_START,
-  SET_END
+  SET_END,
+  SET_STATUS
 } from '../hooks/types'
 
 const UserProvider = props => {
@@ -23,6 +24,10 @@ const UserProvider = props => {
 
   const handleRefresh = () => {
     dispatch({ type: SET_REFRESH, payload: toggle => !toggle })
+  }
+
+  const handleSetStatus = status => {
+    dispatch({ type: SET_STATUS, payload: status })
   }
 
   const handlePageChange = pageNum => {
@@ -71,7 +76,8 @@ const UserProvider = props => {
         onSort: handleSort,
         onSearch: handleSearch,
         onSetStart: handleSetStart,
-        onSetEnd: handleSetEnd
+        onSetEnd: handleSetEnd,
+        onSetStatus: handleSetStatus
       }}
     >
       {props.children}

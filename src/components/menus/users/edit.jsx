@@ -171,7 +171,7 @@ const EditUser = ({ auth, ...props }) => {
 
         <style jsx="">{`
           .dashboard {
-            border-radius: 0px 7px 0 0;
+            border-radius: 0px 5px 0 0;
           }
           .col-4 {
             padding: 0;
