@@ -42,6 +42,8 @@ const Nav = props => {
               {auth.isValidUser() && (
                 <React.Fragment>
                   <Link
+                    data-toggle="tooltip"
+                    title={`You have ${unverify} unverify user/s!`}
                     onClick={() => onSetStatus(0)}
                     to="/users"
                     className="fa fa-user text-white"
