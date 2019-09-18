@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Joi from 'joi-browser'
-import { getBranches, getManager, getUser } from '../../../services/userService'
+import {
+  getBranches,
+  getManager,
+  getUser,
+  editUser
+} from '../../../services/userService'
 import { toast } from 'react-toastify'
 import { cap } from '../../../services/utilsService'
 import withAuth from '../../hoc/withAuth'
@@ -31,9 +36,9 @@ const EditUser = ({ auth, ...props }) => {
         manager: profile.branch.manager
       })
       setSelectedPosition({
-        id: position === 'sales officer' ? 1 : 2,
+        id: position === 'sales' ? 1 : 2,
         value: position,
-        label: cap(position)
+        label: cap(position + (position !== 'manager' ? ' officer' : ''))
       })
       setSelectedBranch({
         id: profile.branch_id,
@@ -41,7 +46,12 @@ const EditUser = ({ auth, ...props }) => {
         label: cap(profile.branch.name)
       })
 
-      getBranches('/api/branches').then(branches => {
+      const url =
+        position === 'manager'
+          ? '/api/branches/available'
+          : '/api/branches/taken'
+
+      getBranches(url).then(branches => {
         setBranches(branches)
       })
     })
@@ -52,12 +62,12 @@ const EditUser = ({ auth, ...props }) => {
     {
       id: 1,
       label: 'Sales Officer',
-      value: 'sales officer'
+      value: 'sales'
     },
     {
       id: 2,
       label: 'Promo Officer',
-      value: 'promo officer'
+      value: 'promo'
     }
   ]
 
@@ -99,7 +109,56 @@ const EditUser = ({ auth, ...props }) => {
     })
   }
 
-  const handleSubmit = async (e, user) => alert('Under construction!')
+  const handleSubmit = async (
+    e,
+    { username, email, password, firstname, middlename, lastname, codeNo }
+  ) => {
+    const user = {
+      username,
+      password,
+      position: selectedPosition ? selectedPosition.value : '',
+      profile: {
+        firstname,
+        middlename,
+        lastname,
+        email,
+        codeNo,
+        branch_id: selectedBranch ? selectedBranch.id : null
+      }
+    }
+
+    try {
+      await editUser(id, user)
+      // console.log(user)
+      toast.success('Created!')
+
+      // setUser({
+      //   username: '',
+      //   email: '',
+      //   password: '',
+      //   firstname: '',
+      //   middlename: '',
+      //   lastname: '',
+      //   codeNo: '',
+      //   confirmPassword: ''
+      // })
+
+      // setSelectedBranch(null)
+      // setSelectedPosition(null)
+
+      //fetchBranches(setBranches)
+
+      setErrors(errors)
+
+      //onRefresh()
+
+      // props.history.replace('/users')
+    } catch ({ response }) {
+      if (response && response.status === 400) {
+        toast.error(response.data.status.errors[0].message)
+      }
+    }
+  }
 
   const isAgent = () => {
     return (

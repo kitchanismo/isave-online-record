@@ -51,7 +51,7 @@ const Nav = props => {
                   <span className="badge badge-sm badge-danger mb-4">
                     {unverify ? unverify : ''}
                   </span>
-                  <li className="nav-item">
+                  <li className="nav-item ml-1">
                     <NavLink className="nav-link active" to="/home">
                       {cap(auth.getCurrentUser().username) +
                         ' | ' +
@@ -70,15 +70,6 @@ const Nav = props => {
                 </React.Fragment>
               )}
             </ul>
-            <div className="dropdown-menu">
-              <h6 className="dropdown-header">Dropdown header</h6>
-              <a className="dropdown-item" href="#">
-                Action
-              </a>
-              <a className="dropdown-item" href="#">
-                Another action
-              </a>
-            </div>
           </div>
         </div>
         <style jsx="">{`

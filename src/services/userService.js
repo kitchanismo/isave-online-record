@@ -39,6 +39,11 @@ export async function addManager(user) {
   return await http.post('/api/users', user).then(data => data.data)
 }
 
+export async function editUser(id, user) {
+  http.sendJwt(auth.jwt())
+  return await http.put('/api/users/' + id, user).then(data => data.data)
+}
+
 export async function getManager(branchId) {
   // http.setJwt(auth.jwt())
   return await http
