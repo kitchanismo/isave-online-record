@@ -9,7 +9,9 @@ const AddGPA = () => {
     middlename: '',
     address: '',
     contact: '',
-    codeNo: ''
+    codeNo: '',
+    gender: '',
+    converage: 0
   })
 
   const [selectedCoverage, setSelectedCoverage] = useState(null)
@@ -19,16 +21,22 @@ const AddGPA = () => {
   const schema = {
     firstname: Joi.string()
       .required()
-      .label('firstname'),
+      .label('Firstname'),
     middlename: Joi.string()
       .required()
       .label('Middlename'),
     lastname: Joi.string()
       .required()
       .label('Lastname'),
+    gender: Joi.string()
+      .required()
+      .label('Gender'),
+    coverage: Joi.number()
+      .required()
+      .label('Coverage'),
     contact: Joi.optional(),
     address: Joi.optional(),
-    codeNo: Joi.string()
+    codeNo: Joi.number()
       .required()
       .label('Code Number')
   }

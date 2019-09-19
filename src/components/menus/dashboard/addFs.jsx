@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import Form from '../../common/form'
+import { toast } from 'react-toastify'
 import Joi from 'joi-browser'
 import { formatDate } from '../../../services/utilsService'
 import auth from '../../../services/authService'
+import { addClient } from '../../../services/clientService'
 
 const AddClient = () => {
   const [client, setClient] = useState({
@@ -61,9 +63,32 @@ const AddClient = () => {
   const handleSubmit = async (e, client) => {
     const _client = {
       ...client,
+      dateInsured: new Date(client.dateInsured).toISOString(),
       userInsured: auth.getCurrentUser().id
     }
-    console.log(_client)
+
+    try {
+      await addClient(_client)
+      toast.success('Saved')
+      setClient({
+        firstname: '',
+        lastname: '',
+        middlename: '',
+        address: '',
+        contact: '',
+        dateInsured: '',
+        codeNo: '',
+        userInsured: '',
+        gender: '',
+        mode: '',
+        civil: ''
+      })
+      setSelectedGender(null)
+      setSelectedMode(null)
+      setSelectedCivil(null)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const genders = [

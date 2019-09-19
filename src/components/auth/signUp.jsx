@@ -161,7 +161,7 @@ const SignUp = ({ auth, ...props }) => {
 
     try {
       await auth.signUp(user)
-      toast.success('Registered!')
+
       toast.success('Please wait for verification!')
 
       setUser({
@@ -184,6 +184,7 @@ const SignUp = ({ auth, ...props }) => {
       fetchBranches(setBranches)
 
       setErrors(_errors)
+      props.history.replace('/login')
     } catch ({ response }) {
       if (response && (response.status === 400 || response.status === 401)) {
         toast.error(response.data.status.errors)
@@ -247,7 +248,7 @@ const SignUp = ({ auth, ...props }) => {
                     'password',
                     'fa-key'
                   )}
-                  {renderButton('Sign Up', null, 'Signing in...', true)}
+                  {renderButton('Sign Up', null, 'Signing up...', true)}
                   <button
                     onClick={e => {
                       e.preventDefault()

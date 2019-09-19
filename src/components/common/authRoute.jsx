@@ -24,7 +24,7 @@ const AuthRoute = ({
               }}
             />
           )
-        console.log(isAdminOrManager)
+
         if (isAdminOrManager && !auth.isAdminOrManager()) {
           return <Redirect to="/not-found" />
         }

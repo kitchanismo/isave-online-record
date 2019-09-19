@@ -104,6 +104,7 @@ const Form = props => {
           }}
           onChange={selectData => {
             onChange(selectData)
+
             setData({
               ...data,
               [name]: selectData ? selectData.value : ''
