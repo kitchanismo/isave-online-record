@@ -15,7 +15,9 @@ const SignUp = ({ auth, ...props }) => {
     lastname: '',
     codeNo: '',
     manager: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    position: '',
+    branch: ''
   })
   const agents = [
     {
@@ -75,7 +77,15 @@ const SignUp = ({ auth, ...props }) => {
     lastname: Joi.string()
       .required()
       .label('Lastname'),
-    codeNo: Joi.optional(),
+    position: Joi.string()
+      .required()
+      .label('Position'),
+    branch: Joi.string()
+      .required()
+      .label('Branch'),
+    codeNo: Joi.number()
+      .required()
+      .label('Code Number'),
     manager: Joi.optional()
   }
 
@@ -86,9 +96,12 @@ const SignUp = ({ auth, ...props }) => {
     setSelectedBranch(selectedBranch)
     setUser({ ...user, manager: '' })
 
+    if (!selectedBranch) return
+
+    // branch needs to populate after fetching manager
     getManager(selectedBranch.id)
       .then(fullname => {
-        setUser({ ...user, manager: fullname })
+        setUser({ ...user, manager: fullname, branch: selectedBranch.value })
       })
       .catch(({ response }) => {
         if (response && response.status === 404) {
@@ -160,6 +173,8 @@ const SignUp = ({ auth, ...props }) => {
         lastname: '',
         codeNo: '',
         manager: '',
+        branch: '',
+        position: '',
         confirmPassword: ''
       })
 

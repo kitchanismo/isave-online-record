@@ -1,16 +1,10 @@
-import React, { useContext } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React from 'react'
+import { NavLink } from 'react-router-dom'
 import auth from '../../services/authService'
 import { cap } from '../../services/utilsService'
 import { theme } from '../../config.json'
-import { UserContext } from './../../context'
 
 const Nav = props => {
-  const {
-    state: { unverify },
-    onSetStatus
-  } = useContext(UserContext)
-
   const handleLogout = async () => {
     await auth.logout()
   }
@@ -19,10 +13,10 @@ const Nav = props => {
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
-          <h5 className="text-white mt-1">
-            <span style={{ color: theme.secondary }}>COCOLIFE </span>: HYBRID
-            MANAGEMENT INFORMATION SYSTEM
-          </h5>
+          <h6 className="text-white mt-1">
+            <span style={{ color: theme.secondary }}>COCOLIFE </span>: Hybrid
+            Management Information System with SMS Notification
+          </h6>
           <button
             className="navbar-toggler"
             type="button"
@@ -41,16 +35,6 @@ const Nav = props => {
             <ul className="navbar-nav">
               {auth.isValidUser() && (
                 <React.Fragment>
-                  <Link
-                    data-toggle="tooltip"
-                    title={`You have ${unverify} unverify user/s!`}
-                    onClick={() => onSetStatus(0)}
-                    to="/users"
-                    className="fa fa-user text-white"
-                  />
-                  <span className="badge badge-sm badge-danger mb-4">
-                    {unverify ? unverify : ''}
-                  </span>
                   <li className="nav-item ml-1">
                     <NavLink className="nav-link active" to="/home">
                       {cap(auth.getCurrentUser().username) +

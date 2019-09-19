@@ -38,6 +38,7 @@ const Form = props => {
 
     const errors = validate()
     setErrors(errors || {})
+
     if (errors) return
 
     setIsDisable(true)
@@ -96,17 +97,34 @@ const Form = props => {
           isSearchable
           isClearable
           value={value}
-          onChange={onChange}
+          onBlur={() => {
+            const _errors = { ...errors }
+            delete _errors[name]
+            setErrors(_errors)
+          }}
+          onChange={selectData => {
+            onChange(selectData)
+            setData({
+              ...data,
+              [name]: selectData ? selectData.value : ''
+            })
+          }}
           options={options}
         />
+        {errors[name] && (
+          <p className="error-message text-danger p-1">{errors[name]}</p>
+        )}
       </div>
     )
   }
 
+  const isButtonDisable = () =>
+    Object.keys(errors).length > 0 || validate() || isDisable
+
   const renderButton = (label, icon, labelLoading = label, isBlock = false) => {
     return (
       <button
-        disabled={validate() || Object.keys(errors).length > 0 || isDisable}
+        // disabled={isButtonDisable()}
         className={`btn btn-grad-primary mt-3 ${isBlock ? 'btn-block' : ''}`}
       >
         <span className={`${icon} mr-1`} />
@@ -128,11 +146,16 @@ const Form = props => {
             placeholderText="Select a date"
             className="form-control"
             value={data[name]}
+            onBlur={() => {
+              const _errors = { ...errors }
+              delete _errors[name]
+              setErrors(_errors)
+            }}
             {...rest}
           />
         </div>
         {errors[name] && (
-          <div className="alert p-2 mt-2 alert-danger">{errors[name]}</div>
+          <p className="error-message text-danger p-1">{errors[name]}</p>
         )}
       </div>
     )

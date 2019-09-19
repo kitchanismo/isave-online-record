@@ -17,6 +17,7 @@ const NewManager = ({ auth, ...props }) => {
     middlename: '',
     lastname: '',
     codeNo: '',
+    branch: '',
     confirmPassword: ''
   })
 
@@ -66,7 +67,12 @@ const NewManager = ({ auth, ...props }) => {
     lastname: Joi.string()
       .required()
       .label('Lastname'),
-    codeNo: Joi.optional()
+    branch: Joi.string()
+      .required()
+      .label('Branch'),
+    codeNo: Joi.number()
+      .required()
+      .label('Code Number')
   }
 
   const handleCheckUser = async ({ currentTarget: input }) => {
@@ -218,7 +224,6 @@ const NewManager = ({ auth, ...props }) => {
             padding: 0;
           }
           .row {
-            background-color: white;
             border-radius: 7px;
           }
           .side-content {

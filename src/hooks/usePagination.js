@@ -1,7 +1,6 @@
 import { useEffect, useReducer } from 'react'
 import { toast } from 'react-toastify'
 import { pagination } from '../config.json'
-import auth from '../services/authService'
 
 import {
   SET_ITEMS,
@@ -73,8 +72,6 @@ const usePagination = ({
   )
 
   useEffect(() => {
-    if (!auth.isValidUser()) return
-
     request(pageNum, take, title, status)
       .then(response => {
         dispatch({ type: SET_ITEMS, payload: response[data] })

@@ -171,17 +171,24 @@ const Charts = ({ dimension = 400 }) => {
     }
   ])
 
-  const chart = option => (
-    <Chart type="line" options={option} series={series} width={dimension} />
+  const chart = () => (
+    <React.Fragment>
+      <div className="row d-flex justify-content-center">
+        <Chart
+          type="line"
+          options={optionsSales}
+          series={series}
+          width="650px"
+        />
+      </div>
+      <div className="row d-flex justify-content-around">
+        <Chart type="line" options={optionsGPA} series={series} width="400px" />
+        <Chart type="line" options={optionsFSF} series={series} width="400px" />
+      </div>
+    </React.Fragment>
   )
 
-  return (
-    <div>
-      {chart(optionsGPA)}
-      {chart(optionsSales)}
-      {chart(optionsFSF)}
-    </div>
-  )
+  return <div>{chart(optionsGPA)}</div>
 }
 
 export default Charts

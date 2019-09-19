@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import withAuth from '../hoc/withAuth'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import { theme } from '../../config.json'
+import { UserContext } from './../../context'
 
 const SideMenu = ({ auth, ...props }) => {
   const [toggle, setToggle] = useState(false)
+
+  const {
+    state: { unverify },
+    onSetStatus
+  } = useContext(UserContext)
 
   return (
     <React.Fragment>
@@ -27,7 +33,7 @@ const SideMenu = ({ auth, ...props }) => {
                 onClick={() => setToggle(false)}
                 name="branch"
                 to="/branches"
-                className={`nav-link text-white `}
+                className={`nav-link text-white`}
               >
                 {/* <span className="fa fa-node"></span> Branch */}
                 Branch
@@ -37,13 +43,36 @@ const SideMenu = ({ auth, ...props }) => {
 
           {auth.isAdminOrManager() && (
             <li className="nav-item">
-              <NavLink
-                onClick={() => setToggle(false)}
-                to="/users"
-                className={`nav-link text-white `}
-              >
-                Users
-              </NavLink>
+              <div className="row ">
+                <div className="d-flex ml-3">
+                  <NavLink
+                    onClick={() => {
+                      setToggle(false)
+                      onSetStatus(null)
+                    }}
+                    to="/users"
+                    className={`nav-link text-white pr-1`}
+                  >
+                    Users
+                  </NavLink>
+                </div>
+                <div className="m-0 p-0">
+                  <Link
+                    data-toggle="tooltip"
+                    title={`You have ${unverify} unverify user/s!`}
+                    onClick={() => {
+                      setToggle(false)
+                      onSetStatus(0)
+                    }}
+                    to="/users"
+                    className={`nav-link text-white pt-0 pl-0`}
+                  >
+                    <span className="badge badge-sm badge-danger ml-1">
+                      {unverify ? unverify : ''}
+                    </span>
+                  </Link>
+                </div>
+              </div>
             </li>
           )}
 
@@ -84,6 +113,9 @@ const SideMenu = ({ auth, ...props }) => {
         </ul>
 
         <style jsx="">{`
+          .badge-danger {
+            margin-top: -5px;
+          }
           .active {
             color: ${theme.secondary} !important;
             cursor: hand;
@@ -109,6 +141,7 @@ const SideMenu = ({ auth, ...props }) => {
             z-index: 2 !important;
             border-radius: 3px !important;
             padding-top: 10px;
+
             padding-bottom: 10px;
             border: 1px solid #343a40;
           }

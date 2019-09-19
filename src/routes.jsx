@@ -9,15 +9,20 @@ import NotFound from './components/common/notFound'
 import AuthRoute from './components/common/authRoute'
 import GuestRoute from './components/common/guestRoute'
 
-const Routes = ({ unverify }) => {
+const Routes = props => {
   return (
     <Switch>
-      {/* <AuthRoute path="/home" component={Home} /> */}
+      <AuthRoute
+        path="/dashboard/new-fs"
+        render={props => <Home {...props} menu="dashboard" sub="newFs" />}
+      />
+      <AuthRoute
+        path="/dashboard/new-gpa"
+        render={props => <Home {...props} menu="dashboard" sub="newGPA" />}
+      />
       <AuthRoute
         path="/dashboard"
-        render={props => (
-          <Home {...props} unverify={unverify} menu="dashboard" />
-        )}
+        render={props => <Home {...props} menu="dashboard" />}
       />
       <AuthRoute
         path="/branches"
@@ -45,16 +50,13 @@ const Routes = ({ unverify }) => {
       <AuthRoute
         path="/users"
         isAdminOrManager
-        render={props => <Home {...props} menu="users" unverify={unverify} />}
+        render={props => <Home {...props} menu="users" />}
       />
       <AuthRoute
         path="/reports"
         render={props => <Home {...props} menu="reports" />}
       />
-      <GuestRoute
-        path="/login"
-        render={props => <Login {...props} unverify={unverify}></Login>}
-      />
+      <GuestRoute path="/login" render={props => <Login {...props}></Login>} />
       <GuestRoute path="/sign-up" component={SignUp} />
       <Route path="/not-found" component={NotFound} />>
       <Redirect from="/" exact to="/dashboard" />
