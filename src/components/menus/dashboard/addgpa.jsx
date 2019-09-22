@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Form from '../../common/form'
 import Joi from 'joi-browser'
+import { toast } from 'react-toastify'
+import { addClient } from '../../../services/clientService'
 
 const AddGPA = () => {
   const [client, setClient] = useState({
@@ -11,7 +13,7 @@ const AddGPA = () => {
     contact: '',
     codeNo: '',
     gender: '',
-    converage: 0
+    coverage: 0
   })
 
   const [selectedCoverage, setSelectedCoverage] = useState(null)
@@ -44,8 +46,26 @@ const AddGPA = () => {
   const handleChangeCoverage = coverage => setSelectedCoverage(coverage)
 
   const handleChangeGender = gender => setSelectedGender(gender)
-  const handleSubmit = async (e, data) => {
-    console.log(data)
+  const handleSubmit = async (e, client) => {
+    try {
+      await addClient({ ...client, isGPA: true })
+      toast.success('Saved')
+
+      setClient({
+        firstname: '',
+        lastname: '',
+        middlename: '',
+        address: '',
+        contact: '',
+        codeNo: '',
+        gender: '',
+        coverage: 0
+      })
+      setSelectedGender(null)
+      setSelectedCoverage(null)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const genders = [
@@ -113,7 +133,7 @@ const AddGPA = () => {
               </div>
 
               <div className="col-6">
-                {renderInput('codeNo', 'No')}
+                {renderInput('codeNo', 'GPA No.')}
 
                 {renderSelect(
                   'coverage',

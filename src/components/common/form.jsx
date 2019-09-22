@@ -3,6 +3,8 @@ import Joi from 'joi-browser'
 import Input from './input'
 import DatePicker from 'react-datepicker'
 import Select from 'react-select'
+import { Checkbox } from 'reactstrap'
+
 import 'react-datepicker/dist/react-datepicker.css'
 
 const Form = props => {
@@ -38,7 +40,7 @@ const Form = props => {
 
     const errors = validate()
     setErrors(errors || {})
-
+    console.log(errors)
     if (errors) return
 
     setIsDisable(true)
@@ -85,6 +87,24 @@ const Form = props => {
         icon={icon}
         {...rest}
       />
+    )
+  }
+
+  const renderCheckbox = (name, label, rest) => {
+    return (
+      <div className="form-check">
+        <input
+          type="checkbox"
+          checked={data[name]}
+          name={name}
+          className="form-check-input"
+          id={name}
+          {...rest}
+        />
+        <label className="form-check-label" htmlFor={name}>
+          {label}
+        </label>
+      </div>
     )
   }
 
@@ -187,7 +207,8 @@ const Form = props => {
         renderInput,
         renderTextArea,
         renderDatePicker,
-        renderSelect
+        renderSelect,
+        renderCheckbox
       })}
     </form>
   )

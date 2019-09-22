@@ -18,7 +18,8 @@ const AddClient = () => {
     userInsured: '',
     gender: '',
     mode: '',
-    civil: ''
+    civil: '',
+    forApproval: true
   })
 
   const [selectedGender, setSelectedGender] = useState(null)
@@ -42,6 +43,7 @@ const AddClient = () => {
     dateInsured: Joi.string()
       .required()
       .label('Data Insured'),
+    forApproval: Joi.optional(),
     userInsured: Joi.optional(),
     gender: Joi.string()
       .required()
@@ -81,7 +83,8 @@ const AddClient = () => {
         userInsured: '',
         gender: '',
         mode: '',
-        civil: ''
+        civil: '',
+        forApproval: true
       })
       setSelectedGender(null)
       setSelectedMode(null)
@@ -165,7 +168,8 @@ const AddClient = () => {
           renderSelect,
           renderTextArea,
           renderDatePicker,
-          renderButton
+          renderButton,
+          renderCheckbox
         }) => {
           return (
             <div className="row">
@@ -192,7 +196,6 @@ const AddClient = () => {
               </div>
 
               <div className="col-6">
-                {renderInput('codeNo', 'No')}
                 {renderDatePicker('dateInsured', 'Date Insured', {
                   onChange: handleDateChange
                 })}
@@ -203,6 +206,15 @@ const AddClient = () => {
                   handleChangeMode,
                   modes
                 )}
+                {!client.forApproval && renderInput('codeNo', 'Policy No')}
+                {renderCheckbox('forApproval', 'For Approval', {
+                  onChange: e =>
+                    setClient({
+                      ...client,
+                      codeNo: '',
+                      forApproval: e.target.checked
+                    })
+                })}
 
                 {renderButton('Save', null, 'Saving...', true)}
               </div>
