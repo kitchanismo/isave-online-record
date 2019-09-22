@@ -14,6 +14,7 @@ const AddClient = () => {
     address: '',
     contact: '',
     dateInsured: '',
+    expiredDate: '',
     codeNo: '',
     userInsured: '',
     gender: '',
@@ -40,9 +41,10 @@ const AddClient = () => {
     codeNo: Joi.optional(),
     contact: Joi.optional(),
     address: Joi.optional(),
+    expiredDate: Joi.optional(),
     dateInsured: Joi.string()
       .required()
-      .label('Data Insured'),
+      .label('Date Insured'),
     forApproval: Joi.optional(),
     userInsured: Joi.optional(),
     gender: Joi.string()
@@ -60,14 +62,31 @@ const AddClient = () => {
 
   const handleChangeCivil = civil => setSelectedCivil(civil)
 
-  const handleChangeMode = mode => setSelectedMode(mode)
+  const handleChangeMode = mode => {
+    setSelectedMode(mode)
+  }
+
+  const getExpiredDate = (date, mode) => {
+    const dateInsured = new Date(date)
+
+    const expiredDate = new Date(dateInsured)
+
+    expiredDate.setMonth(dateInsured.getMonth() + getAddedMonth(mode))
+
+    return formatDate(expiredDate)
+  }
 
   const handleSubmit = async (e, client) => {
+    const expiredDate = getExpiredDate(client.dateInsured, client.mode)
+
     const _client = {
       ...client,
       dateInsured: new Date(client.dateInsured).toISOString(),
+      expiredDate: new Date(expiredDate).toISOString(),
       userInsured: auth.getCurrentUser().id
     }
+    console.log(_client)
+    return
 
     try {
       await addClient(_client)
@@ -131,7 +150,7 @@ const AddClient = () => {
     },
     {
       id: 2,
-      value: 'quaterly',
+      value: 'quarterly',
       label: 'Quarterly'
     },
     {
@@ -146,8 +165,27 @@ const AddClient = () => {
     }
   ]
 
-  const handleDateChange = date =>
-    setClient({ ...client, dateInsured: formatDate(date) })
+  const getAddedMonth = mode => {
+    switch (mode) {
+      case 'monthly':
+        return 1
+      case 'quarterly':
+        return 3
+      case 'semi':
+        return 6
+      case 'annually':
+        return 12
+      default:
+        return 0
+    }
+  }
+
+  const handleDateChange = date => {
+    setClient({
+      ...client,
+      dateInsured: formatDate(date)
+    })
+  }
 
   return (
     <main
