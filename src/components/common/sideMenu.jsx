@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import withAuth from '../hoc/withAuth'
 import { NavLink, Link } from 'react-router-dom'
 import { theme } from '../../config.json'
-import { UserContext } from './../../context'
+import { UserContext, ClientContext } from './../../context'
 
 const SideMenu = ({ auth, ...props }) => {
   const [toggle, setToggle] = useState(false)
@@ -11,6 +11,18 @@ const SideMenu = ({ auth, ...props }) => {
     state: { unverify },
     onSetStatus
   } = useContext(UserContext)
+
+  const {
+    status: {
+      total,
+      forApproval,
+      lapsed,
+      nearExpiration,
+      gpa,
+      enforced,
+      cancelled
+    }
+  } = useContext(ClientContext)
 
   return (
     <React.Fragment>
@@ -77,36 +89,75 @@ const SideMenu = ({ auth, ...props }) => {
           )}
 
           <li className="nav-item">
-            <NavLink
-              onClick={() => setToggle(!toggle)}
-              to="/reports"
-              className="nav-link text-white "
-            >
-              Reports{' '}
-              <span
-                className={`fa fa-angle-${!toggle ? 'down' : 'up'} ml-1`}
-              ></span>
-            </NavLink>
+            <div className="row">
+              <div className="d-flex ml-3">
+                <NavLink
+                  onClick={() => setToggle(!toggle)}
+                  to="/reports"
+                  className="nav-link text-white pr-1"
+                >
+                  Reports
+                  <span
+                    className={`fa fa-angle-${!toggle ? 'down' : 'up'} ml-1`}
+                  ></span>
+                </NavLink>
+              </div>
+              <div className="m-0 p-0">
+                <Link
+                  data-toggle="tooltip"
+                  title={`You have ${total} client reports!`}
+                  onClick={() => {
+                    setToggle(false)
+                    onSetStatus(0)
+                  }}
+                  to="/reports"
+                  className={`nav-link text-white pt-1 pl-0`}
+                >
+                  <span className="badge badge-sm badge-info ml-1">
+                    {total ? total : ''}
+                  </span>
+                </Link>
+              </div>
+            </div>
+
             {toggle && (
               <div className="dropdown">
-                <a className="dropdown-item" href="#">
+                <Link className="dropdown-item" to="/reports">
                   Cancelled Policy
-                </a>
-                <a className="dropdown-item" href="#">
+                  <span className="badge badge-sm badge-danger ml-1 mt-0">
+                    {cancelled ? cancelled : ''}
+                  </span>
+                </Link>
+                <Link className="dropdown-item" to="/reports">
                   GPA
-                </a>
-                <a className="dropdown-item" href="#">
+                  <span className="badge badge-sm badge-success ml-1">
+                    {gpa ? gpa : ''}
+                  </span>
+                </Link>
+                <Link className="dropdown-item" to="/reports">
                   Enforced Client
-                </a>
-                <a className="dropdown-item" href="#">
+                  <span className="badge badge-sm badge-success ml-1">
+                    {enforced ? enforced : ''}
+                  </span>
+                </Link>
+                <Link className="dropdown-item" to="/reports">
                   For Approval
-                </a>
-                <a className="dropdown-item" href="#">
+                  <span className="badge badge-sm badge-info ml-1">
+                    {forApproval ? forApproval : ''}
+                  </span>
+                </Link>
+                <Link className="dropdown-item" to="/reports">
                   Lapsed Policy
-                </a>
-                <a className="dropdown-item" href="#">
+                  <span className="badge badge-sm badge-danger ml-1">
+                    {lapsed ? lapsed : ''}
+                  </span>
+                </Link>
+                <Link className="dropdown-item" to="/reports">
                   Nearing Expiration
-                </a>
+                  <span className="badge badge-sm badge-warning ml-1">
+                    {nearExpiration ? nearExpiration : ''}
+                  </span>
+                </Link>
               </div>
             )}
           </li>
@@ -147,6 +198,9 @@ const SideMenu = ({ auth, ...props }) => {
           }
           .dropdown-item {
             font-size: 14px;
+          }
+          .dropdown-item:hover {
+            color: gray !important;
           }
         `}</style>
       </nav>

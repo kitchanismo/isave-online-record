@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import Chart from 'react-apexcharts'
+import { UserContext } from './../../../context'
 
 const Charts = ({ dimension = 400 }) => {
+  const {
+    state: {}
+  } = useContext(UserContext)
+
   const [optionsSales, setOptionsSales] = useState({
     theme: {
       palette: 'palette6'
@@ -167,19 +172,20 @@ const Charts = ({ dimension = 400 }) => {
   const [series, setSeries] = useState([
     {
       name: 'series-1',
-      data: [30, 40, 45, 50, 49, 60, 70, 91]
+      data: [30, 40, 45, 50, 49]
     }
   ])
 
   const chart = () => (
     <React.Fragment>
-      <div className="row d-flex justify-content-center">
+      <div className="row d-flex justify-content-around">
         <Chart
           type="line"
           options={optionsSales}
           series={series}
-          width="650px"
+          width="400px"
         />
+        <Chart type="line" options={optionsGPA} series={series} width="400px" />
       </div>
       <div className="row d-flex justify-content-around">
         <Chart type="line" options={optionsGPA} series={series} width="400px" />

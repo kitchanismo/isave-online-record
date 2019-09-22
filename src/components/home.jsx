@@ -9,6 +9,7 @@ import Users from './menus/users/index'
 import Reports from './menus/reports'
 import Footer from './common/footer'
 import UserProvider from '../providers/userProvider'
+import ClientProvider from '../providers/clientProvider'
 import ViewUser from './menus/users/view'
 import EditUser from './menus/users/edit'
 import NewUser from './menus/users/new'
@@ -17,34 +18,36 @@ const Home = ({ menu, sub, ...props }) => {
   return (
     <React.Fragment>
       <UserProvider>
-        <div className="container-fluid">
-          <div
-            className="row"
-            style={{ backgroundColor: 'transparent', minHeight: '800px' }}
-          >
-            <SideMenu>
-              {menu === 'dashboard' && (
-                <React.Fragment>
-                  {sub === 'newFs' && <AddFS {...props} />}
-                  {sub === 'newGPA' && <AddGPA {...props} />}
-                  {!sub && <Dashboard {...props} />}
-                </React.Fragment>
-              )}
-              {menu === 'branches' && <Branch {...props} />}
-              {menu === 'users' && (
-                <React.Fragment>
-                  {sub === 'viewUser' && <ViewUser {...props} />}
-                  {sub === 'editUser' && <EditUser {...props} />}
-                  {sub === 'newUser' && <NewUser {...props} />}
-                  {!sub && <Users {...props} />}
-                </React.Fragment>
-              )}
-              {menu === 'reports' && <Reports />}
-            </SideMenu>
+        <ClientProvider>
+          <div className="container-fluid">
+            <div
+              className="row"
+              style={{ backgroundColor: 'transparent', minHeight: '800px' }}
+            >
+              <SideMenu>
+                {menu === 'dashboard' && (
+                  <React.Fragment>
+                    {sub === 'newFs' && <AddFS {...props} />}
+                    {sub === 'newGPA' && <AddGPA {...props} />}
+                    {!sub && <Dashboard {...props} />}
+                  </React.Fragment>
+                )}
+                {menu === 'branches' && <Branch {...props} />}
+                {menu === 'users' && (
+                  <React.Fragment>
+                    {sub === 'viewUser' && <ViewUser {...props} />}
+                    {sub === 'editUser' && <EditUser {...props} />}
+                    {sub === 'newUser' && <NewUser {...props} />}
+                    {!sub && <Users {...props} />}
+                  </React.Fragment>
+                )}
+                {menu === 'reports' && <Reports />}
+              </SideMenu>
 
-            <Footer></Footer>
+              <Footer></Footer>
+            </div>
           </div>
-        </div>
+        </ClientProvider>
       </UserProvider>
     </React.Fragment>
   )

@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Form from '../../common/form'
 import { toast } from 'react-toastify'
 import Joi from 'joi-browser'
 import { formatDate } from '../../../services/utilsService'
 import auth from '../../../services/authService'
-import { addClient } from '../../../services/clientService'
+//import { addClient } from '../../../services/clientService'
+import { ClientContext } from './../../../context'
 
 const AddClient = () => {
+  const { onAddClient, status } = useContext(ClientContext)
   const [client, setClient] = useState({
     firstname: '',
     lastname: '',
@@ -77,6 +79,10 @@ const AddClient = () => {
   }
 
   const handleSubmit = async (e, client) => {
+    if (!client.forApproval && client.codeNo === '') {
+      setErrors({ codeNo: `"Policy Number" is not allowed to be empty` })
+      return
+    }
     const expiredDate = getExpiredDate(client.dateInsured, client.mode)
 
     const _client = {
@@ -85,11 +91,9 @@ const AddClient = () => {
       expiredDate: new Date(expiredDate).toISOString(),
       userInsured: auth.getCurrentUser().id
     }
-    console.log(_client)
-    return
 
     try {
-      await addClient(_client)
+      await onAddClient(_client)
       toast.success('Saved')
       setClient({
         firstname: '',

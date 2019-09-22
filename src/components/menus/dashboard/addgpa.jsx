@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Form from '../../common/form'
 import Joi from 'joi-browser'
 import { toast } from 'react-toastify'
-import { addClient } from '../../../services/clientService'
 
+import { ClientContext } from './../../../context'
 const AddGPA = () => {
+  const { onAddClient } = useContext(ClientContext)
+
   const [client, setClient] = useState({
     firstname: '',
     lastname: '',
@@ -48,7 +50,7 @@ const AddGPA = () => {
   const handleChangeGender = gender => setSelectedGender(gender)
   const handleSubmit = async (e, client) => {
     try {
-      await addClient({ ...client, isGPA: true })
+      await onAddClient({ ...client, isGPA: true })
       toast.success('Saved')
 
       setClient({
