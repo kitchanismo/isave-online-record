@@ -6,7 +6,7 @@ import AddGPA from './menus/dashboard/addgpa'
 import Branch from './menus/branch/index'
 import { toast } from 'react-toastify'
 import Users from './menus/users/index'
-import Reports from './menus/reports'
+import Reports from './menus/reports/index'
 import Footer from './common/footer'
 import UserProvider from '../providers/userProvider'
 import ClientProvider from '../providers/clientProvider'
@@ -41,7 +41,7 @@ const Home = ({ menu, sub, ...props }) => {
                     {!sub && <Users {...props} />}
                   </React.Fragment>
                 )}
-                {menu === 'reports' && <Reports />}
+                {menu === 'reports' && <Reports {...props} />}
               </SideMenu>
 
               <Footer></Footer>

@@ -135,7 +135,7 @@ const Users = ({ auth, ...props }) => {
   const renderModal = () => {
     return (
       <CustomModal
-        title="iSave"
+        title="Cocolife"
         modal={modal}
         toggle={toggle}
         label={`Activate ${selectedUser.username}?`}
@@ -147,7 +147,7 @@ const Users = ({ auth, ...props }) => {
   const renderModalDelete = () => {
     return (
       <CustomModal
-        title="iSave"
+        title="Cocolife"
         modal={modalDelete}
         toggle={toggleDelete}
         label={`Archive ${selectedUser.username}?`}

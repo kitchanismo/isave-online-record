@@ -24,6 +24,21 @@ const SideMenu = ({ auth, ...props }) => {
     }
   } = useContext(ClientContext)
 
+  const reportMenu = (name, label, value) => {
+    return (
+      <Link
+        onClick={() => setToggle(false)}
+        className="dropdown-item"
+        to={{ pathname: '/reports', search: '?name=' + name }}
+      >
+        {label}
+        <span className="badge badge-sm badge-secondary ml-1 mt-0">
+          {value ? value : ''}
+        </span>
+      </Link>
+    )
+  }
+
   return (
     <React.Fragment>
       <nav className="side-menu col-md-2 d-none d-md-block bg-dark mr-0 pt-3">
@@ -91,73 +106,41 @@ const SideMenu = ({ auth, ...props }) => {
           <li className="nav-item">
             <div className="row">
               <div className="d-flex ml-3">
-                <NavLink
+                <a
                   onClick={() => setToggle(!toggle)}
-                  to="/reports"
                   className="nav-link text-white pr-1"
                 >
                   Reports
                   <span
                     className={`fa fa-angle-${!toggle ? 'down' : 'up'} ml-1`}
                   ></span>
-                </NavLink>
+                </a>
               </div>
               <div className="m-0 p-0">
-                <Link
+                <a
                   data-toggle="tooltip"
                   title={`You have ${total} client reports!`}
-                  onClick={() => {
-                    setToggle(false)
-                    onSetStatus(0)
-                  }}
-                  to="/reports"
                   className={`nav-link text-white pt-1 pl-0`}
                 >
-                  <span className="badge badge-sm badge-info ml-1">
+                  <span className="badge badge-sm badge-danger ml-1">
                     {total ? total : ''}
                   </span>
-                </Link>
+                </a>
               </div>
             </div>
 
             {toggle && (
               <div className="dropdown">
-                <Link className="dropdown-item" to="/reports">
-                  Cancelled Policy
-                  <span className="badge badge-sm badge-danger ml-1 mt-0">
-                    {cancelled ? cancelled : ''}
-                  </span>
-                </Link>
-                <Link className="dropdown-item" to="/reports">
-                  GPA
-                  <span className="badge badge-sm badge-success ml-1">
-                    {gpa ? gpa : ''}
-                  </span>
-                </Link>
-                <Link className="dropdown-item" to="/reports">
-                  Enforced Client
-                  <span className="badge badge-sm badge-success ml-1">
-                    {enforced ? enforced : ''}
-                  </span>
-                </Link>
-                <Link className="dropdown-item" to="/reports">
-                  For Approval
-                  <span className="badge badge-sm badge-info ml-1">
-                    {forApproval ? forApproval : ''}
-                  </span>
-                </Link>
-                <Link className="dropdown-item" to="/reports">
-                  Lapsed Policy
-                  <span className="badge badge-sm badge-danger ml-1">
-                    {lapsed ? lapsed : ''}
-                  </span>
-                </Link>
-                <Link className="dropdown-item" to="/reports">
-                  Nearing Expiration
-                  <span className="badge badge-sm badge-warning ml-1">
-                    {nearExpiration ? nearExpiration : ''}
-                  </span>
-                </Link>
+                {reportMenu('cancelled', 'Cancelled Policy', cancelled)}
+                {reportMenu('gpa', 'GPA', gpa)}
+                {reportMenu('enforced', 'Enforced Client', enforced)}
+                {reportMenu('for-approval', 'For Approval', forApproval)}
+                {reportMenu('lapsed', 'Lapsed Policy', lapsed)}
+                {reportMenu(
+                  'near-expiration',
+                  'Near Expiration',
+                  nearExpiration
+                )}
               </div>
             )}
           </li>

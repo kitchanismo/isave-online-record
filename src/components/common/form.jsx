@@ -3,7 +3,7 @@ import Joi from 'joi-browser'
 import Input from './input'
 import DatePicker from 'react-datepicker'
 import Select from 'react-select'
-import { Checkbox } from 'reactstrap'
+
 
 import 'react-datepicker/dist/react-datepicker.css'
 
