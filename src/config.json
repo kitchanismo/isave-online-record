@@ -1,6 +1,6 @@
 {
   "apiUrl": "https://isave-online-record.herokuapp.com",
-  "appUrl": "https://isave.netlify.com",
+  "appUrl": "https://cocolife.netlify.com",
   "pagination": {
     "perPage": 10,
     "pageNumbers": 3
