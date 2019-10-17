@@ -112,6 +112,7 @@ const EditUser = ({ auth, ...props }) => {
     manager: Joi.optional(),
     codeNo: Joi.number()
       .required()
+      .min(8)
       .label('Code Number')
   }
 
@@ -194,86 +195,77 @@ const EditUser = ({ auth, ...props }) => {
 
   return (
     <React.Fragment>
-      <main
-        role="main"
-        className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"
-      >
-        <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-          <h1 className="h2">Edit User</h1>
-        </div>
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1 className="h2">Edit User</h1>
+      </div>
 
-        <Spinner isLoaded={user.username !== ''} className="spinner">
-          <Form
-            data={{ data: user, setData: setUser }}
-            errors={{ errors, setErrors }}
-            onSubmit={handleSubmit}
-            schema={schema}
-          >
-            {({ renderInput, renderSelect, renderButton }) => {
-              return (
-                <React.Fragment>
-                  <div className="row m-1">
-                    <div className="col-6 pl-5 pr-3 pt-4">
-                      {renderInput('firstname', 'Firstname')}
-                      {renderInput('middlename', 'Middlename')}
-                      {renderInput('lastname', 'Lastname')}
-                      {renderSelect(
-                        'position',
-                        'Position',
-                        selectedPosition,
-                        handleChangePosition,
-                        agents
-                      )}
-                      {renderInput('codeNo', 'Code Number')}
-                      {renderSelect(
-                        'branch',
-                        'Branch',
-                        selectedBranch,
-                        handleChangeBranch,
-                        branches
-                      )}
+      <Spinner isLoaded={user.username !== ''} className="spinner">
+        <Form
+          data={{ data: user, setData: setUser }}
+          errors={{ errors, setErrors }}
+          onSubmit={handleSubmit}
+          schema={schema}
+        >
+          {({ renderInput, renderSelect, renderButton }) => {
+            return (
+              <React.Fragment>
+                <div className="row m-1">
+                  <div className="col-6 pl-5 pr-3 pt-4">
+                    {renderInput('firstname', 'Firstname')}
+                    {renderInput('middlename', 'Middlename')}
+                    {renderInput('lastname', 'Lastname')}
+                    {renderSelect(
+                      'position',
+                      'Position',
+                      selectedPosition,
+                      handleChangePosition,
+                      agents,
+                      {
+                        isDisabled: user.position === 'manager' ? true : false
+                      }
+                    )}
+                    {renderInput('codeNo', 'Code Number')}
+                    {renderSelect(
+                      'branch',
+                      'Branch',
+                      selectedBranch,
+                      handleChangeBranch,
+                      branches
+                    )}
 
-                      {isAgent() &&
-                        renderInput('manager', 'Manager', 'manager', '', {
-                          disabled: true
-                        })}
-                    </div>
-                    <div className="col-6 pl-3 pr-5 pt-4">
-                      {renderInput('username', 'Username', 'text', 'fa-user')}
-                      {renderInput('email', 'Email', 'email', 'fa-envelope')}
-                      {renderButton('Update', null, 'Updating...', true)}
-
-                      {/* <p className="text-primary p-2 ">
-                      *Note: Only admin can update the other managers account
-                    </p> */}
-                    </div>
+                    {isAgent() &&
+                      renderInput('manager', 'Manager', 'manager', '', {
+                        disabled: true
+                      })}
                   </div>
-                </React.Fragment>
-              )
-            }}
-          </Form>
-        </Spinner>
+                  <div className="col-6 pl-3 pr-5 pt-4">
+                    {renderInput('username', 'Username', 'text', 'fa-user')}
+                    {renderInput('email', 'Email', 'email', 'fa-envelope')}
+                    {renderButton('Update', null, 'Updating...', true)}
+                  </div>
+                </div>
+              </React.Fragment>
+            )
+          }}
+        </Form>
+      </Spinner>
 
-        <style jsx="">{`
-          .dashboard {
-            border-radius: 0px 5px 0 0;
-          }
-          .col-4 {
-            padding: 0;
-          }
-          .row {
-            border-radius: 5px;
-          }
-          .side-content {
-            background-color: #343a40;
-            border-radius: 0 5px 5px 0;
-          }
-          .spinner {
-            margin-top: 200px;
-            margin-bottom: 200px;
-          }
-        `}</style>
-      </main>
+      <style jsx="">{`
+        .col-4 {
+          padding: 0;
+        }
+        .row {
+          border-radius: 5px;
+        }
+        .side-content {
+          background-color: #343a40;
+          border-radius: 0 5px 5px 0;
+        }
+        .spinner {
+          margin-top: 200px;
+          margin-bottom: 200px;
+        }
+      `}</style>
     </React.Fragment>
   )
 }

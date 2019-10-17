@@ -72,6 +72,7 @@ const NewManager = ({ auth, ...props }) => {
       .label('Branch'),
     codeNo: Joi.number()
       .required()
+      .min(8)
       .label('Code Number')
   }
 
@@ -151,90 +152,82 @@ const NewManager = ({ auth, ...props }) => {
   }
   return (
     <React.Fragment>
-      <main
-        role="main"
-        className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"
+      <div className="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
+        <h1 className="h2">Add New Manager</h1>
+      </div>
+      <Form
+        data={{ data: user, setData: setUser }}
+        errors={{ errors, setErrors }}
+        onSubmit={handleSubmit}
+        schema={schema}
       >
-        <div className="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-          <h1 className="h2">Add New Manager</h1>
-        </div>
-        <Form
-          data={{ data: user, setData: setUser }}
-          errors={{ errors, setErrors }}
-          onSubmit={handleSubmit}
-          schema={schema}
-        >
-          {({ renderInput, renderSelect, renderButton }) => {
-            return (
-              <React.Fragment>
-                <div className="row mb-3 mr-0">
-                  <div className="col-6 pl-3 pr-2 pt-3">
-                    {renderInput('firstname', 'Firstname')}
-                    {renderInput('middlename', 'Middlename')}
-                    {renderInput('lastname', 'Lastname')}
+        {({ renderInput, renderSelect, renderButton }) => {
+          return (
+            <React.Fragment>
+              <div className="row mb-3 mr-0">
+                <div className="col-6 pl-3 pr-2 pt-3">
+                  {renderInput('firstname', 'Firstname')}
+                  {renderInput('middlename', 'Middlename')}
+                  {renderInput('lastname', 'Lastname')}
 
-                    {renderInput('codeNo', 'Code Number')}
-                    {!hasBranches && (
-                      <React.Fragment>
-                        <label>No Available Branch</label>
-                        <br />
-                        <button
-                          onClick={() => props.history.replace('/branches')}
-                          className="btn btn-sm btn-outline-success ml-1"
-                        >
-                          <span className="fa fa-plus mr-1"></span>
-                          BRANCH
-                        </button>
-                      </React.Fragment>
+                  {renderInput('codeNo', 'Code Number')}
+                  {!hasBranches && (
+                    <React.Fragment>
+                      <label>No Available Branch</label>
+                      <br />
+                      <button
+                        onClick={() => props.history.replace('/branches')}
+                        className="btn btn-sm btn-outline-success ml-1"
+                      >
+                        <span className="fa fa-plus mr-1"></span>
+                        BRANCH
+                      </button>
+                    </React.Fragment>
+                  )}
+                  {hasBranches &&
+                    renderSelect(
+                      'branch',
+                      'Available Branch',
+                      selectedBranch,
+                      handleChangeBranch,
+                      branches
                     )}
-                    {hasBranches &&
-                      renderSelect(
-                        'branch',
-                        'Available Branch',
-                        selectedBranch,
-                        handleChangeBranch,
-                        branches
-                      )}
-                  </div>
-                  <div className="col-6 pl-2 pr-3 pt-3">
-                    {renderInput('username', 'Username', 'text', 'fa-user', {
-                      onBlur: handleCheckUser
-                    })}
-                    {renderInput('email', 'Email', 'email', 'fa-envelope')}
-                    {renderInput('password', 'Password', 'password', 'fa-key')}
-                    {renderInput(
-                      'confirmPassword',
-                      'Confirm Password',
-                      'password',
-                      'fa-key'
-                    )}
-                    {renderButton('Add', null, 'Saving...', true)}
-                  </div>
                 </div>
-              </React.Fragment>
-            )
-          }}
-        </Form>
+                <div className="col-6 pl-2 pr-3 pt-3">
+                  {renderInput('username', 'Username', 'text', 'fa-user', {
+                    onBlur: handleCheckUser
+                  })}
+                  {renderInput('email', 'Email', 'email', 'fa-envelope')}
+                  {renderInput('password', 'Password', 'password', 'fa-key')}
+                  {renderInput(
+                    'confirmPassword',
+                    'Confirm Password',
+                    'password',
+                    'fa-key'
+                  )}
+                  {renderButton('Add', null, 'Saving...', true)}
+                </div>
+              </div>
+            </React.Fragment>
+          )
+        }}
+      </Form>
 
-        <style jsx="">{`
-          .dashboard {
-            border-radius: 0px 5px 0 0;
-          }
-          .col-4 {
-            padding: 0;
-          }
-          .row {
-            border-radius: 7px;
-          }
-          .side-content {
-            background-color: #343a40;
-            border-radius: 7px 0 0 7px;
-          }
-          .fa-plus {
-            margin-top: 0 !important;
-          }
-        `}</style>
-      </main>
+      <style jsx="">{`
+        .col-4 {
+          padding: 0;
+        }
+        .row {
+          border-radius: 7px;
+        }
+        .side-content {
+          background-color: #343a40;
+          border-radius: 7px 0 0 7px;
+        }
+        .fa-plus {
+          margin-top: 0 !important;
+        }
+      `}</style>
     </React.Fragment>
   )
 }

@@ -62,7 +62,12 @@ export function getPagedUsers(num, limit, search = '', status) {
 
 export function verifyUser(id) {
   http.sendJwt(auth.jwt())
-  return http.get(`/api/users/verify/${id}`).then(data => data.data.data)
+  return http.get(`/api/users/status/${id}`).then(data => data.data.data)
+}
+
+export function archivedUser() {
+  http.sendJwt(auth.jwt())
+  return http.get(`/api/users/archived`).then(data => data.data.archived)
 }
 
 export function statusCount() {
@@ -83,4 +88,9 @@ export function getUnverifyUser() {
 export function deleteUser(id) {
   http.sendJwt(auth.jwt())
   return http.delete(`/api/users/${id}`).then(data => data.data)
+}
+
+export function restoreUser(id) {
+  http.sendJwt(auth.jwt())
+  return http.get(`/api/users/restore/${id}`).then(data => data.data)
 }

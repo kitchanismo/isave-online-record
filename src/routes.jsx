@@ -53,6 +53,10 @@ const Routes = props => {
         render={props => <Home {...props} menu="users" />}
       />
       <AuthRoute
+        path="/reports/:name"
+        render={props => <Home {...props} menu="reports" />}
+      />
+      <AuthRoute
         path="/reports"
         render={props => <Home {...props} menu="reports" />}
       />

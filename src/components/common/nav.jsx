@@ -17,17 +17,7 @@ const Nav = props => {
             <span style={{ color: theme.secondary }}>COCOLIFE </span>: Hybrid
             Management Information System with SMS Notification
           </h6>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
+
           <div
             className="collapse navbar-collapse d-flex justify-content-end"
             id="navbarNav"

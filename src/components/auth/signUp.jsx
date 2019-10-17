@@ -85,6 +85,7 @@ const SignUp = ({ auth, ...props }) => {
       .label('Branch'),
     codeNo: Joi.number()
       .required()
+      .min(8)
       .label('Code Number'),
     manager: Joi.optional()
   }

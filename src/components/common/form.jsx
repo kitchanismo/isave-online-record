@@ -4,7 +4,6 @@ import Input from './input'
 import DatePicker from 'react-datepicker'
 import Select from 'react-select'
 
-
 import 'react-datepicker/dist/react-datepicker.css'
 
 const Form = props => {
