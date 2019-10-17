@@ -3,7 +3,7 @@ import Joi from 'joi-browser'
 import Form from '../../common/form'
 import { getBranches, addManager } from '../../../services/userService'
 import { toast } from 'react-toastify'
-import { cap } from '../../../services/utilsService'
+import { cap, joiLettersOnly } from '../../../services/utilsService'
 import withAuth from './../../hoc/withAuth'
 import Spinner from './../../common/spinner'
 import { UserContext } from './../../../context'
@@ -58,15 +58,9 @@ const NewManager = ({ auth, ...props }) => {
       .valid(Joi.ref('password'))
       .options({ language: { any: { allowOnly: 'not match' } } })
       .label('Password'),
-    firstname: Joi.string()
-      .required()
-      .label('Firstname'),
-    middlename: Joi.string()
-      .required()
-      .label('Middlename'),
-    lastname: Joi.string()
-      .required()
-      .label('Lastname'),
+    firstname: joiLettersOnly('Firstname'),
+    middlename: joiLettersOnly('Middlename'),
+    lastname: joiLettersOnly('Lastname'),
     branch: Joi.string()
       .required()
       .label('Branch'),
@@ -176,7 +170,7 @@ const NewManager = ({ auth, ...props }) => {
                       <label>No Available Branch</label>
                       <br />
                       <button
-                        onClick={() => props.history.replace('/branches')}
+                        onClick={() => props.history.replace('/branches/new')}
                         className="btn btn-sm btn-outline-success ml-1"
                       >
                         <span className="fa fa-plus mr-1"></span>

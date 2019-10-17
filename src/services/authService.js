@@ -21,11 +21,12 @@ async function signUp(user) {
   // return true
   return false
 }
-
-async function logout() {
+function logout() {
   http.sendJwt(jwt())
-  removeTokens()
-  await http.post('/token/revoke', { refreshToken: jwt().refreshToken })
+
+  http
+    .post('/token/revoke', { refreshToken: jwt().refreshToken })
+    .then(() => removeTokens())
 }
 
 function removeTokens() {

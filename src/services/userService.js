@@ -34,6 +34,14 @@ export function addBranch(branch) {
   return http.post('/api/branches', branch).then(data => data.data)
 }
 
+export function getBranch(id) {
+  return http.get('/api/branches/show/' + id).then(data => data.data)
+}
+
+export function updateBranch(id, branch) {
+  return http.put('/api/branches/edit/' + id, branch).then(data => data.data)
+}
+
 export async function addManager(user) {
   http.sendJwt(auth.jwt())
   return await http.post('/api/users', user).then(data => data.data)

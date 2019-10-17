@@ -7,7 +7,7 @@ import {
   editUser
 } from '../../../services/userService'
 import { toast } from 'react-toastify'
-import { cap } from '../../../services/utilsService'
+import { cap, joiLettersOnly } from '../../../services/utilsService'
 import withAuth from '../../hoc/withAuth'
 import Form from './../../common/form'
 import Spinner from './../../common/spinner'
@@ -30,40 +30,39 @@ const EditUser = ({ auth, ...props }) => {
   })
 
   useEffect(() => {
-    getUser(id)
-      .then(({ profile, username, position }) => {
-        setUser({
-          username,
-          email: profile.email,
-          firstname: profile.firstname,
-          middlename: profile.middlename,
-          lastname: profile.lastname,
-          codeNo: profile.codeNo,
-          manager: profile.branch.manager,
-          branch: profile.branch.name,
-          position
-        })
-        setSelectedPosition({
-          id: position === 'sales' ? 1 : 2,
-          value: position,
-          label: cap(position + (position !== 'manager' ? ' officer' : ''))
-        })
-        setSelectedBranch({
-          id: profile.branch_id,
-          value: profile.branch.name,
-          label: cap(profile.branch.name)
-        })
-
-        const url =
-          position === 'manager'
-            ? '/api/branches/available'
-            : '/api/branches/taken'
-
-        getBranches(url).then(branches => {
-          setBranches(branches)
-        })
+    getUser(id).then(({ profile, username, position }) => {
+      setUser({
+        username,
+        email: profile.email,
+        firstname: profile.firstname,
+        middlename: profile.middlename,
+        lastname: profile.lastname,
+        codeNo: profile.codeNo,
+        manager: profile.branch ? profile.branch.manager : '',
+        branch: profile.branch ? profile.branch.name : '',
+        position
       })
-      .catch(() => props.history.replace('/not-found'))
+      setSelectedPosition({
+        id: position === 'sales' ? 1 : 2,
+        value: position,
+        label: cap(position + (position !== 'manager' ? ' officer' : ''))
+      })
+      setSelectedBranch({
+        id: profile.branch_id,
+        value: profile.branch ? profile.branch.name : '',
+        label: cap(profile.branch ? profile.branch.name : '')
+      })
+
+      const url =
+        position === 'manager'
+          ? '/api/branches/available'
+          : '/api/branches/taken'
+
+      getBranches(url).then(branches => {
+        setBranches(branches)
+      })
+    })
+    // .catch(() => props.history.replace('/not-found'))
   }, [])
 
   const agents = [
@@ -94,15 +93,9 @@ const EditUser = ({ auth, ...props }) => {
     email: Joi.string()
       .required()
       .label('Email'),
-    firstname: Joi.string()
-      .required()
-      .label('Firstname'),
-    middlename: Joi.string()
-      .required()
-      .label('Middlename'),
-    lastname: Joi.string()
-      .required()
-      .label('Lastname'),
+    firstname: joiLettersOnly('Firstname'),
+    middlename: joiLettersOnly('Middlename'),
+    lastname: joiLettersOnly('Lastname'),
     position: Joi.string()
       .required()
       .label('Position'),

@@ -3,7 +3,7 @@ import Form from '../../common/form'
 import Joi from 'joi-browser'
 import { toast } from 'react-toastify'
 
-import { ClientContext } from './../../../context'
+import { ClientContext } from '../../../context'
 const AddGPA = () => {
   const { onAddClient } = useContext(ClientContext)
 

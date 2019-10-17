@@ -5,7 +5,7 @@ import Joi from 'joi-browser'
 import { formatDate } from '../../../services/utilsService'
 import auth from '../../../services/authService'
 //import { addClient } from '../../../services/clientService'
-import { ClientContext } from './../../../context'
+import { ClientContext } from '../../../context'
 
 const AddClient = () => {
   const { onAddClient, status } = useContext(ClientContext)
@@ -30,6 +30,38 @@ const AddClient = () => {
   const [selectedCivil, setSelectedCivil] = useState(null)
   const [errors, setErrors] = useState({})
 
+  const codeNoValidation = () => {
+    return client.forApproval
+      ? Joi.optional()
+      : Joi.string()
+          //.regex(/^(\d+-?)+\d+$/)
+          .regex(/^[a-zA-Z0-9-]+$/)
+          .error(errors => {
+            errors.forEach(err => {
+              switch (err.type) {
+                case 'string.regex.base':
+                  err.message =
+                    '"Policy Number" must only have a number and letter with hyphen'
+                  break
+                case 'string.min':
+                  err.message =
+                    '"Policy Number" must be equal to 15 characters long'
+                  break
+                case 'string.max':
+                  err.message =
+                    '"Policy Number" must be equal to 15 characters long'
+                  break
+                default:
+                  break
+              }
+            })
+            return errors
+          })
+          .min(15)
+          .max(15)
+          .label('Policy Number')
+  }
+
   const schema = {
     firstname: Joi.string()
       .required()
@@ -40,7 +72,7 @@ const AddClient = () => {
     lastname: Joi.string()
       .required()
       .label('Lastname'),
-    codeNo: Joi.optional(),
+    codeNo: codeNoValidation(),
     contact: Joi.optional(),
     address: Joi.optional(),
     expiredDate: Joi.optional(),
@@ -246,6 +278,7 @@ const AddClient = () => {
                   modes
                 )}
                 {!client.forApproval && renderInput('codeNo', 'Policy No')}
+
                 {renderCheckbox('forApproval', 'For Approval', {
                   onChange: e =>
                     setClient({

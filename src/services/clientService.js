@@ -16,9 +16,19 @@ export function getClients(report) {
   return http.get('/api/clients/' + report).then(data => data.data.clients)
 }
 
+export function getClient(id) {
+  http.sendJwt(auth.jwt())
+  return http.get('/api/clients/show/' + id).then(data => data.data)
+}
+
 export function approved(id, codeNo) {
   http.sendJwt(auth.jwt())
   return http.put('/api/clients/approved/' + id, { codeNo }).then(data => data)
+}
+
+export function updateClient(id, client) {
+  http.sendJwt(auth.jwt())
+  return http.put('/api/clients/edit/' + id, client).then(data => data)
 }
 
 export function enforced(client) {

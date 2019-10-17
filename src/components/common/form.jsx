@@ -40,6 +40,7 @@ const Form = props => {
     const errors = validate()
     setErrors(errors || {})
 
+   // console.log(errors)
     if (errors) return
 
     setIsDisable(true)

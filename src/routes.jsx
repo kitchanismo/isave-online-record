@@ -25,6 +25,14 @@ const Routes = props => {
         render={props => <Home {...props} menu="dashboard" />}
       />
       <AuthRoute
+        path="/branches/edit/:id"
+        render={props => <Home {...props} menu="branches" sub="editBranch" />}
+      />
+      <AuthRoute
+        path="/branches/new"
+        render={props => <Home {...props} menu="branches" sub="newBranch" />}
+      />
+      <AuthRoute
         path="/branches"
         render={props => <Home {...props} menu="branches" />}
       />
@@ -59,6 +67,10 @@ const Routes = props => {
       <AuthRoute
         path="/reports"
         render={props => <Home {...props} menu="reports" />}
+      />
+      <AuthRoute
+        path="/clients/edit/:id"
+        render={props => <Home {...props} menu="clients" />}
       />
       <GuestRoute path="/login" render={props => <Login {...props}></Login>} />
       <GuestRoute path="/sign-up" component={SignUp} />

@@ -45,6 +45,10 @@ const Reports = props => {
       label: 'Code Number'
     },
     {
+      path: 'gender',
+      label: 'Gender'
+    },
+    {
       path: 'mode',
       label: 'Mode of Payment'
     },
@@ -59,11 +63,6 @@ const Reports = props => {
       content: client => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-between">
-            <Link to={`/clients/${client.id}`}>
-              <button className="btn btn-sm btn-outline-primary ml-1">
-                VIEW
-              </button>
-            </Link>
             <Link to={`/clients/edit/${client.id}`}>
               <button className="btn btn-sm btn-outline-warning ml-1">
                 EDIT
@@ -110,12 +109,6 @@ const Reports = props => {
       content: client => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-between">
-            <Link to={`/clients/${client.id}`}>
-              <button className="btn btn-sm btn-outline-primary ml-1">
-                VIEW
-              </button>
-            </Link>
-
             <button
               onClick={e => {
                 setClient(client)
@@ -143,6 +136,11 @@ const Reports = props => {
       content: client =>
         `${client.firstname}, ${client.lastname} ${client.middlename}`
     },
+
+    {
+      path: 'gender',
+      label: 'Gender'
+    },
     {
       path: 'mode',
       label: 'Mode of Payment'
@@ -163,12 +161,6 @@ const Reports = props => {
       content: client => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-between">
-            <Link to={`/clients/${client.id}`}>
-              <button className="btn btn-sm btn-outline-primary ml-1">
-                VIEW
-              </button>
-            </Link>
-
             <button
               onClick={e => {
                 setClient(client)
@@ -197,6 +189,10 @@ const Reports = props => {
         `${client.firstname}, ${client.lastname} ${client.middlename}`
     },
     {
+      path: 'gender',
+      label: 'Gender'
+    },
+    {
       path: 'mode',
       label: 'Mode of Payment'
     },
@@ -209,21 +205,6 @@ const Reports = props => {
       path: 'expiredDate',
       label: 'Date Expire',
       content: client => formatDate(client.expiredDate)
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
-      content: client => (
-        <div className="row pl-1 pt-1 pr-1">
-          <div className="d-flex justify-content-between">
-            <Link to={`/clients/${client.id}`}>
-              <button className="btn btn-sm btn-outline-primary ml-1">
-                VIEW
-              </button>
-            </Link>
-          </div>
-        </div>
-      )
     }
   ]
 
@@ -237,6 +218,11 @@ const Reports = props => {
       label: 'Fullname',
       content: client =>
         `${client.firstname}, ${client.lastname} ${client.middlename}`
+    },
+
+    {
+      path: 'gender',
+      label: 'Gender'
     },
     {
       path: 'codeNo',
@@ -257,12 +243,6 @@ const Reports = props => {
       content: client => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-between">
-            <Link to={`/clients/${client.id}`}>
-              <button className="btn btn-sm btn-outline-primary ml-1">
-                VIEW
-              </button>
-            </Link>
-
             <button
               onClick={e => {
                 onRetrieved(client.id).then(data => setRefresh(r => !r))
@@ -289,29 +269,17 @@ const Reports = props => {
       content: client =>
         `${client.firstname}, ${client.lastname} ${client.middlename}`
     },
-    ,
+    {
+      path: 'gender',
+      label: 'Gender'
+    },
     {
       path: 'codeNo',
       label: 'Policy #'
     },
     {
       path: 'coverage',
-      label: 'Coverage'
-    },
-    {
-      key: 'actions',
-      label: 'Actions',
-      content: client => (
-        <div className="row pl-1 pt-1 pr-1">
-          <div className="d-flex justify-content-between">
-            <Link to={`/clients/${client.id}`}>
-              <button className="btn btn-sm btn-outline-primary ml-1">
-                VIEW
-              </button>
-            </Link>
-          </div>
-        </div>
-      )
+      label: 'Coverage(Year)'
     }
   ]
 
@@ -479,6 +447,9 @@ const Reports = props => {
           sortColumn={sortColumn}
           onSort={handleSort}
         />
+        {isLoaded && reports.length === 0 && (
+          <h6 className="mt-2 mb-5">No records found!</h6>
+        )}
       </Spinner>
 
       <style jsx="">{`

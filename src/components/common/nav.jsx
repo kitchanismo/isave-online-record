@@ -5,8 +5,8 @@ import { cap } from '../../services/utilsService'
 import { theme } from '../../config.json'
 
 const Nav = props => {
-  const handleLogout = async () => {
-    await auth.logout()
+  const handleLogout = () => {
+    auth.logout()
   }
 
   return (
@@ -33,11 +33,7 @@ const Nav = props => {
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      href="/login"
-                      onClick={handleLogout}
-                    >
+                    <a href="/" className="nav-link" onClick={handleLogout}>
                       Logout
                     </a>
                   </li>
