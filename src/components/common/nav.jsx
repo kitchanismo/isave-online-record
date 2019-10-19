@@ -26,14 +26,21 @@ const Nav = props => {
               {auth.isValidUser() && (
                 <React.Fragment>
                   <li className="nav-item ml-1">
-                    <NavLink className="nav-link active" to="/home">
+                    <NavLink
+                      className="nav-link active"
+                      to={`/users/${auth.getCurrentUser().id}`}
+                    >
                       {cap(auth.getCurrentUser().username) +
                         ' | ' +
                         cap(auth.getCurrentUser().position)}
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a href="/" className="nav-link" onClick={handleLogout}>
+                    <a
+                      href="/login"
+                      className="nav-link"
+                      onClick={handleLogout}
+                    >
                       Logout
                     </a>
                   </li>

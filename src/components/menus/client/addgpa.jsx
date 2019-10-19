@@ -2,15 +2,17 @@ import React, { useState, useContext } from 'react'
 import Form from '../../common/form'
 import Joi from 'joi-browser'
 import { toast } from 'react-toastify'
+import { formatDate, joiLettersOnly } from '../../../services/utilsService'
 
 import { ClientContext } from '../../../context'
-const AddGPA = () => {
+const AddGPA = props => {
   const { onAddClient } = useContext(ClientContext)
 
   const [client, setClient] = useState({
     firstname: '',
     lastname: '',
     middlename: '',
+    birthdate: '',
     address: '',
     contact: '',
     codeNo: '',
@@ -23,15 +25,12 @@ const AddGPA = () => {
   const [errors, setErrors] = useState({})
 
   const schema = {
-    firstname: Joi.string()
+    firstname: joiLettersOnly('Firstname'),
+    middlename: joiLettersOnly('Middlename'),
+    lastname: joiLettersOnly('Lastname'),
+    birthdate: Joi.string()
       .required()
-      .label('Firstname'),
-    middlename: Joi.string()
-      .required()
-      .label('Middlename'),
-    lastname: Joi.string()
-      .required()
-      .label('Lastname'),
+      .label('Birthdate'),
     gender: Joi.string()
       .required()
       .label('Gender'),
@@ -61,6 +60,7 @@ const AddGPA = () => {
         contact: '',
         codeNo: '',
         gender: '',
+        birthdate: '',
         coverage: 0
       })
       setSelectedGender(null)
@@ -100,7 +100,12 @@ const AddGPA = () => {
       value: 3
     }
   ]
-
+  const handleBirthdate = date => {
+    setClient({
+      ...client,
+      birthdate: formatDate(date)
+    })
+  }
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -112,7 +117,7 @@ const AddGPA = () => {
         onSubmit={handleSubmit}
         schema={schema}
       >
-        {({ renderInput, renderSelect, renderTextArea }) => {
+        {({ renderInput, renderSelect, renderTextArea, renderDatePicker }) => {
           return (
             <div className="row">
               <div className="col-6">
@@ -126,7 +131,9 @@ const AddGPA = () => {
                   handleChangeGender,
                   genders
                 )}
-
+                {renderDatePicker('birthdate', 'Birthdate', {
+                  onChange: handleBirthdate
+                })}
                 {renderInput('contact', 'Contact')}
                 {renderTextArea('address', 'Address')}
               </div>
@@ -143,6 +150,16 @@ const AddGPA = () => {
                 )}
                 <button className="btn btn-grad-primary btn-block" name="back">
                   Save
+                </button>
+                <button
+                  onClick={e => {
+                    e.preventDefault()
+                    props.history.replace('/dashboard')
+                  }}
+                  className="btn btn-grad-secondary btn-block"
+                  name="back"
+                >
+                  Back
                 </button>
               </div>
             </div>

@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react'
 import Form from '../../common/form'
 import { toast } from 'react-toastify'
 import Joi from 'joi-browser'
-import { formatDate } from '../../../services/utilsService'
+import { formatDate, joiLettersOnly } from '../../../services/utilsService'
 import auth from '../../../services/authService'
-//import { addClient } from '../../../services/clientService'
+
 import { ClientContext } from '../../../context'
 
-const AddClient = () => {
+const AddClient = props => {
   const { onAddClient, status } = useContext(ClientContext)
   const [client, setClient] = useState({
     firstname: '',
@@ -15,7 +15,8 @@ const AddClient = () => {
     middlename: '',
     address: '',
     contact: '',
-    dateInsured: '',
+    birthdate: '',
+    dateInsured: formatDate(Date.now()),
     expiredDate: '',
     codeNo: '',
     userInsured: '',
@@ -63,19 +64,16 @@ const AddClient = () => {
   }
 
   const schema = {
-    firstname: Joi.string()
-      .required()
-      .label('Firstname'),
-    middlename: Joi.string()
-      .required()
-      .label('Middlename'),
-    lastname: Joi.string()
-      .required()
-      .label('Lastname'),
+    firstname: joiLettersOnly('Firstname'),
+    middlename: joiLettersOnly('Middlename'),
+    lastname: joiLettersOnly('Lastname'),
     codeNo: codeNoValidation(),
     contact: Joi.optional(),
     address: Joi.optional(),
     expiredDate: Joi.optional(),
+    birthdate: Joi.string()
+      .required()
+      .label('Birthdate'),
     dateInsured: Joi.string()
       .required()
       .label('Date Insured'),
@@ -134,6 +132,7 @@ const AddClient = () => {
         address: '',
         contact: '',
         dateInsured: '',
+        birthdate: '',
         codeNo: '',
         userInsured: '',
         gender: '',
@@ -216,10 +215,17 @@ const AddClient = () => {
     }
   }
 
-  const handleDateChange = date => {
+  const handleDateInsured = date => {
     setClient({
       ...client,
       dateInsured: formatDate(date)
+    })
+  }
+
+  const handleBirthdate = date => {
+    setClient({
+      ...client,
+      birthdate: formatDate(date)
     })
   }
 
@@ -262,14 +268,18 @@ const AddClient = () => {
                   handleChangeCivil,
                   civils
                 )}
+                {renderDatePicker('birthdate', 'Birthdate', {
+                  onChange: handleBirthdate
+                })}
                 {renderInput('contact', 'Contact')}
                 {renderTextArea('address', 'Address')}
               </div>
 
               <div className="col-6">
                 {renderDatePicker('dateInsured', 'Date Insured', {
-                  onChange: handleDateChange
+                  onChange: handleDateInsured
                 })}
+
                 {renderSelect(
                   'mode',
                   'Mode of Payment',
@@ -289,6 +299,16 @@ const AddClient = () => {
                 })}
 
                 {renderButton('Save', null, 'Saving...', true)}
+                <button
+                  onClick={e => {
+                    e.preventDefault()
+                    props.history.replace('/dashboard')
+                  }}
+                  className="btn btn-grad-secondary btn-block"
+                  name="back"
+                >
+                  Back
+                </button>
               </div>
             </div>
           )

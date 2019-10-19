@@ -135,7 +135,7 @@ const SideMenu = ({ auth, ...props }) => {
                 {reportMenu('enforced', 'Enforced Client')}
                 {reportMenu('gpa', 'GPA')}
                 {reportMenu('cancelled', 'Cancelled Policy')}
-                {auth.isAdmin() && (
+                {auth.isAdminOrManager() && (
                   <React.Fragment>
                     <hr className="mx-2" />
 

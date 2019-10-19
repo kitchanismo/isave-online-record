@@ -29,6 +29,15 @@ const Reports = props => {
     setReports(sortBy(reports, sortColumn))
   }
 
+  const calculateAge = date => {
+    if (!date) return 'N/A'
+    const birthdate = new Date(formatDate(date))
+
+    const ageDif = Date.now() - birthdate.getTime()
+    const ageDate = new Date(ageDif)
+    return Math.abs(ageDate.getUTCFullYear() - 1970)
+  }
+
   const enforcedCol = [
     {
       path: 'id',
@@ -41,16 +50,21 @@ const Reports = props => {
         `${client.firstname}, ${client.lastname} ${client.middlename}`
     },
     {
-      path: 'codeNo',
-      label: 'Code Number'
+      path: 'birthdate',
+      label: 'Age',
+      content: client => calculateAge(client.birthdate)
     },
     {
       path: 'gender',
       label: 'Gender'
     },
     {
+      path: 'codeNo',
+      label: 'Code Number'
+    },
+    {
       path: 'mode',
-      label: 'Mode of Payment'
+      label: 'Mode'
     },
     {
       path: 'dateInsured',
@@ -96,7 +110,7 @@ const Reports = props => {
     },
     {
       path: 'mode',
-      label: 'Mode of Payment'
+      label: 'Mode'
     },
     {
       path: 'dateInsured',
@@ -136,6 +150,11 @@ const Reports = props => {
       content: client =>
         `${client.firstname}, ${client.lastname} ${client.middlename}`
     },
+    {
+      path: 'birthdate',
+      label: 'Age',
+      content: client => calculateAge(client.birthdate)
+    },
 
     {
       path: 'gender',
@@ -143,7 +162,7 @@ const Reports = props => {
     },
     {
       path: 'mode',
-      label: 'Mode of Payment'
+      label: 'Mode'
     },
     {
       path: 'dateInsured',
@@ -152,7 +171,7 @@ const Reports = props => {
     },
     {
       path: 'expiredDate',
-      label: 'Date Expire',
+      label: 'Due Date',
       content: client => formatDate(client.expiredDate)
     },
     {
@@ -189,12 +208,17 @@ const Reports = props => {
         `${client.firstname}, ${client.lastname} ${client.middlename}`
     },
     {
+      path: 'birthdate',
+      label: 'Age',
+      content: client => calculateAge(client.birthdate)
+    },
+    {
       path: 'gender',
       label: 'Gender'
     },
     {
       path: 'mode',
-      label: 'Mode of Payment'
+      label: 'Mode'
     },
     {
       path: 'dateInsured',
@@ -203,7 +227,7 @@ const Reports = props => {
     },
     {
       path: 'expiredDate',
-      label: 'Date Expire',
+      label: 'Due Date',
       content: client => formatDate(client.expiredDate)
     }
   ]
@@ -221,6 +245,11 @@ const Reports = props => {
     },
 
     {
+      path: 'birthdate',
+      label: 'Age',
+      content: client => calculateAge(client.birthdate)
+    },
+    {
       path: 'gender',
       label: 'Gender'
     },
@@ -230,7 +259,7 @@ const Reports = props => {
     },
     {
       path: 'mode',
-      label: 'Mode of Payment'
+      label: 'Mode'
     },
     {
       path: 'dateInsured',
@@ -268,6 +297,11 @@ const Reports = props => {
       label: 'Fullname',
       content: client =>
         `${client.firstname}, ${client.lastname} ${client.middlename}`
+    },
+    {
+      path: 'birthdate',
+      label: 'Age',
+      content: client => calculateAge(client.birthdate)
     },
     {
       path: 'gender',
@@ -439,22 +473,29 @@ const Reports = props => {
           PRINT
         </button>
       </div>
-
-      <Spinner isLoaded={isLoaded} className="spinner mt-5 pt-5">
-        <Table
-          columns={columns()}
-          data={reports}
-          sortColumn={sortColumn}
-          onSort={handleSort}
-        />
-        {isLoaded && reports.length === 0 && (
-          <h6 className="mt-2 mb-5">No records found!</h6>
-        )}
-      </Spinner>
-
+      <div className="wrapper-client">
+        <Spinner isLoaded={isLoaded} className="spinner mt-5 pt-5">
+          <Table
+            columns={columns()}
+            data={reports}
+            sortColumn={sortColumn}
+            onSort={handleSort}
+          />
+          {isLoaded && reports.length === 0 && (
+            <h6 className="mt-2 mb-5">No records found!</h6>
+          )}
+        </Spinner>
+      </div>
       <style jsx="">{`
         .fa-print {
           margin-top: 0 !important;
+        }
+        .wrapper-client {
+          margin: 0;
+          padding: 0;
+          height: 550px;
+          overflow-y: auto;
+          overflow-x: hidden;
         }
       `}</style>
     </React.Fragment>

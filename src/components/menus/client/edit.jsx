@@ -2,9 +2,10 @@ import React, { useState, useContext, useEffect } from 'react'
 import Form from '../../common/form'
 import { toast } from 'react-toastify'
 import Joi from 'joi-browser'
-import { formatDate, cap } from '../../../services/utilsService'
+import { formatDate, cap, joiLettersOnly } from '../../../services/utilsService'
 import auth from '../../../services/authService'
 import { ClientContext } from '../../../context'
+import Spinner from './../../common/spinner'
 
 const EditClient = props => {
   const { id } = props.match.params
@@ -19,6 +20,7 @@ const EditClient = props => {
     address: '',
     contact: '',
     dateInsured: '',
+    birthdate: '',
     codeNo: '',
     userInsured: '',
     gender: '',
@@ -37,7 +39,10 @@ const EditClient = props => {
     getClient(id).then(({ client: { id, coverage, ...client } }) => {
       setClient({
         ...client,
-        dateInsured: new Date(client.dateInsured).toLocaleDateString()
+        dateInsured: new Date(client.dateInsured).toLocaleDateString(),
+        birthdate: client.birthdate
+          ? new Date(client.birthdate).toLocaleDateString()
+          : ''
       })
       setSelectedCivil({
         id: 1,
@@ -71,15 +76,15 @@ const EditClient = props => {
             switch (err.type) {
               case 'string.regex.base':
                 err.message =
-                  'Policy Number must only have a number and letter with hyphen'
+                  '"Policy Number" must only have a number and letter with hyphen'
                 break
               case 'string.min':
                 err.message =
-                  'Policy Number must be equal to 15 characters long'
+                  '"Policy Number" must be equal to 15 characters long'
                 break
               case 'string.max':
                 err.message =
-                  'Policy Number must be equal to 15 characters long'
+                  '"Policy Number" must be equal to 15 characters long'
                 break
               default:
                 break
@@ -94,15 +99,9 @@ const EditClient = props => {
   }
 
   const schema = {
-    firstname: Joi.string()
-      .required()
-      .label('Firstname'),
-    middlename: Joi.string()
-      .required()
-      .label('Middlename'),
-    lastname: Joi.string()
-      .required()
-      .label('Lastname'),
+    firstname: joiLettersOnly('Firstname'),
+    middlename: joiLettersOnly('Middlename'),
+    lastname: joiLettersOnly('Lastname'),
     codeNo: codeNoValidation(),
     contact: Joi.optional(),
     address: Joi.optional(),
@@ -110,6 +109,9 @@ const EditClient = props => {
     dateInsured: Joi.string()
       .required()
       .label('Date Insured'),
+    birthdate: Joi.string()
+      .required()
+      .label('Birthdate'),
     forApproval: Joi.optional(),
     userInsured: Joi.optional(),
     gender: Joi.string()
@@ -151,7 +153,8 @@ const EditClient = props => {
     const _client = {
       ...client,
       dateInsured: new Date(client.dateInsured).toISOString(),
-      expiredDate: new Date(expiredDate).toISOString()
+      expiredDate: new Date(expiredDate).toISOString(),
+      birthdate: new Date(client.birthdate).toISOString()
     }
 
     try {
@@ -229,75 +232,103 @@ const EditClient = props => {
     }
   }
 
-  const handleDateChange = date => {
+  const handleDateInsured = date => {
     setClient({
       ...client,
       dateInsured: formatDate(date)
     })
   }
 
+  const handleBirthdate = date => {
+    setClient({
+      ...client,
+      birthdate: formatDate(date)
+    })
+  }
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">Edit Client</h1>
       </div>
-      <Form
-        data={{ data: client, setData: setClient }}
-        errors={{ errors, setErrors }}
-        onSubmit={handleSubmit}
-        schema={schema}
-      >
-        {({
-          renderInput,
-          renderSelect,
-          renderTextArea,
-          renderDatePicker,
-          renderButton,
-          renderCheckbox
-        }) => {
-          return (
-            <div className="row">
-              <div className="col-6">
-                {renderInput('firstname', 'Firstname')}
-                {renderInput('middlename', 'Middlename')}
-                {renderInput('lastname', 'Lastname')}
-                {renderSelect(
-                  'gender',
-                  'Gender',
-                  selectedGender,
-                  handleChangeGender,
-                  genders
-                )}
-                {renderSelect(
-                  'civil',
-                  'Civil Status',
-                  selectedCivil,
-                  handleChangeCivil,
-                  civils
-                )}
-                {renderInput('contact', 'Contact')}
-                {renderTextArea('address', 'Address')}
-              </div>
+      <Spinner isLoaded={isLoaded} className="spinner">
+        <Form
+          data={{ data: client, setData: setClient }}
+          errors={{ errors, setErrors }}
+          onSubmit={handleSubmit}
+          schema={schema}
+        >
+          {({
+            renderInput,
+            renderSelect,
+            renderTextArea,
+            renderDatePicker,
+            renderButton,
+            renderCheckbox
+          }) => {
+            return (
+              <div className="row">
+                <div className="col-6">
+                  {renderInput('firstname', 'Firstname')}
+                  {renderInput('middlename', 'Middlename')}
+                  {renderInput('lastname', 'Lastname')}
+                  {renderSelect(
+                    'gender',
+                    'Gender',
+                    selectedGender,
+                    handleChangeGender,
+                    genders
+                  )}
+                  {renderSelect(
+                    'civil',
+                    'Civil Status',
+                    selectedCivil,
+                    handleChangeCivil,
+                    civils
+                  )}
+                  {renderDatePicker('birthdate', 'Birthdate', {
+                    onChange: handleBirthdate
+                  })}
+                  {renderInput('contact', 'Contact')}
+                  {renderTextArea('address', 'Address')}
+                </div>
 
-              <div className="col-6">
-                {renderDatePicker('dateInsured', 'Date Insured', {
-                  onChange: handleDateChange
-                })}
-                {renderSelect(
-                  'mode',
-                  'Mode of Payment',
-                  selectedMode,
-                  handleChangeMode,
-                  modes
-                )}
-                {renderInput('codeNo', 'Policy No')}
+                <div className="col-6">
+                  {renderDatePicker('dateInsured', 'Date Insured', {
+                    onChange: handleDateInsured
+                  })}
+                  {renderSelect(
+                    'mode',
+                    'Mode of Payment',
+                    selectedMode,
+                    handleChangeMode,
+                    modes
+                  )}
+                  {renderInput('codeNo', 'Policy No')}
 
-                {renderButton('UPDATE', null, 'Updating...', true)}
+                  {renderButton('UPDATE', null, 'Updating...', true)}
+                  <button
+                    onClick={e => {
+                      e.preventDefault()
+                      props.history.replace('/reports/enforced')
+                    }}
+                    className="btn btn-grad-secondary btn-block"
+                    name="back"
+                  >
+                    Back
+                  </button>
+                </div>
               </div>
-            </div>
-          )
-        }}
-      </Form>
+            )
+          }}
+        </Form>
+      </Spinner>
+
+      <style jsx="">{`
+        .spinner {
+          margin-top: 200px;
+          margin-bottom: 200px;
+        }
+      `}</style>
     </React.Fragment>
   )
 }

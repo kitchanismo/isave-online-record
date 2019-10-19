@@ -23,10 +23,8 @@ async function signUp(user) {
 }
 function logout() {
   http.sendJwt(jwt())
-
-  http
-    .post('/token/revoke', { refreshToken: jwt().refreshToken })
-    .then(() => removeTokens())
+  removeTokens()
+  http.post('/token/revoke', { refreshToken: jwt().refreshToken })
 }
 
 function removeTokens() {

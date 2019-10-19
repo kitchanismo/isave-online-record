@@ -26,6 +26,13 @@ export function approved(id, codeNo) {
   return http.put('/api/clients/approved/' + id, { codeNo }).then(data => data)
 }
 
+export function getStatistics(year) {
+  http.sendJwt(auth.jwt())
+  return http
+    .post('/api/clients/statistic/', { year })
+    .then(data => data.data.statistic)
+}
+
 export function updateClient(id, client) {
   http.sendJwt(auth.jwt())
   return http.put('/api/clients/edit/' + id, client).then(data => data)

@@ -28,8 +28,10 @@ const EditUser = ({ auth, ...props }) => {
     position: '',
     branch: ''
   })
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    setIsLoaded(false)
     getUser(id).then(({ profile, username, position }) => {
       setUser({
         username,
@@ -60,6 +62,7 @@ const EditUser = ({ auth, ...props }) => {
 
       getBranches(url).then(branches => {
         setBranches(branches)
+        setIsLoaded(true)
       })
     })
     // .catch(() => props.history.replace('/not-found'))
@@ -192,7 +195,7 @@ const EditUser = ({ auth, ...props }) => {
         <h1 className="h2">Edit User</h1>
       </div>
 
-      <Spinner isLoaded={user.username !== ''} className="spinner">
+      <Spinner isLoaded={isLoaded} className="spinner">
         <Form
           data={{ data: user, setData: setUser }}
           errors={{ errors, setErrors }}
@@ -235,6 +238,16 @@ const EditUser = ({ auth, ...props }) => {
                     {renderInput('username', 'Username', 'text', 'fa-user')}
                     {renderInput('email', 'Email', 'email', 'fa-envelope')}
                     {renderButton('Update', null, 'Updating...', true)}
+                    <button
+                      onClick={e => {
+                        e.preventDefault()
+                        props.history.replace('/users')
+                      }}
+                      className="btn btn-grad-secondary btn-block"
+                      name="back"
+                    >
+                      Back
+                    </button>
                   </div>
                 </div>
               </React.Fragment>

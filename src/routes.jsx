@@ -52,7 +52,6 @@ const Routes = props => {
       />
       <AuthRoute
         path="/users/:id"
-        isAdminOrManager
         render={props => <Home {...props} menu="users" sub="viewUser" />}
       />
       <AuthRoute
