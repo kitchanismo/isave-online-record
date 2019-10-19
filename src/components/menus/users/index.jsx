@@ -166,7 +166,6 @@ const Users = ({ auth, ...props }) => {
       onSetEnd(end - 1)
       return
     }
-    onRefresh()
   }
 
   const handleSort = sortColumn => {

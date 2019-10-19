@@ -6,12 +6,15 @@ import { formatDate, cap, joiLettersOnly } from '../../../services/utilsService'
 import auth from '../../../services/authService'
 import { ClientContext } from '../../../context'
 import Spinner from './../../common/spinner'
+import { getPromos } from '../../../services/userService'
 
 const EditClient = props => {
   const { id } = props.match.params
   const [isLoaded, setIsLoaded] = useState(false)
 
   const { getClient, onUpdateClient, status } = useContext(ClientContext)
+
+  const [promos, setPromos] = useState([])
 
   const [client, setClient] = useState({
     firstname: '',
@@ -22,6 +25,7 @@ const EditClient = props => {
     dateInsured: '',
     birthdate: '',
     codeNo: '',
+    promo: '',
     userInsured: '',
     gender: '',
     mode: '',
@@ -29,6 +33,7 @@ const EditClient = props => {
     forApproval: true
   })
 
+  const [selectedPromo, setSelectedPromo] = useState(null)
   const [selectedGender, setSelectedGender] = useState(null)
   const [selectedMode, setSelectedMode] = useState(null)
   const [selectedCivil, setSelectedCivil] = useState(null)
@@ -39,6 +44,7 @@ const EditClient = props => {
     getClient(id).then(({ client: { id, coverage, ...client } }) => {
       setClient({
         ...client,
+        promo: client.promo.value,
         dateInsured: new Date(client.dateInsured).toLocaleDateString(),
         birthdate: client.birthdate
           ? new Date(client.birthdate).toLocaleDateString()
@@ -62,7 +68,15 @@ const EditClient = props => {
         label: cap(client ? client.mode : '')
       })
 
+      setSelectedPromo({
+        ...client.promo,
+        label: cap(client.promo ? client.promo.label : '')
+      })
+
       setIsLoaded(true)
+    })
+    getPromos().then(promos => {
+      setPromos(promos)
     })
   }, [])
 
@@ -122,7 +136,10 @@ const EditClient = props => {
       .label('Mode of Payment'),
     civil: Joi.string()
       .required()
-      .label('Civil Status')
+      .label('Civil Status'),
+    promo: Joi.string()
+      .required()
+      .label('Promo Officer')
   }
 
   const handleChangeGender = gender => setSelectedGender(gender)
@@ -132,6 +149,7 @@ const EditClient = props => {
   const handleChangeMode = mode => {
     setSelectedMode(mode)
   }
+  const handleChangePromo = promo => setSelectedPromo(promo)
 
   const getExpiredDate = (date, mode) => {
     const dateInsured = new Date(date)
@@ -154,7 +172,8 @@ const EditClient = props => {
       ...client,
       dateInsured: new Date(client.dateInsured).toISOString(),
       expiredDate: new Date(expiredDate).toISOString(),
-      birthdate: new Date(client.birthdate).toISOString()
+      birthdate: new Date(client.birthdate).toISOString(),
+      promo: selectedPromo.id
     }
 
     try {
@@ -302,6 +321,13 @@ const EditClient = props => {
                     selectedMode,
                     handleChangeMode,
                     modes
+                  )}
+                  {renderSelect(
+                    'promo',
+                    'Promo Officer',
+                    selectedPromo,
+                    handleChangePromo,
+                    promos
                   )}
                   {renderInput('codeNo', 'Policy No')}
 

@@ -1,14 +1,23 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Form from '../../common/form'
 import { toast } from 'react-toastify'
 import Joi from 'joi-browser'
 import { formatDate, joiLettersOnly } from '../../../services/utilsService'
 import auth from '../../../services/authService'
+import { getPromos } from '../../../services/userService'
 
 import { ClientContext } from '../../../context'
 
 const AddClient = props => {
   const { onAddClient, status } = useContext(ClientContext)
+  const [promos, setPromos] = useState([])
+
+  useEffect(() => {
+    getPromos().then(promos => {
+      setPromos(promos)
+    })
+  }, [])
+
   const [client, setClient] = useState({
     firstname: '',
     lastname: '',
@@ -16,6 +25,7 @@ const AddClient = props => {
     address: '',
     contact: '',
     birthdate: '',
+    promo: '',
     dateInsured: formatDate(Date.now()),
     expiredDate: '',
     codeNo: '',
@@ -26,6 +36,7 @@ const AddClient = props => {
     forApproval: true
   })
 
+  const [selectedPromo, setSelectedPromo] = useState(null)
   const [selectedGender, setSelectedGender] = useState(null)
   const [selectedMode, setSelectedMode] = useState(null)
   const [selectedCivil, setSelectedCivil] = useState(null)
@@ -87,12 +98,17 @@ const AddClient = props => {
       .label('Mode of Payment'),
     civil: Joi.string()
       .required()
-      .label('Civil Status')
+      .label('Civil Status'),
+    promo: Joi.string()
+      .required()
+      .label('Promo Officer')
   }
 
   const handleChangeGender = gender => setSelectedGender(gender)
 
   const handleChangeCivil = civil => setSelectedCivil(civil)
+
+  const handleChangePromo = promo => setSelectedPromo(promo)
 
   const handleChangeMode = mode => {
     setSelectedMode(mode)
@@ -117,6 +133,7 @@ const AddClient = props => {
 
     const _client = {
       ...client,
+      promo: selectedPromo.id,
       dateInsured: new Date(client.dateInsured).toISOString(),
       expiredDate: new Date(expiredDate).toISOString(),
       userInsured: auth.getCurrentUser().id
@@ -135,6 +152,7 @@ const AddClient = props => {
         birthdate: '',
         codeNo: '',
         userInsured: '',
+        promo: '',
         gender: '',
         mode: '',
         civil: '',
@@ -143,6 +161,7 @@ const AddClient = props => {
       setSelectedGender(null)
       setSelectedMode(null)
       setSelectedCivil(null)
+      setSelectedPromo(null)
     } catch (error) {
       console.log(error)
     }
@@ -286,6 +305,13 @@ const AddClient = props => {
                   selectedMode,
                   handleChangeMode,
                   modes
+                )}
+                {renderSelect(
+                  'promo',
+                  'Promo Officer',
+                  selectedPromo,
+                  handleChangePromo,
+                  promos
                 )}
                 {!client.forApproval && renderInput('codeNo', 'Policy No')}
 
