@@ -13,7 +13,7 @@ const AddGPA = props => {
     lastname: '',
     middlename: '',
     birthdate: '',
-    dateInsured: '',
+    dateInsured: formatDate(Date.now()),
     address: '',
     contact: '',
     codeNo: '',
