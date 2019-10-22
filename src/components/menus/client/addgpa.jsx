@@ -2,7 +2,11 @@ import React, { useState, useContext } from 'react'
 import Form from '../../common/form'
 import Joi from 'joi-browser'
 import { toast } from 'react-toastify'
-import { formatDate, joiLettersOnly } from '../../../services/utilsService'
+import {
+  formatDate,
+  joiLettersOnly,
+  joiMobileNumber
+} from '../../../services/utilsService'
 
 import { ClientContext } from '../../../context'
 const AddGPA = props => {
@@ -41,7 +45,7 @@ const AddGPA = props => {
     coverage: Joi.number()
       .required()
       .label('Coverage'),
-    contact: Joi.optional(),
+    contact: joiMobileNumber('Mobile Number'),
     address: Joi.optional(),
     codeNo: Joi.number()
       .required()

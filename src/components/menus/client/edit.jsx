@@ -2,7 +2,12 @@ import React, { useState, useContext, useEffect } from 'react'
 import Form from '../../common/form'
 import { toast } from 'react-toastify'
 import Joi from 'joi-browser'
-import { formatDate, cap, joiLettersOnly } from '../../../services/utilsService'
+import {
+  formatDate,
+  cap,
+  joiLettersOnly,
+  joiMobileNumber
+} from '../../../services/utilsService'
 import auth from '../../../services/authService'
 import { ClientContext } from '../../../context'
 import Spinner from './../../common/spinner'
@@ -23,6 +28,7 @@ const EditClient = props => {
     address: '',
     contact: '',
     dateInsured: '',
+    expiredDate: '',
     birthdate: '',
     codeNo: '',
     promo: '',
@@ -41,40 +47,43 @@ const EditClient = props => {
 
   useEffect(() => {
     setIsLoaded(false)
-    getClient(id).then(({ client: { id, coverage, ...client } }) => {
-      setClient({
-        ...client,
-        promo: client.promo.value,
-        dateInsured: new Date(client.dateInsured).toLocaleDateString(),
-        birthdate: client.birthdate
-          ? new Date(client.birthdate).toLocaleDateString()
-          : ''
-      })
-      setSelectedCivil({
-        id: 1,
-        value: client ? client.civil : '',
-        label: cap(client ? client.civil : '')
-      })
+    getClient(id).then(
+      ({ client: { id, coverage, isNear, isDue, isLapsed, ...client } }) => {
+        setClient({
+          ...client,
+          promo: client.promo.value,
+          expiredDate: new Date(client.expiredDate).toLocaleDateString(),
+          dateInsured: new Date(client.dateInsured).toLocaleDateString(),
+          birthdate: client.birthdate
+            ? new Date(client.birthdate).toLocaleDateString()
+            : ''
+        })
+        setSelectedCivil({
+          id: 1,
+          value: client ? client.civil : '',
+          label: cap(client ? client.civil : '')
+        })
 
-      setSelectedGender({
-        id: 2,
-        value: client ? client.gender : '',
-        label: cap(client ? client.gender : '')
-      })
+        setSelectedGender({
+          id: 2,
+          value: client ? client.gender : '',
+          label: cap(client ? client.gender : '')
+        })
 
-      setSelectedMode({
-        id: 3,
-        value: client ? client.mode : '',
-        label: cap(client ? client.mode : '')
-      })
+        setSelectedMode({
+          id: 3,
+          value: client ? client.mode : '',
+          label: cap(client ? client.mode : '')
+        })
 
-      setSelectedPromo({
-        ...client.promo,
-        label: cap(client.promo ? client.promo.label : '')
-      })
+        setSelectedPromo({
+          ...client.promo,
+          label: cap(client.promo ? client.promo.label : '')
+        })
 
-      setIsLoaded(true)
-    })
+        setIsLoaded(true)
+      }
+    )
     getPromos().then(promos => {
       setPromos(promos)
     })
@@ -117,7 +126,7 @@ const EditClient = props => {
     middlename: joiLettersOnly('Middlename'),
     lastname: joiLettersOnly('Lastname'),
     codeNo: codeNoValidation(),
-    contact: Joi.optional(),
+    contact: joiMobileNumber('Mobile Number'),
     address: Joi.optional(),
     expiredDate: Joi.optional(),
     dateInsured: Joi.string()
@@ -148,6 +157,16 @@ const EditClient = props => {
 
   const handleChangeMode = mode => {
     setSelectedMode(mode)
+
+    if (mode) {
+      const expiredDate = getExpiredDate(client.dateInsured, mode.value)
+
+      setClient({
+        ...client,
+        mode: mode.value,
+        expiredDate
+      })
+    }
   }
   const handleChangePromo = promo => setSelectedPromo(promo)
 
@@ -166,10 +185,11 @@ const EditClient = props => {
       setErrors({ codeNo: `"Policy Number" is not allowed to be empty` })
       return
     }
-    const expiredDate = getExpiredDate(client.dateInsured, client.mode)
+    const expiredDate = getExpiredDate(client.dateInsured, selectedMode.value)
 
     const _client = {
       ...client,
+      mode: selectedMode ? selectedMode.value : '',
       dateInsured: new Date(client.dateInsured).toISOString(),
       expiredDate: new Date(expiredDate).toISOString(),
       birthdate: new Date(client.birthdate).toISOString(),
@@ -252,8 +272,13 @@ const EditClient = props => {
   }
 
   const handleDateInsured = date => {
+    const expiredDate = selectedMode
+      ? getExpiredDate(date, selectedMode.value)
+      : ''
+
     setClient({
       ...client,
+      expiredDate,
       dateInsured: formatDate(date)
     })
   }
@@ -281,8 +306,7 @@ const EditClient = props => {
             renderSelect,
             renderTextArea,
             renderDatePicker,
-            renderButton,
-            renderCheckbox
+            renderButton
           }) => {
             return (
               <div className="row">
@@ -322,6 +346,9 @@ const EditClient = props => {
                     handleChangeMode,
                     modes
                   )}
+                  {renderInput('expiredDate', 'Due Date', 'text', '', {
+                    disabled: true
+                  })}
                   {renderSelect(
                     'promo',
                     'Promo Officer',

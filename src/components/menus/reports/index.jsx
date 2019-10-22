@@ -379,7 +379,8 @@ const Reports = props => {
         return forApprovalCol
       case 'lapsed':
         return lapsedCol
-
+      case 'due':
+        return lapsedCol
       case 'cancelled':
         return cancelledCol
       case 'near-expiration':
@@ -408,7 +409,8 @@ const Reports = props => {
         return 'For Approval'
       case 'lapsed':
         return 'Lapsed Policy'
-
+      case 'Due':
+        return 'Due Policy'
       case 'cancelled':
         return 'Cancelled Policy'
       case 'near-expiration':
