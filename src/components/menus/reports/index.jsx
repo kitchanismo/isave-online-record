@@ -580,9 +580,7 @@ const Reports = props => {
         .fa-print {
           margin-top: 0 !important;
         }
-        .fa {
-          margin-top: 0 !important;
-        }
+      
         .wrapper-client {
           margin: 0;
           padding: 0;
