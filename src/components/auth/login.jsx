@@ -42,10 +42,10 @@ const Login = ({ auth, ...props }) => {
   return (
     <React.Fragment>
       <div className="row mt-3 mb-3 border border-secondary">
-        <div className="col-8 p-0">
+        <div className="col-md-0 col-lg-8 p-0">
           <Logo />
         </div>
-        <div className="col-4 p-3 pt-2">
+        <div className="col-md-12 col-lg-4 p-3 pt-2">
           <h3>Login</h3>
           <hr></hr>
           <Form

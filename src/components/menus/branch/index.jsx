@@ -14,7 +14,7 @@ const Branch = props => {
         <h1 className="h2">Branch</h1>
         <button
           onClick={() => props.history.replace('/branches/new')}
-          className="btn btn-sm btn-grad-secondary ml-1"
+          className="btn btn-sm btn-grad-primary ml-1"
         >
           <span className="fa fa-plus mr-1"></span>
           BRANCH

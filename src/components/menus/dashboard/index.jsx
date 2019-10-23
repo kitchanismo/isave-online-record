@@ -13,14 +13,14 @@ const Dashboard = ({ auth, ...props }) => {
           <div>
             <button
               onClick={() => props.history.replace('/dashboard/new-fs')}
-              className="btn btn-sm btn-grad-secondary"
+              className="btn btn-sm btn-grad-primary"
             >
               <span className="fa fa-plus mr-1"></span>
               FUTURE SAVINGS
             </button>
             <button
               onClick={() => props.history.replace('/dashboard/new-gpa')}
-              className="btn btn-sm btn-grad-secondary  ml-2"
+              className="btn btn-sm btn-grad-primary  ml-2"
             >
               <span className="fa fa-plus mr-1"></span>
               GPA FORM

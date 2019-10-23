@@ -201,7 +201,7 @@ const Users = ({ auth, ...props }) => {
         {auth.isAdmin() && (
           <button
             onClick={() => props.history.replace('/users/new')}
-            className="btn btn-sm btn-grad-secondary ml-1"
+            className="btn btn-sm btn-grad-primary ml-1"
           >
             <span className="fa fa-plus mr-1"></span>
             MANAGER
