@@ -112,7 +112,7 @@ const Charts = props => {
           <ul className="list-group">
             <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
               <span className="font-weight-bold">Client Near Expiration</span>
-              <span className="badge badge-secondary badge-pill">
+              <span className="badge badge-danger badge-pill">
                 {reports.length ? reports.length : ''}
               </span>
             </li>
