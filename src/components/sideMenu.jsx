@@ -33,7 +33,7 @@ const SideMenu = ({ auth, ...props }) => {
 
   return (
     <React.Fragment>
-      <nav className="side-menu col-md-2 d-none d-md-block bg-dark mr-0 pt-3">
+      <nav className="side-menu col-md-2 d-none d-md-block bg-dark mr-0 pt-2">
         <ul className="nav flex-column mb-2 mt-2 pr-0">
           <li className="nav-item">
             <NavLink
@@ -42,7 +42,7 @@ const SideMenu = ({ auth, ...props }) => {
               to="/dashboard"
               className={`nav-link text-white `}
             >
-              {/* <span className="fa fa-line-chart mr-2"></span> */}
+              <span className="fa fa-bookmark mr-2"></span>
               Dashboard
             </NavLink>
           </li>
@@ -54,7 +54,7 @@ const SideMenu = ({ auth, ...props }) => {
                 to="/branches"
                 className={`nav-link text-white`}
               >
-                {/* <span className="fa fa-node"></span> Branch */}
+                <span className="fa fa-home mr-2"></span>
                 Branch
               </NavLink>
             </li>
@@ -72,6 +72,7 @@ const SideMenu = ({ auth, ...props }) => {
                     to="/users"
                     className={`nav-link text-white pr-1`}
                   >
+                    <span className="fa fa-user mr-2"></span>
                     Users
                   </NavLink>
                 </div>
@@ -102,6 +103,7 @@ const SideMenu = ({ auth, ...props }) => {
                   onClick={() => setToggle(!toggle)}
                   className="nav-link text-white pr-1"
                 >
+                  <span className="fa fa-file mr-2"></span>
                   Reports
                   <span
                     className={`fa fa-angle-${!toggle ? 'down' : 'up'} ml-1`}
