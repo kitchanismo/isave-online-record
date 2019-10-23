@@ -231,10 +231,7 @@ const Users = ({ auth, ...props }) => {
         .col-4 {
           padding: 0;
         }
-        .badge {
-          cursor: pointer;
-          margin-right: 2px !important;
-        }
+
         .spinner {
           margin-bottom: 200px !important;
         }

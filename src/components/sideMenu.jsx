@@ -33,7 +33,7 @@ const SideMenu = ({ auth, ...props }) => {
 
   return (
     <React.Fragment>
-      <nav className="side-menu col-md-2 d-none d-md-block bg-dark mr-0 pt-2">
+      <nav className="side-menu col-md-2 d-none d-md-block bg-dark mr-0 pt-1">
         <ul className="nav flex-column mb-2 mt-2 pr-0">
           <li className="nav-item">
             <NavLink
@@ -150,6 +150,9 @@ const SideMenu = ({ auth, ...props }) => {
         </ul>
 
         <style jsx="">{`
+          .nav-item {
+            height: 40px !important;
+          }
           .badge-danger {
             margin-top: -5px;
           }

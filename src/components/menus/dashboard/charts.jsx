@@ -193,7 +193,8 @@ const Charts = props => {
           margin-top: 110px;
         }
 
-        .fa {
+        .fa-check,
+        .fa-close {
           margin-top: 0 !important;
         }
 
