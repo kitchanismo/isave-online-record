@@ -331,7 +331,7 @@ const EditClient = props => {
                   {renderDatePicker('birthdate', 'Birthdate', {
                     onChange: handleBirthdate
                   })}
-                  {renderInput('contact', 'Contact')}
+                  {renderInput('contact', 'Mobile Contact')}
                   {renderTextArea('address', 'Address')}
                 </div>
 

@@ -4,6 +4,7 @@ import { theme } from '../../../config.json'
 import useReport from '../../../hooks/useReport'
 import { formatDate } from '../../../services/utilsService'
 import { getStatistics } from '../../../services/clientService'
+import Spinner from './../../common/spinner'
 
 const useOptions = title => {
   const [series, setSeries] = useState([
@@ -85,6 +86,8 @@ const useOptions = title => {
 const Charts = props => {
   const { reports = [], isLoaded } = useReport('near-expiration')
 
+  const [isLoadedStat, setIsLoadedStat] = useState(false)
+
   const { options: fspOptions, series: fsp, setSeries: setFSP } = useOptions(
     '2019 FSP Statistic'
   )
@@ -94,81 +97,105 @@ const Charts = props => {
   )
 
   useEffect(() => {
+    setIsLoadedStat(false)
     getStatistics().then(data => {
       setFSP([{ name: 'series-1', data: data.fsp }])
       setGPA([{ name: 'series-1', data: data.gpa }])
+      setIsLoadedStat(true)
     })
   }, [])
 
   const chart = () => (
     <React.Fragment>
-      <div className="row d-flex justify-content-around mx-2">
-        <ul className="list-group">
-          <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
-            <span className="font-weight-bold">Client Near Expiration</span>
-            <span className="badge badge-danger badge-pill">
-              {reports.length ? reports.length : ''}
-            </span>
-          </li>
-          <li className="header-list py-1 list-group-item d-flex justify-content-between align-items-center">
-            <span className="font-weight-light">Name</span>
-            <span className="font-weight-light">Due Date</span>
-          </li>
-          <div className="wrapper-list">
-            {reports.map(client => (
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                {`${client.lastname}, ${client.firstname} ${client.middlename}`}
+      <Spinner isLoaded={isLoaded} className="spinner">
+        <div className="row d-flex justify-content-around mx-2">
+          <ul className="list-group">
+            <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
+              <span className="font-weight-bold">Client Near Expiration</span>
+              <span className="badge badge-danger badge-pill">
+                {reports.length ? reports.length : ''}
+              </span>
+            </li>
+            <li className="header-list py-1 list-group-item d-flex justify-content-between align-items-center">
+              <span className="font-weight-light">Name</span>
+              <span className="font-weight-light">Due Date</span>
+              <span className="font-weight-light">Notify</span>
+            </li>
+            <div className="wrapper-list">
+              {reports.map(client => (
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  {`${client.lastname}, ${client.firstname} ${client.middlename}`}
 
-                <span className="badge badge-warning badge-pill">
-                  {formatDate(client.expiredDate)}
-                </span>
-              </li>
-            ))}
-            {reports.length === 0 && isLoaded && (
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                No record/s found!
-              </li>
-            )}
-          </div>
-        </ul>
+                  <span className="badge badge-warning badge-pill">
+                    {formatDate(client.expiredDate)}
+                  </span>
 
-        <ul className="list-group">
-          <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
-            <span className="font-weight-bold">SPIF</span>
-          </li>
-          <li className="header-list py-1 list-group-item d-flex justify-content-between align-items-center">
-            <span className="font-weight-light">Tab</span>
-            <span className="font-weight-light">Tab</span>
-          </li>
-          <li className="list-group-item d-flex justify-content-between align-items-center">
-            No record/s found!
-          </li>
-        </ul>
-      </div>
-      <div className="row d-flex justify-content-around">
-        <Chart
-          key="Sales"
-          type="line"
-          options={fspOptions}
-          series={fsp}
-          width="400px"
-        />
-        <Chart
-          key="FSF"
-          type="line"
-          options={gpaOptions}
-          series={gpa}
-          width="400px"
-        />
-      </div>
+                  {client.isNear === 1 && (
+                    <span className="fa fa-check text-info"></span>
+                  )}
+
+                  {client.isNear === 0 && (
+                    <span className="fa fa-close text-danger"></span>
+                  )}
+                </li>
+              ))}
+              {reports.length === 0 && isLoaded && (
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                  No record/s found!
+                </li>
+              )}
+            </div>
+          </ul>
+
+          <ul className="list-group">
+            <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
+              <span className="font-weight-bold">SPIF</span>
+            </li>
+            <li className="header-list py-1 list-group-item d-flex justify-content-between align-items-center">
+              <span className="font-weight-light">Tab</span>
+              <span className="font-weight-light">Tab</span>
+            </li>
+            <li className="list-group-item d-flex justify-content-between align-items-center">
+              No record/s found!
+            </li>
+          </ul>
+        </div>
+      </Spinner>
+      <Spinner isLoaded={isLoadedStat} className="spinner">
+        <div className="row d-flex mt-4 justify-content-around">
+          <Chart
+            key="Sales"
+            type="line"
+            options={fspOptions}
+            series={fsp}
+            width="400px"
+          />
+          <Chart
+            key="FSF"
+            type="line"
+            options={gpaOptions}
+            series={gpa}
+            width="400px"
+          />
+        </div>
+      </Spinner>
       <style jsx="">{`
         .list-group {
           width: 400px !important;
         }
+
         .header-list {
           background-color: ${theme.secondary};
           border-color: ${theme.secondary};
           color: white;
+        }
+
+        .spinner {
+          margin-top: 110px;
+        }
+
+        .fa {
+          margin-top: 0 !important;
         }
 
         .wrapper-list {

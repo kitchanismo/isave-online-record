@@ -48,7 +48,7 @@ const ClientProvider = props => {
 
   const handleUpdateClient = async (id, client) => {
     await updateClient(id, client)
-    //setStatus(await getStatus())
+    setStatus(await getStatus())
   }
 
   return (

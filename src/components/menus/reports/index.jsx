@@ -122,19 +122,17 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <div className="row pl-1 pt-1 pr-1">
-          <div className="d-flex justify-content-between">
-            <button
-              onClick={e => {
-                setClient(client)
-                toggleApproved(e)
-              }}
-              className="btn btn-sm btn-outline-success ml-1"
-              name="delete"
-            >
-              APPROVED
-            </button>
-          </div>
+        <div className="row d-flex-justify-content-center">
+          <button
+            onClick={e => {
+              setClient(client)
+              toggleApproved(e)
+            }}
+            className="btn btn-sm btn-outline-success ml-1"
+            name="delete"
+          >
+            APPROVED
+          </button>
         </div>
       )
     }
@@ -175,6 +173,18 @@ const Reports = props => {
       label: 'Due Date',
       content: client => formatDate(client.expiredDate)
     },
+
+    {
+      path: 'isLapsed',
+      label: 'Notify',
+      content: client => {
+        return client.isLapsed === 1 ? (
+          <span className="fa fa-check text-info" />
+        ) : (
+          <span className="fa fa-close text-danger" />
+        )
+      }
+    },
     {
       key: 'actions',
       label: 'Actions',
@@ -192,6 +202,73 @@ const Reports = props => {
               ENFORCED
             </button>
           </div>
+        </div>
+      )
+    }
+  ]
+
+  const dueCol = [
+    {
+      path: 'id',
+      label: '#'
+    },
+    {
+      path: 'firstname',
+      label: 'Fullname',
+      content: client =>
+        `${client.firstname}, ${client.lastname} ${client.middlename}`
+    },
+    {
+      path: 'birthdate',
+      label: 'Age',
+      content: client => calculateAge(client.birthdate)
+    },
+
+    {
+      path: 'gender',
+      label: 'Gender'
+    },
+    {
+      path: 'mode',
+      label: 'Mode'
+    },
+    {
+      path: 'dateInsured',
+      label: 'Date Insured',
+      content: client => formatDate(client.dateInsured)
+    },
+    {
+      path: 'expiredDate',
+      label: 'Due Date',
+      content: client => formatDate(client.expiredDate)
+    },
+
+    {
+      path: 'isDue',
+      label: 'Notify',
+      content: client => {
+        return client.isDue === 1 ? (
+          <span className="fa fa-check text-info" />
+        ) : (
+          <span className="fa fa-close text-danger" />
+        )
+      }
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      content: client => (
+        <div className="row">
+          <button
+            onClick={e => {
+              setClient(client)
+              toggleEnforced(e)
+            }}
+            className="btn btn-sm btn-outline-success ml-1"
+            name="delete"
+          >
+            ENFORCED
+          </button>
         </div>
       )
     }
@@ -230,6 +307,17 @@ const Reports = props => {
       path: 'expiredDate',
       label: 'Due Date',
       content: client => formatDate(client.expiredDate)
+    },
+    {
+      path: 'isNear',
+      label: 'Notify',
+      content: client => {
+        return client.isNear === 1 ? (
+          <span className="fa fa-check text-info" />
+        ) : (
+          <span className="fa fa-close text-danger" />
+        )
+      }
     }
   ]
 
@@ -271,19 +359,15 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <div className="row pl-1 pt-1 pr-1">
-          <div className="d-flex justify-content-between">
-            <button
-              onClick={e => {
-                onRetrieved(client.id).then(data => setRefresh(r => !r))
-              }}
-              className="btn btn-sm btn-outline-success ml-1"
-              name="delete"
-            >
-              RETRIEVED
-            </button>
-          </div>
-        </div>
+        <button
+          onClick={e => {
+            onRetrieved(client.id).then(data => setRefresh(r => !r))
+          }}
+          className="btn btn-sm btn-outline-success ml-1"
+          name="delete"
+        >
+          RETRIEVED
+        </button>
       )
     }
   ]
@@ -355,18 +439,12 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: user => (
-        <div className="row pl-1 pt-1 pr-1">
-          <div className="d-flex justify-content-around">
-            <button
-              onClick={() =>
-                restoreUser(user.id).then(data => setRefresh(r => !r))
-              }
-              className="btn btn-sm btn-outline-primary ml-1"
-            >
-              RESTORE
-            </button>
-          </div>
-        </div>
+        <button
+          onClick={() => restoreUser(user.id).then(data => setRefresh(r => !r))}
+          className="btn btn-sm btn-outline-primary ml-1"
+        >
+          RESTORE
+        </button>
       )
     }
   ]
@@ -380,7 +458,7 @@ const Reports = props => {
       case 'lapsed':
         return lapsedCol
       case 'due':
-        return lapsedCol
+        return dueCol
       case 'cancelled':
         return cancelledCol
       case 'near-expiration':
@@ -409,7 +487,7 @@ const Reports = props => {
         return 'For Approval'
       case 'lapsed':
         return 'Lapsed Policy'
-      case 'Due':
+      case 'due':
         return 'Due Policy'
       case 'cancelled':
         return 'Cancelled Policy'
@@ -498,6 +576,9 @@ const Reports = props => {
       </div>
       <style jsx="">{`
         .fa-print {
+          margin-top: 0 !important;
+        }
+        .fa {
           margin-top: 0 !important;
         }
         .wrapper-client {

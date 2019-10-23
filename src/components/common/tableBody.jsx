@@ -13,7 +13,9 @@ const TableBody = ({ data, columns }) => {
       {data.map(item => (
         <tr key={item.id}>
           {columns.map((column, i) => (
-            <td key={i}>{renderCell(item, column)}</td>
+            <td className="text-center" key={i}>
+              {renderCell(item, column)}
+            </td>
           ))}
         </tr>
       ))}

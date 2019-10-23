@@ -39,8 +39,18 @@ const CustomModal = ({
 
   const [mode, setMode] = useState(null)
 
-  const handleOnChange = selectedMode => {
-    setMode(selectedMode)
+  const getExpiredDate = (date, mode) => {
+    const dateInsured = new Date(date)
+
+    const expiredDate = new Date(dateInsured)
+
+    expiredDate.setMonth(dateInsured.getMonth() + getAddedMonth(mode))
+
+    return formatDate(expiredDate)
+  }
+
+  const handleOnChange = mode => {
+    setMode(mode)
   }
 
   const getAddedMonth = mode => {
@@ -56,16 +66,6 @@ const CustomModal = ({
       default:
         return 0
     }
-  }
-
-  const getExpiredDate = (date, mode) => {
-    const dateInsured = new Date(date)
-
-    const expiredDate = new Date(dateInsured)
-
-    expiredDate.setMonth(dateInsured.getMonth() + getAddedMonth(mode))
-
-    return new Date(expiredDate).toISOString()
   }
 
   const dateInsured = new Date(Date.now()).toISOString()
