@@ -561,6 +561,7 @@ const Reports = props => {
           PRINT
         </button>
       </div>
+
       <div className="wrapper-client">
         <Spinner isLoaded={isLoaded} className="spinner mt-5 pt-5">
           <Table
@@ -569,11 +570,12 @@ const Reports = props => {
             sortColumn={sortColumn}
             onSort={handleSort}
           />
-          {isLoaded && reports.length === 0 && (
-            <h6 className="mt-2 mb-5">No records found!</h6>
-          )}
         </Spinner>
+        {isLoaded && reports.length === 0 && (
+          <h6 className="mt-2 mb-5">No records found!</h6>
+        )}
       </div>
+
       <style jsx="">{`
         .fa-print {
           margin-top: 0 !important;
@@ -585,9 +587,10 @@ const Reports = props => {
           margin: 0;
           padding: 0;
           height: 550px;
-          overflow-y: auto;
           overflow-x: hidden;
+          overflow-y: auto;
         }
+        
       `}</style>
     </React.Fragment>
   )

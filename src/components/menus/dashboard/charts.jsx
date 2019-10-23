@@ -107,7 +107,7 @@ const Charts = props => {
 
   const chart = () => (
     <React.Fragment>
-      <Spinner isLoaded={isLoaded} className="spinner">
+      <Spinner isLoaded={isLoaded && isLoadedStat} className="spinner">
         <div className="row d-flex justify-content-around mx-2">
           <ul className="list-group">
             <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
@@ -160,8 +160,7 @@ const Charts = props => {
             </li>
           </ul>
         </div>
-      </Spinner>
-      <Spinner isLoaded={isLoadedStat} className="spinner">
+
         <div className="row d-flex mt-4 justify-content-around">
           <Chart
             key="Sales"
@@ -202,8 +201,8 @@ const Charts = props => {
           margin: 0;
           padding: 0;
           height: 180px;
-          overflow-y: auto;
           overflow-x: hidden;
+          overflow-y: auto;
         }
       `}</style>
     </React.Fragment>

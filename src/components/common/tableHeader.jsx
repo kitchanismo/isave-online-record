@@ -41,10 +41,11 @@ const TableHeader = props => {
         ))}
       </tr>
       <style jsx="">{`
-        .table .thead-dark th {
+        .thead-dark,
+        th {
           color: #fff;
-          background-color: #343a40 !important;
-          border-color: #32383e;
+          background: #02aab0 !important;
+          border-color: #02aab0 !important;
         }
       `}</style>
     </thead>

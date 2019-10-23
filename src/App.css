@@ -181,3 +181,36 @@ a:link {
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
 }
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #343a40;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #02aab0;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #02aab0;
+}
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border: 0px none #ffffff;
+  border-radius: 54px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #e5e5e5;
+}
+::-webkit-scrollbar-track:active {
+  background: #e5e5e5;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
