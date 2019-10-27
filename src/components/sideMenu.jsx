@@ -42,7 +42,7 @@ const SideMenu = ({ auth, ...props }) => {
               to="/dashboard"
               className={`nav-link text-white `}
             >
-              <span className="fa fa-bookmark mr-2"></span>
+              <span className="fa fa-bar-chart mr-2"></span>
               Dashboard
             </NavLink>
           </li>
@@ -116,9 +116,11 @@ const SideMenu = ({ auth, ...props }) => {
                   title={`You have ${total} client reports!`}
                   className={`nav-link text-white pt-1 pl-0`}
                 >
-                  <span className="badge badge-sm badge-danger ml-1">
-                    {total ? total : ''}
-                  </span>
+                  {total > 0 && (
+                    <span className="badge badge-sm badge-danger ml-1">
+                      {total > 9 ? '9+' : total}
+                    </span>
+                  )}
                 </a>
               </div>
             </div>
