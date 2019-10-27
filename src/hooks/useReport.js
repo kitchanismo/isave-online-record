@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getClients } from '../services/clientService'
 import { archivedUser } from '../services/userService'
 
-export default name => {
+export default (name, search) => {
   const [reports, setReports] = useState([])
   const [refresh, setRefresh] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -18,7 +18,7 @@ export default name => {
         setIsLoaded(true)
       })
     } else {
-      getClients(name).then(reports => {
+      getClients(name, search).then(reports => {
         setReports(reports)
         setIsLoaded(true)
       })

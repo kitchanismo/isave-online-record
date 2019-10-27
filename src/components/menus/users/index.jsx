@@ -26,6 +26,8 @@ const Users = ({ auth, ...props }) => {
     onSetStatus
   } = useContext(UserContext)
 
+  const [search, setSearch] = useState('')
+
   const [selectedUser, setSelectedUser] = useState({})
 
   const [sortColumn, setSortColumn] = useState({ path: 'name', order: 'asc' })
@@ -211,7 +213,11 @@ const Users = ({ auth, ...props }) => {
 
       <div className="col-12">
         <div className="mb-3">
-          <SearchForm handleSearch={handleSearch} placeholder="Search here" />
+          <SearchForm
+            handleSearch={handleSearch}
+            search={search}
+            setSearch={setSearch}
+          />
         </div>
 
         <Table

@@ -1,11 +1,8 @@
 import React, { useContext, useState } from 'react'
 
-const SearchForm = ({ handleSearch, placeholder = 'Search here' }) => {
-  const [search, setSearch] = useState('')
-
+const SearchForm = ({ handleSearch, search, setSearch }) => {
   const handleChange = e => {
     setSearch(e.target.value)
-    // handleSearch({ e, search: e.target.value })
   }
 
   return (
@@ -17,7 +14,7 @@ const SearchForm = ({ handleSearch, placeholder = 'Search here' }) => {
           value={search}
           onChange={handleChange}
           className="form-control"
-          placeholder={placeholder}
+          placeholder="Search here"
         />
         <button className="btn btn-grad-primary ml-2">SEARCH</button>
         <button

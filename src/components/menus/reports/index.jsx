@@ -10,14 +10,23 @@ import EnforcedModal from '../../common/modalEnforced'
 import ApprovedModal from '../../common/modalApproved'
 import Spinner from './../../common/spinner'
 import auth from '../../../services/authService'
+import SearchForm from './../../common/searchForm'
 
 const Reports = props => {
-  //let name = new URLSearchParams(props.location.search).get('name')
+  const [search, setSearch] = useState('')
+
   const { name } = props.match.params
 
   const [sortColumn, setSortColumn] = useState({ path: 'name', order: 'asc' })
 
-  const { reports, setReports, setRefresh, isLoaded } = useReport(name)
+  const { reports, setReports, setRefresh, isLoaded } = useReport(
+    name,
+    new URLSearchParams(props.location.search).get('search')
+  )
+
+  useEffect(() => {
+    setSearch('')
+  }, [name])
 
   const [client, setClient] = useState(null)
 
@@ -550,19 +559,35 @@ const Reports = props => {
     )
   }
 
+  const handleSearch = ({ e, search }) => {
+    e.preventDefault()
+
+    setSearch(search)
+    props.history.replace('/reports/' + name + '?search=' + search)
+    setRefresh(r => !r)
+  }
+
   return (
     <React.Fragment>
       {client && renderModalEnforced(client)}
       {renderModalApproved()}
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">{title()}</h1>
+
         <button className="btn btn-sm btn-grad-primary ">
           <span className="fa fa-print mr-1"></span>
           PRINT
         </button>
       </div>
+      {name !== 'for-approval' && name !== 'user-archived' && (
+        <SearchForm
+          handleSearch={handleSearch}
+          search={search}
+          setSearch={setSearch}
+        />
+      )}
 
-      <div className="wrapper-client">
+      <div className="wrapper-client mt-3">
         <Spinner isLoaded={isLoaded} className="spinner mt-5 pt-5">
           <Table
             columns={preparecColumns()}
@@ -580,7 +605,7 @@ const Reports = props => {
         .fa-print {
           margin-top: 0 !important;
         }
-      
+
         .wrapper-client {
           margin: 0;
           padding: 0;
@@ -588,7 +613,6 @@ const Reports = props => {
           overflow-x: hidden;
           overflow-y: auto;
         }
-        
       `}</style>
     </React.Fragment>
   )
