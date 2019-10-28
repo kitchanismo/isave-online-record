@@ -181,19 +181,7 @@ const Reports = props => {
       path: 'expiredDate',
       label: 'Due Date',
       content: client => formatDate(client.expiredDate)
-    },
-
-    {
-      path: 'isLapsed',
-      label: 'Notify',
-      content: client => {
-        return client.isLapsed === 1 ? (
-          <span className="fa fa-check text-info" />
-        ) : (
-          <span className="fa fa-close text-danger" />
-        )
-      }
-    },
+    } ,
     {
       key: 'actions',
       label: 'Actions',
@@ -561,7 +549,7 @@ const Reports = props => {
 
   const handleSearch = ({ e, search }) => {
     e.preventDefault()
-
+   
     setSearch(search)
     props.history.replace('/reports/' + name + '?search=' + search)
     setRefresh(r => !r)
@@ -574,10 +562,10 @@ const Reports = props => {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">{title()}</h1>
 
-        <button className="btn btn-sm btn-grad-primary ">
+        {/* <button className="btn btn-sm btn-grad-primary ">
           <span className="fa fa-print mr-1"></span>
           PRINT
-        </button>
+        </button> */}
       </div>
       {name !== 'for-approval' && name !== 'user-archived' && (
         <SearchForm

@@ -37,7 +37,10 @@ function throwError(error) {
     error.response.data.status &&
     error.response.data.status.name === 'ExpiredJwtToken'
   ) {
-    toast.error('Please Logout!')
+    toast.error('Session Expired!')
+    localStorage.removeItem('refresh-token')
+    localStorage.removeItem('access-token')
+    window.location.href = window.location.origin
     return Promise.reject(error)
   }
 

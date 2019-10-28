@@ -30,6 +30,8 @@ const Nav = props => {
                       className="nav-link active"
                       to={`/users/${auth.getCurrentUser().id}`}
                     >
+                      <span className="fa fa-user mr-2"></span>
+
                       {cap(auth.getCurrentUser().username) +
                         ' | ' +
                         cap(auth.getCurrentUser().position)}
@@ -55,6 +57,10 @@ const Nav = props => {
           }
           .fa {
             margin-top: 12px !important;
+          }
+
+          .fa-user {
+            margin-top: 0 !important;
           }
 
           i {

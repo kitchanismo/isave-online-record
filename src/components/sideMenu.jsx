@@ -72,7 +72,7 @@ const SideMenu = ({ auth, ...props }) => {
                     to="/users"
                     className={`nav-link text-white pr-1`}
                   >
-                    <span className="fa fa-user mr-2"></span>
+                    <span className="fa fa-users mr-2"></span>
                     Users
                   </NavLink>
                 </div>

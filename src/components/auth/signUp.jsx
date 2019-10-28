@@ -5,6 +5,8 @@ import { getBranches, getManager } from '../../services/userService'
 import { toast } from 'react-toastify'
 import withAuth from './../hoc/withAuth'
 import { joiLettersOnly } from '../../services/utilsService'
+import logo from './../../img/cocolife-tree.png'
+import forest from '../../img/forest.jpg'
 
 const SignUp = ({ auth, ...props }) => {
   const [user, setUser] = useState({
@@ -200,7 +202,9 @@ const SignUp = ({ auth, ...props }) => {
           return (
             <React.Fragment>
               <div className="row mt-3 mb-3 border border-secondary">
-                <div className="side-content col-4"></div>
+                <div className="side-content p-0 d-flex justify-content-center align-content-center col-4">
+                  <img className="logo px-0 m-0" src={logo}></img>
+                </div>
 
                 <div className="col-4 pl-3 pr-2 pt-3">
                   <div className="col-12  d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
@@ -274,8 +278,17 @@ const SignUp = ({ auth, ...props }) => {
           border-radius: 7px;
         }
         .side-content {
-          background-color: #343a40;
           border-radius: 7px 0 0 7px;
+          background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+            url(${forest});
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        .logo {
+          padding-top: 100% !important;
+          padding-bottom: 100% !important;
+        }
+        .bg-content {
         }
       `}</style>
     </React.Fragment>
