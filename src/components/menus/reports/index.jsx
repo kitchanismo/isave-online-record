@@ -11,9 +11,12 @@ import ApprovedModal from '../../common/modalApproved'
 import Spinner from './../../common/spinner'
 import auth from '../../../services/authService'
 import SearchForm from './../../common/searchForm'
+import Select from 'react-select'
 
 const Reports = props => {
   const [search, setSearch] = useState('')
+
+  const [gender, setGender] = useState(null)
 
   const { name } = props.match.params
 
@@ -21,11 +24,13 @@ const Reports = props => {
 
   const { reports, setReports, setRefresh, isLoaded } = useReport(
     name,
-    new URLSearchParams(props.location.search).get('search')
+    new URLSearchParams(props.location.search).get('search'),
+    gender ? gender.value : ''
   )
 
   useEffect(() => {
     setSearch('')
+    //setGender(null)
   }, [name])
 
   const [client, setClient] = useState(null)
@@ -558,6 +563,21 @@ const Reports = props => {
     setRefresh(r => !r)
   }
 
+  const genders = [
+    {
+      id: 1,
+      label: 'Male',
+      value: 'male'
+    },
+    {
+      id: 2,
+      label: 'Female',
+      value: 'female'
+    }
+  ]
+
+  const handleChangeGender = gender => setGender(gender)
+
   return (
     <React.Fragment>
       {client && renderModalEnforced(client)}
@@ -571,14 +591,64 @@ const Reports = props => {
         </button> */}
       </div>
       {name !== 'for-approval' && name !== 'user-archived' && (
-        <SearchForm
-          handleSearch={handleSearch}
-          search={search}
-          setSearch={setSearch}
-        />
+        <React.Fragment>
+          {/* <SearchForm
+            handleSearch={handleSearch}
+            search={search}
+            setSearch={setSearch}
+            onRefresh={() => {
+              setSearch('')
+              setGender(null)
+            }}
+          /> */}
+          <form onSubmit={e => handleSearch({ e, search })}>
+            <div className="col-6 m-0 p-0">
+              <input
+                type={'text'}
+                name={search}
+                value={search}
+                onChange={e => {
+                  setSearch(e.target.value)
+                }}
+                className="form-control"
+                placeholder="Search here"
+              />
+            </div>
+            <div className="col-3 m-0 py-0 pl-2">
+              <Select
+                placeholder="Filter gender..."
+                isClearable
+                value={gender}
+                onChange={handleChangeGender}
+                options={genders}
+              />
+            </div>
+            <div className="col-3 m-0 p-0  d-flex justify-content-end">
+              <button className="btn btn-grad-primary ml-2">SEARCH</button>
+              <button
+                onClick={() => {
+                  setSearch('')
+                  setGender(null)
+                }}
+                className="btn btn-grad-secondary ml-2"
+              >
+                REFRESH
+              </button>
+            </div>
+          </form>
+          <style jsx="">{`
+            form {
+              display: flex;
+            }
+            .btn-search {
+              width: 15%;
+            }
+          `}</style>
+          <div className="offset-9 col-3 p-0 mt-2"></div>
+        </React.Fragment>
       )}
 
-      <div className="wrapper-client mt-3">
+      <div className="wrapper-client mt-2">
         <Spinner isLoaded={isLoaded} className="spinner mt-5 pt-5">
           <Table
             columns={preparedColumns()}

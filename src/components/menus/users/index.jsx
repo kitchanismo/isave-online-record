@@ -222,6 +222,7 @@ const Users = ({ auth, ...props }) => {
             handleSearch={handleSearch}
             search={search}
             setSearch={setSearch}
+            onRefresh={() => setSearch('')}
           />
         </div>
 

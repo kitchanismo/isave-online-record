@@ -16,7 +16,6 @@ const SearchForm = ({ handleSearch, search, setSearch, onRefresh }) => {
           className="form-control"
           placeholder="Search here"
         />
-
         <button className="btn btn-grad-primary ml-2">SEARCH</button>
         <button onClick={onRefresh} className="btn btn-grad-secondary ml-2">
           REFRESH

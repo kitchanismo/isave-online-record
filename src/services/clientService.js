@@ -11,10 +11,10 @@ export function getStatus() {
   return http.get('/api/clients/status').then(data => data.data)
 }
 
-export function getClients(report, search) {
+export function getClients(report, search, gender = '') {
   http.sendJwt(auth.jwt())
   return http
-    .get('/api/clients/' + report + '?search=' + search)
+    .get('/api/clients/' + report + '?search=' + search + '&gender=' + gender)
     .then(data => data.data.clients)
 }
 
