@@ -181,7 +181,7 @@ const Reports = props => {
       path: 'expiredDate',
       label: 'Due Date',
       content: client => formatDate(client.expiredDate)
-    } ,
+    },
     {
       key: 'actions',
       label: 'Actions',
@@ -469,11 +469,14 @@ const Reports = props => {
     }
   }
 
-  const preparecColumns = () => {
-    if (!auth.isPromo()) return columns()
+  const preparedColumns = () => {
+    if (!auth.isPromo() && !auth.isAdmin()) return columns()
 
     const _columns = [...columns()]
-    return _columns.filter(c => c.key !== 'actions')
+
+    return name === 'user-archived'
+      ? archivedCol
+      : _columns.filter(c => c.key !== 'actions')
   }
 
   const title = () => {
@@ -549,7 +552,7 @@ const Reports = props => {
 
   const handleSearch = ({ e, search }) => {
     e.preventDefault()
-   
+
     setSearch(search)
     props.history.replace('/reports/' + name + '?search=' + search)
     setRefresh(r => !r)
@@ -578,7 +581,7 @@ const Reports = props => {
       <div className="wrapper-client mt-3">
         <Spinner isLoaded={isLoaded} className="spinner mt-5 pt-5">
           <Table
-            columns={preparecColumns()}
+            columns={preparedColumns()}
             data={reports}
             sortColumn={sortColumn}
             onSort={handleSort}
