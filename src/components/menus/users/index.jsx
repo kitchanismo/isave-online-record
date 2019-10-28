@@ -97,6 +97,10 @@ const Users = ({ auth, ...props }) => {
             </Link>
             <button
               onClick={e => {
+                if (user.status) {
+                  alert('Cannot archive user when status is active!')
+                  return
+                }
                 setSelectedUser(user)
                 toggleDelete(e).then(data => data)
               }}
@@ -129,6 +133,7 @@ const Users = ({ auth, ...props }) => {
     setModalDelete(modalDelete => !modalDelete)
     if (target && target.name === 'primary') {
       await doDelete(selectedUser)
+
       if (selectedUser.position === 'manager') {
         toast.info(
           `${cap(selectedUser.profile.branch.name)} branch is now available`
