@@ -108,13 +108,14 @@ const Charts = props => {
 
   const remarksColor = remarks => {
     if (remarks === 'near expiration') return 'warning'
-    if (remarks === 'on due') return 'danger'
+    if (remarks === 'on due' || remarks === 'on lapsed') return 'danger'
 
     return 'info'
   }
   const toView = remarks => {
     if (remarks === 'near expiration') return '/reports/near-expiration'
     if (remarks === 'on due') return '/reports/due'
+    if (remarks === 'on lapsed') return '/reports/lapsed'
 
     return '/reports/for-approval'
   }
