@@ -46,6 +46,10 @@ const Routes = props => {
         render={props => <Home {...props} menu="users" sub="newUser" />}
       />
       <AuthRoute
+        path="/profile/me"
+        render={props => <Home {...props} menu="profile" sub="me" />}
+      />
+      <AuthRoute
         isAdminOrManager
         path="/users/edit/:id"
         render={props => <Home {...props} menu="users" sub="editUser" />}

@@ -11,6 +11,7 @@ import Footer from './common/footer'
 import UserProvider from '../providers/userProvider'
 import ClientProvider from '../providers/clientProvider'
 import ViewUser from './menus/users/view'
+import Me from './menus/profile/me'
 import EditUser from './menus/users/edit'
 import NewUser from './menus/users/new'
 import EditBranch from './menus/branch/edit'
@@ -36,6 +37,13 @@ const Home = ({ menu, sub, ...props }) => {
                     <React.Fragment>
                       {sub === 'newFs' && <AddFS {...props} />}
                       {sub === 'newGPA' && <AddGPA {...props} />}
+                      {!sub && <Dashboard {...props} />}
+                    </React.Fragment>
+                  )}
+                  {menu === 'profile' && (
+                    <React.Fragment>
+                      {sub === 'me' && <Me {...props} />}
+
                       {!sub && <Dashboard {...props} />}
                     </React.Fragment>
                   )}

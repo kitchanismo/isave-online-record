@@ -105,6 +105,11 @@ export function getUser(id) {
   return http.get(`/api/users/${id}`).then(data => data.data.user)
 }
 
+export function getMe() {
+  http.sendJwt(auth.jwt())
+  return http.get(`/api/users/me`).then(data => data.data.user)
+}
+
 export function getUnverifyUser() {
   http.sendJwt(auth.jwt())
   return http.get(`/api/users/unverify`).then(data => data.data.unverify)
