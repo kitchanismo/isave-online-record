@@ -611,7 +611,7 @@ const Reports = props => {
                   setSearch(e.target.value)
                 }}
                 className="form-control"
-                placeholder="Search here"
+                placeholder="Search here..."
               />
             </div>
             <div className="col-3 m-0 py-0 pl-2">

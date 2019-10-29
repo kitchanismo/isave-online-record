@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Chart from 'react-apexcharts'
+import { Link } from 'react-router-dom'
 import { theme } from '../../../config.json'
 import useReport from '../../../hooks/useReport'
 import { formatDate } from '../../../services/utilsService'
@@ -84,7 +85,7 @@ const useOptions = title => {
 }
 
 const Charts = props => {
-  const { reports = [], isLoaded } = useReport('near-expiration')
+  const { reports = [], isLoaded } = useReport('policy-monitoring')
 
   const [isLoadedStat, setIsLoadedStat] = useState(false)
 
@@ -105,38 +106,47 @@ const Charts = props => {
     })
   }, [])
 
+  const remarksColor = remarks => {
+    if (remarks === 'near expiration') return 'warning'
+    if (remarks === 'on due') return 'danger'
+
+    return 'info'
+  }
+  const toView = remarks => {
+    if (remarks === 'near expiration') return '/reports/near-expiration'
+    if (remarks === 'on due') return '/reports/due'
+
+    return '/reports/for-approval'
+  }
+
   const chart = () => (
     <React.Fragment>
       <Spinner isLoaded={isLoaded && isLoadedStat} className="spinner">
         <div className="row d-flex justify-content-around mx-2">
           <ul className="list-group">
             <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
-              <span className="font-weight-bold">Client Near Expiration</span>
+              <span className="font-weight-bold">Policy Monitoring</span>
               <span className="badge badge-danger badge-pill">
                 {reports.length ? reports.length : ''}
               </span>
             </li>
             <li className="header-list py-1 list-group-item d-flex justify-content-between align-items-center">
               <span className="font-weight-light">Name</span>
-              <span className="font-weight-light">Due Date</span>
-              <span className="font-weight-light">Notify</span>
+              <span className="font-weight-light">Remarks</span>
             </li>
             <div className="wrapper-list">
               {reports.map(client => (
                 <li className="list-group-item d-flex justify-content-between align-items-center">
-                  {`${client.lastname}, ${client.firstname} ${client.middlename}`}
-
-                  <span className="badge badge-secondary badge-pill">
-                    {formatDate(client.expiredDate)}
+                  <Link className="link-policy" to={toView(client.remarks)}>
+                    {`${client.lastname}, ${client.firstname} ${client.middlename}`}
+                  </Link>
+                  <span
+                    className={`badge badge-${remarksColor(
+                      client.remarks
+                    )} badge-pill`}
+                  >
+                    {client.remarks}
                   </span>
-
-                  {client.isNear === 1 && (
-                    <span className="fa fa-check text-info"></span>
-                  )}
-
-                  {client.isNear === 0 && (
-                    <span className="fa fa-close text-danger"></span>
-                  )}
                 </li>
               ))}
               {reports.length === 0 && isLoaded && (
@@ -167,14 +177,14 @@ const Charts = props => {
             type="line"
             options={fspOptions}
             series={fsp}
-            width="400px"
+            width="410px"
           />
           <Chart
             key="FSF"
             type="line"
             options={gpaOptions}
             series={gpa}
-            width="400px"
+            width="410px"
           />
         </div>
       </Spinner>
@@ -204,6 +214,9 @@ const Charts = props => {
           height: 180px;
           overflow-x: hidden;
           overflow-y: auto;
+        }
+        .link-policy {
+          color: ${theme.secondary};
         }
       `}</style>
     </React.Fragment>

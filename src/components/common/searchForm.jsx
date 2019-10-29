@@ -14,7 +14,7 @@ const SearchForm = ({ handleSearch, search, setSearch, onRefresh }) => {
           value={search}
           onChange={handleChange}
           className="form-control"
-          placeholder="Search here"
+          placeholder="Search here..."
         />
 
         <button className="btn btn-grad-primary ml-2">SEARCH</button>
