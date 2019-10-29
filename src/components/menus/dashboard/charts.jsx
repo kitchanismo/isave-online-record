@@ -122,7 +122,7 @@ const Charts = props => {
 
   const chart = () => (
     <React.Fragment>
-      <Spinner isLoaded={isLoaded && isLoadedStat} className="spinner">
+      <Spinner isLoaded={isLoaded} className="spinner">
         <div className="row d-flex justify-content-around mx-2">
           <ul className="list-group">
             <li className="header-list pb-0 list-group-item d-flex justify-content-between align-items-center">
