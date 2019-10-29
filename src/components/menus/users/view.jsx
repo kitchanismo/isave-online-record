@@ -36,7 +36,7 @@ const ViewUser = props => {
         <div className="row mb-3">
           <div className="col-4 pr-0">
             <div className="card" style={{ width: 'auto' }}>
-              <img
+              {/* <img
                 style={{
                   padding: '10%',
                   backgroundColor: '#343a40',
@@ -45,7 +45,7 @@ const ViewUser = props => {
                 src={`${appUrl}/user.png`}
                 className="card-img-top"
                 alt=""
-              />
+              /> */}
               <div className="card-body">
                 <h5 className="card-title">{`${cap(
                   user.profile.lastname

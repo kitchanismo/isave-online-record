@@ -30,13 +30,13 @@ const Me = props => {
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <h1 className="h2">My Profilex</h1>
+        <h1 className="h2">My Profile</h1>
       </div>
       <Spinner isLoaded={user.username !== ''} className="spinner">
         <div className="row mb-3">
           <div className="col-4 pr-0">
             <div className="card" style={{ width: 'auto' }}>
-              <img
+              {/* <img
                 style={{
                   padding: '10%',
                   backgroundColor: '#343a40',
@@ -45,7 +45,7 @@ const Me = props => {
                 src={`${appUrl}/user.png`}
                 className="card-img-top"
                 alt=""
-              />
+              /> */}
               <div className="card-body">
                 <h5 className="card-title">{`${cap(
                   user.profile.lastname
@@ -53,7 +53,10 @@ const Me = props => {
                   user.profile.middlename
                 )}`}</h5>
                 <p className="card-subtitle">{cap(user.username)}</p>
-                <button className={`mt-4 btn btn-outline-warning`}>
+                <button
+                  onClick={() => alert('under construction')}
+                  className={`mt-4 btn btn-sm btn-grad-primary`}
+                >
                   SETTING
                 </button>
               </div>
