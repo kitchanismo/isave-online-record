@@ -319,20 +319,26 @@ const EditClient = props => {
                   {renderInput('firstname', 'Firstname')}
                   {renderInput('middlename', 'Middlename')}
                   {renderInput('lastname', 'Lastname')}
-                  {renderSelect(
-                    'gender',
-                    'Gender',
-                    selectedGender,
-                    handleChangeGender,
-                    genders
-                  )}
-                  {renderSelect(
-                    'civil',
-                    'Civil Status',
-                    selectedCivil,
-                    handleChangeCivil,
-                    civils
-                  )}
+                  <div className="row m-0 p-0">
+                    <div className="col-6 m-0 py-0 pl-0 pr-2">
+                      {renderSelect(
+                        'gender',
+                        'Gender',
+                        selectedGender,
+                        handleChangeGender,
+                        genders
+                      )}
+                    </div>
+                    <div className="col-6 m-0 py-0 pr-0 pl-2">
+                      {renderSelect(
+                        'civil',
+                        'Civil Status',
+                        selectedCivil,
+                        handleChangeCivil,
+                        civils
+                      )}
+                    </div>
+                  </div>
                   {renderDatePicker('birthdate', 'Birthdate', {
                     onChange: handleBirthdate
                   })}
