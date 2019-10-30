@@ -151,9 +151,9 @@ const Users = ({ auth, ...props }) => {
         title="Cocolife"
         modal={modal}
         toggle={toggle}
-        label={`${selectedUser.status === 0 ? 'Activate' : 'Deactivate'} ${
-          selectedUser.username
-        }?`}
+        label={`Are you sure to ${
+          selectedUser.status === 0 ? 'activate' : 'deactivate'
+        } ${selectedUser.username}?`}
         primary={{ type: 'primary', label: 'CONFIRM' }}
       />
     )
@@ -165,7 +165,7 @@ const Users = ({ auth, ...props }) => {
         title="Cocolife"
         modal={modalDelete}
         toggle={toggleDelete}
-        label={`Archive ${selectedUser.username}?`}
+        label={`Are you sure to archive ${selectedUser.username}?`}
         primary={{ type: 'danger', label: 'ARCHIVE' }}
       />
     )

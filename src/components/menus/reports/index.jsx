@@ -10,7 +10,8 @@ import EnforcedModal from '../../common/modalEnforced'
 import ApprovedModal from '../../common/modalApproved'
 import Spinner from './../../common/spinner'
 import auth from '../../../services/authService'
-import SearchForm from './../../common/searchForm'
+
+import CustomModal from '../../common/modal'
 import Select from 'react-select'
 
 const Reports = props => {
@@ -451,7 +452,10 @@ const Reports = props => {
       label: 'Actions',
       content: user => (
         <button
-          onClick={() => restoreUser(user.id).then(data => setRefresh(r => !r))}
+          onClick={e => {
+            setUser(user)
+            setModalRestore(modalRestore => !modalRestore)
+          }}
           className="btn btn-sm btn-outline-primary ml-1"
         >
           RESTORE
@@ -535,7 +539,7 @@ const Reports = props => {
         title="Cocolife"
         modal={modalEnforced}
         toggle={toggleEnforced}
-        label={`Enforce ${client.firstname}?`}
+        label={`Are you sure to enforce ${client.firstname}?`}
         primary={{ type: 'primary', label: 'CONFIRM' }}
       />
     )
@@ -560,6 +564,32 @@ const Reports = props => {
         modal={modalApproved}
         toggle={toggleApproved}
         primary={{ type: 'primary', label: 'CONFIRM' }}
+      />
+    )
+  }
+
+  const [modalRestore, setModalRestore] = useState(false)
+
+  const [user, setUser] = useState(null)
+
+  const toggleRestore = e => {
+    setModalRestore(modalRestore => !modalRestore)
+    if (e.target && e.target.name === 'primary') {
+      restoreUser(user.id).then(data => {
+        setRefresh(r => !r)
+        setUser(null)
+      })
+    }
+  }
+
+  const renderModalRestore = () => {
+    return (
+      <CustomModal
+        title="Cocolife"
+        modal={modalRestore}
+        toggle={toggleRestore}
+        label={`Are you sure to restore ${user.username}?`}
+        primary={{ type: 'primary', label: 'RESTORE' }}
       />
     )
   }
@@ -591,6 +621,7 @@ const Reports = props => {
     <React.Fragment>
       {client && renderModalEnforced(client)}
       {renderModalApproved()}
+      {user && renderModalRestore()}
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">{title()}</h1>
 
