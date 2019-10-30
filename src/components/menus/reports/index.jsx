@@ -124,6 +124,15 @@ const Reports = props => {
         `${client.firstname}, ${client.lastname} ${client.middlename}`
     },
     {
+      path: 'birthdate',
+      label: 'Age',
+      content: client => calculateAge(client.birthdate)
+    },
+    {
+      path: 'gender',
+      label: 'Gender'
+    },
+    {
       path: 'mode',
       label: 'Mode'
     },
@@ -590,7 +599,7 @@ const Reports = props => {
           PRINT
         </button> */}
       </div>
-      {name !== 'for-approval' && name !== 'user-archived' && (
+      {name !== 'user-archived' && (
         <React.Fragment>
           {/* <SearchForm
             handleSearch={handleSearch}
