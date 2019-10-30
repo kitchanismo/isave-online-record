@@ -22,8 +22,11 @@ const AddGPA = props => {
     contact: '',
     codeNo: '',
     gender: '',
-    coverage: 0
+    coverage: 0,
+    civil: ''
   })
+
+  const [selectedCivil, setSelectedCivil] = useState(null)
 
   const [selectedCoverage, setSelectedCoverage] = useState(null)
   const [selectedGender, setSelectedGender] = useState(null)
@@ -49,11 +52,14 @@ const AddGPA = props => {
     address: Joi.optional(),
     codeNo: Joi.number()
       .required()
-      .label('Code Number')
+      .label('Code Number'),
+    civil: Joi.string()
+      .required()
+      .label('Civil Status')
   }
 
   const handleChangeCoverage = coverage => setSelectedCoverage(coverage)
-
+  const handleChangeCivil = civil => setSelectedCivil(civil)
   const handleChangeGender = gender => setSelectedGender(gender)
 
   const handleDateInsured = date => {
@@ -83,10 +89,12 @@ const AddGPA = props => {
         codeNo: '',
         gender: '',
         birthdate: '',
-        coverage: 0
+        coverage: 0,
+        civil: ''
       })
       setSelectedGender(null)
       setSelectedCoverage(null)
+      setSelectedCivil(null)
     } catch (error) {
       console.log(error)
     }
@@ -96,12 +104,34 @@ const AddGPA = props => {
     {
       id: 1,
       label: 'Male',
-      value: 'smale'
+      value: 'male'
     },
     {
       id: 2,
       label: 'Female',
       value: 'female'
+    }
+  ]
+  const civils = [
+    {
+      id: 1,
+      value: 'single',
+      label: 'Single'
+    },
+    {
+      id: 2,
+      value: 'married',
+      label: 'Married'
+    },
+    {
+      id: 3,
+      value: 'divorced',
+      label: 'Divorced'
+    },
+    {
+      id: 4,
+      value: 'widowed',
+      label: 'Widowed'
     }
   ]
 
@@ -152,6 +182,13 @@ const AddGPA = props => {
                   selectedGender,
                   handleChangeGender,
                   genders
+                )}
+                {renderSelect(
+                  'civil',
+                  'Civil Status',
+                  selectedCivil,
+                  handleChangeCivil,
+                  civils
                 )}
                 {renderDatePicker('birthdate', 'Birthdate', {
                   onChange: handleBirthdate
