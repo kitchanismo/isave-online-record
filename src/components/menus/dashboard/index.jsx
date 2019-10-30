@@ -12,6 +12,7 @@ const Dashboard = ({ auth, ...props }) => {
         {!auth.isPromo() && !auth.isAdmin() && (
           <div>
             <button
+              title="Add new FSP"
               onClick={() => props.history.replace('/dashboard/new-fs')}
               className="btn btn-sm btn-grad-primary"
             >
@@ -19,6 +20,7 @@ const Dashboard = ({ auth, ...props }) => {
               FUTURE SAVINGS
             </button>
             <button
+              title="Add new GPA"
               onClick={() => props.history.replace('/dashboard/new-gpa')}
               className="btn btn-sm btn-grad-primary  ml-2"
             >

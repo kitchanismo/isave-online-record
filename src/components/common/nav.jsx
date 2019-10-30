@@ -26,7 +26,11 @@ const Nav = props => {
               {auth.isValidUser() && (
                 <React.Fragment>
                   <li className="nav-item ml-1">
-                    <NavLink className="nav-link active" to={`/profile/me`}>
+                    <NavLink
+                      title="View your profile"
+                      className="nav-link active"
+                      to={`/profile/me`}
+                    >
                       <span className="fa fa-user mr-2"></span>
 
                       {cap(auth.getCurrentUser().username) +

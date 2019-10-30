@@ -138,7 +138,11 @@ const Charts = props => {
             <div className="wrapper-list">
               {reports.map(client => (
                 <li className="list-group-item d-flex justify-content-between align-items-center">
-                  <Link className="link-policy" to={toView(client.remarks)}>
+                  <Link
+                    title="View details"
+                    className="link-policy"
+                    to={toView(client.remarks)}
+                  >
                     {`${client.lastname}, ${client.firstname} ${client.middlename}`}
                   </Link>
                   <span
