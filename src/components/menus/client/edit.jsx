@@ -6,7 +6,8 @@ import {
   formatDate,
   cap,
   joiLettersOnly,
-  joiMobileNumber
+  joiMobileNumber,
+  calculateAge
 } from '../../../services/utilsService'
 import auth from '../../../services/authService'
 import { ClientContext } from '../../../context'
@@ -181,6 +182,13 @@ const EditClient = props => {
   }
 
   const handleSubmit = async (e, client) => {
+    const age = calculateAge(client.birthdate)
+
+    if (age < 7 || age > 60) {
+      setErrors({ birthdate: '"Age" must be 7 to 60 years old!' })
+      return
+    }
+
     if (client.codeNo === '') {
       setErrors({ codeNo: `"Policy Number" is not allowed to be empty` })
       return

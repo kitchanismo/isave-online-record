@@ -5,7 +5,8 @@ import Joi from 'joi-browser'
 import {
   formatDate,
   joiLettersOnly,
-  joiMobileNumber
+  joiMobileNumber,
+  calculateAge
 } from '../../../services/utilsService'
 import auth from '../../../services/authService'
 import { getPromos } from '../../../services/userService'
@@ -139,6 +140,13 @@ const AddClient = props => {
   }
 
   const handleSubmit = async (e, client) => {
+    const age = calculateAge(client.birthdate)
+
+    if (age < 7 || age > 60) {
+      setErrors({ birthdate: '"Age" must be 7 to 60 years old!' })
+      return
+    }
+
     if (!client.forApproval && client.codeNo === '') {
       setErrors({ codeNo: `"Policy Number" is not allowed to be empty` })
       return

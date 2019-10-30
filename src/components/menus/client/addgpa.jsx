@@ -5,7 +5,8 @@ import { toast } from 'react-toastify'
 import {
   formatDate,
   joiLettersOnly,
-  joiMobileNumber
+  joiMobileNumber,
+  calculateAge
 } from '../../../services/utilsService'
 
 import { ClientContext } from '../../../context'
@@ -71,6 +72,12 @@ const AddGPA = props => {
 
   const handleSubmit = async (e, client) => {
     try {
+      const age = calculateAge(client.birthdate)
+
+      if (age < 7 || age > 60) {
+        setErrors({ birthdate: '"Age" must be 7 to 60 years old!' })
+        return
+      }
       await onAddClient({
         ...client,
         isGPA: true,

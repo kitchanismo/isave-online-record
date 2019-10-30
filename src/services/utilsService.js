@@ -71,4 +71,13 @@ export const mapToSelect = ({ id, name }) => {
   return { id, label: cap(name), value: name }
 }
 
+export const calculateAge = date => {
+  if (!date) return 0
+  const birthdate = new Date(formatDate(date))
+
+  const ageDif = Date.now() - birthdate.getTime()
+  const ageDate = new Date(ageDif)
+  return Math.abs(ageDate.getUTCFullYear() - 1970)
+}
+
 export const cap = str => _.startCase(str)
