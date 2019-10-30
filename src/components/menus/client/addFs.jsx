@@ -204,11 +204,16 @@ const AddClient = props => {
     },
     {
       id: 2,
+      value: 'married',
+      label: 'Married'
+    },
+    {
+      id: 3,
       value: 'divorced',
       label: 'Divorced'
     },
     {
-      id: 3,
+      id: 4,
       value: 'widowed',
       label: 'Widowed'
     }
