@@ -26,7 +26,8 @@ const EditUser = ({ auth, ...props }) => {
     manager: '',
     codeNo: '',
     position: '',
-    branch: ''
+    branch: '',
+    password: ''
   })
   const [isLoaded, setIsLoaded] = useState(false)
 
@@ -106,6 +107,7 @@ const EditUser = ({ auth, ...props }) => {
       .required()
       .label('Branch'),
     manager: Joi.optional(),
+    password: Joi.optional(),
     codeNo: Joi.number()
       .required()
       .min(8)
@@ -154,24 +156,8 @@ const EditUser = ({ auth, ...props }) => {
 
     try {
       await editUser(id, user)
-      // console.log(user)
+
       toast.success('Updated!')
-
-      // setUser({
-      //   username: '',
-      //   email: '',
-      //   password: '',
-      //   firstname: '',
-      //   middlename: '',
-      //   lastname: '',
-      //   codeNo: '',
-      //   confirmPassword: ''
-      // })
-
-      // setSelectedBranch(null)
-      // setSelectedPosition(null)
-
-      //fetchBranches(setBranches)
 
       setErrors(errors)
 
@@ -217,7 +203,11 @@ const EditUser = ({ auth, ...props }) => {
                       handleChangePosition,
                       agents,
                       {
-                        isDisabled: user.position === 'manager' ? true : false
+                        isDisabled:
+                          user.position === 'manager' ||
+                          user.position === 'admin'
+                            ? true
+                            : false
                       }
                     )}
                     {renderInput('codeNo', 'Code Number')}
@@ -237,7 +227,15 @@ const EditUser = ({ auth, ...props }) => {
                   <div className="col-6 pl-3 pr-5 pt-4">
                     {renderInput('username', 'Username', 'text', 'fa-user')}
                     {renderInput('email', 'Email', 'email', 'fa-envelope')}
+                    {user.position === 'admin' &&
+                      renderInput(
+                        'password',
+                        'New Password',
+                        'password',
+                        'fa-key'
+                      )}
                     {renderButton('Update', null, 'Updating...', true)}
+
                     <button
                       onClick={e => {
                         e.preventDefault()

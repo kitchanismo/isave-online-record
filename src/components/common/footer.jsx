@@ -4,6 +4,7 @@ const Footer = () => {
   return (
     <div className="col-12 pt-3 mb-3 footer d-flex justify-content-center">
       <p className="text-secondary">Copyright 2019</p>
+
       <style jsx="">{`
         .footer {
           border-top: 1px solid #ddd;

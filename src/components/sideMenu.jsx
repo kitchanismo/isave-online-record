@@ -177,7 +177,9 @@ const SideMenu = ({ auth, ...props }) => {
             border-radius: 5px 0 0 0;
           }
           .dropdown {
-            margin-left: 30px;
+            width: 100%;
+            margin-left: 0 !important;
+            // margin-left: 30px;
             padding-right: 0 !important;
             background-color: white;
             z-index: 2 !important;

@@ -49,7 +49,7 @@ const isValidUser = () => (getDecodeToken() ? true : false)
 const isAdminOrManager = () => {
   const position = getDecodeToken().data.position
 
-  return position === 'manager' || position === 'admin'
+  return position === 'manager' || position === 'admin' || position === 'super'
 }
 
 const isPromo = () => {
@@ -60,7 +60,13 @@ const isPromo = () => {
 const isAdmin = () => {
   const position = getDecodeToken().data.position
 
-  return position === 'admin'
+  return position === 'admin' || position === 'super'
+}
+
+const isSuper = () => {
+  const position = getDecodeToken().data.position
+
+  return position === 'super'
 }
 
 function isUsernameTaken(username) {
