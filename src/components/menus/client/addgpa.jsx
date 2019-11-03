@@ -10,6 +10,7 @@ import {
 } from '../../../services/utilsService'
 
 import { ClientContext } from '../../../context'
+import Help from './../../common/help'
 const AddGPA = props => {
   const { onAddClient } = useContext(ClientContext)
 

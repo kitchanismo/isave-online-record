@@ -10,8 +10,8 @@ import {
 } from '../../../services/utilsService'
 import auth from '../../../services/authService'
 import { getPromos } from '../../../services/userService'
-
 import { ClientContext } from '../../../context'
+import Help from './../../common/help'
 
 const AddClient = props => {
   const { onAddClient, status } = useContext(ClientContext)
@@ -380,6 +380,11 @@ const AddClient = props => {
                 >
                   Back
                 </button>
+
+                <Help
+                  className="mt-5"
+                  text="Fill up all the necessary informations. Uncheck the checkbox if there is a given policy number."
+                ></Help>
               </div>
             </div>
           )

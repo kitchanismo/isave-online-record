@@ -21,6 +21,10 @@ const Routes = props => {
         render={props => <Home {...props} menu="dashboard" sub="newGPA" />}
       />
       <AuthRoute
+        path="/dashboard/edit-gpa/:id"
+        render={props => <Home {...props} menu="dashboard" sub="editGPA" />}
+      />
+      <AuthRoute
         path="/dashboard"
         render={props => <Home {...props} menu="dashboard" />}
       />
@@ -48,6 +52,10 @@ const Routes = props => {
       <AuthRoute
         path="/profile/me"
         render={props => <Home {...props} menu="profile" sub="me" />}
+      />
+      <AuthRoute
+        path="/profile/edit"
+        render={props => <Home {...props} menu="profile" sub="edit" />}
       />
       <AuthRoute
         isAdminOrManager

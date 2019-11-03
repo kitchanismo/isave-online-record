@@ -411,6 +411,15 @@ const Reports = props => {
     {
       path: 'coverage',
       label: 'Coverage(Year)'
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      content: client => (
+        <Link to={`/dashboard/edit-gpa/${client.id}`}>
+          <button className="btn btn-sm btn-outline-warning ml-1">EDIT</button>
+        </Link>
+      )
     }
   ]
 
@@ -703,10 +712,11 @@ const Reports = props => {
       </div>
 
       <style jsx="">{`
-        .fa-print {
+        .fa-print, .fa-check, .fa-close {
           margin-top: 0 !important;
         }
 
+      
         .wrapper-client {
           margin: 0;
           padding: 0;

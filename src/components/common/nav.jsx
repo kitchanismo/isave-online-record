@@ -38,7 +38,7 @@ const Nav = props => {
                         cap(auth.getCurrentUser().position)}
                     </NavLink>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a
                       href="/login"
                       className="nav-link"
@@ -46,7 +46,7 @@ const Nav = props => {
                     >
                       Logout
                     </a>
-                  </li>
+                  </li> */}
                 </React.Fragment>
               )}
             </ul>

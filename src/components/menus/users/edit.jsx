@@ -172,7 +172,11 @@ const EditUser = ({ auth, ...props }) => {
   }
 
   const isAgent = () => {
-    return user.position !== 'manager' && user.position !== 'admin'
+    return (
+      user.position !== 'manager' &&
+      user.position !== 'admin' &&
+      user.position !== 'super'
+    )
   }
 
   return (
@@ -211,13 +215,15 @@ const EditUser = ({ auth, ...props }) => {
                       }
                     )}
                     {renderInput('codeNo', 'Code Number')}
-                    {renderSelect(
-                      'branch',
-                      'Branch',
-                      selectedBranch,
-                      handleChangeBranch,
-                      branches
-                    )}
+                    {user.position !== 'super' &&
+                      user.position !== 'admin' &&
+                      renderSelect(
+                        'branch',
+                        'Branch',
+                        selectedBranch,
+                        handleChangeBranch,
+                        branches
+                      )}
 
                     {isAgent() &&
                       renderInput('manager', 'Manager', 'manager', '', {

@@ -144,7 +144,7 @@ const Form = props => {
   const renderButton = (label, icon, labelLoading = label, isBlock = false) => {
     return (
       <button
-        // disabled={isButtonDisable()}
+        disabled={isButtonDisable()}
         className={`btn btn-grad-primary mt-3 ${isBlock ? 'btn-block' : ''}`}
       >
         <span className={`${icon} mr-1`} />

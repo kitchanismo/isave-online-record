@@ -23,8 +23,16 @@ async function signUp(user) {
 }
 function logout() {
   http.sendJwt(jwt())
-  removeTokens()
-  http.post('/token/revoke', { refreshToken: jwt().refreshToken })
+  http
+    .post('/token/revoke', { refreshToken: jwt().refreshToken })
+    .then(() => {
+      removeTokens()
+      window.location.href = window.location.origin
+    })
+    .catch(() => {
+      removeTokens()
+      window.location.href = window.location.origin
+    })
 }
 
 function removeTokens() {

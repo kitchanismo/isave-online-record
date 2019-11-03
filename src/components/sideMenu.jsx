@@ -33,7 +33,7 @@ const SideMenu = ({ auth, ...props }) => {
 
   return (
     <React.Fragment>
-      <nav className="side-menu col-md-2 d-none d-md-block bg-dark mr-0 pt-1">
+      <nav className="side-menu col-md-2 d-none bg-dark d-md-block mr-0 pt-1">
         <ul className="nav flex-column mb-2 mt-2 pr-0">
           <li className="nav-item">
             <NavLink
@@ -178,8 +178,8 @@ const SideMenu = ({ auth, ...props }) => {
           }
           .dropdown {
             width: 100%;
-            margin-left: 0 !important;
-            // margin-left: 30px;
+
+            margin-left: 30px;
             padding-right: 0 !important;
             background-color: white;
             z-index: 2 !important;
@@ -194,6 +194,9 @@ const SideMenu = ({ auth, ...props }) => {
           }
           .dropdown-item:hover {
             color: gray !important;
+          }
+          .dropdown-item:active {
+            background-color: white !important;
           }
         `}</style>
       </nav>

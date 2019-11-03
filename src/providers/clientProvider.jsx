@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ClientContext } from '../context'
 import {
+  getClientGPA,
   getClient,
   updateClient,
   getStatus,
@@ -46,6 +47,10 @@ const ClientProvider = props => {
     return await getClient(id)
   }
 
+  const handleGetClientGPA = async id => {
+    return await getClientGPA(id)
+  }
+
   const handleUpdateClient = async (id, client) => {
     await updateClient(id, client)
     setStatus(await getStatus())
@@ -61,7 +66,8 @@ const ClientProvider = props => {
         onRetrieved: handleRetrieved,
         onEnforced: handleEnforced,
         onUpdateClient: handleUpdateClient,
-        getClient: handleGetClient
+        getClient: handleGetClient,
+        getClientGPA: handleGetClientGPA
       }}
     >
       {props.children}

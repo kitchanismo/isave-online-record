@@ -3,9 +3,9 @@ import { getMe } from './../../../services/userService'
 import { cap } from '../../../services/utilsService'
 import { appUrl } from '../../../config.json'
 import Spinner from '../../common/spinner'
+import auth from '../../../services/authService'
 
 const Me = props => {
-  const { id } = props.match.params
   const [user, setUser] = useState({
     username: '',
     profile: {
@@ -31,6 +31,12 @@ const Me = props => {
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">My Profile</h1>
+        <button
+          onClick={() => auth.logout()}
+          className={`btn btn-sm btn-outline-danger`}
+        >
+          LOGOUT
+        </button>
       </div>
       <Spinner isLoaded={user.username !== ''} className="spinner">
         <div className="row mb-3">
@@ -54,10 +60,10 @@ const Me = props => {
                 )}`}</h5>
                 <p className="card-subtitle">{cap(user.username)}</p>
                 <button
-                  onClick={() => alert('under construction')}
+                  onClick={() => props.history.replace('/profile/edit')}
                   className={`mt-4 btn btn-sm btn-grad-primary`}
                 >
-                  SETTING
+                  EDIT
                 </button>
               </div>
             </div>

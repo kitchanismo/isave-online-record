@@ -171,7 +171,7 @@ const NewManager = ({ auth, ...props }) => {
                       <br />
                       <button
                         onClick={() => props.history.replace('/branches/new')}
-                        className="btn btn-sm btn-outline-success ml-1"
+                        className="btn btn-sm btn-outline-info ml-1"
                       >
                         <span className="fa fa-plus mr-1"></span>
                         BRANCH

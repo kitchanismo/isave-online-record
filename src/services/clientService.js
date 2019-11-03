@@ -23,6 +23,11 @@ export function getClient(id) {
   return http.get('/api/clients/show/' + id).then(data => data.data)
 }
 
+export function getClientGPA(id) {
+  http.sendJwt(auth.jwt())
+  return http.get('/api/clients/show-gpa/' + id).then(data => data.data)
+}
+
 export function approved(id, codeNo) {
   http.sendJwt(auth.jwt())
   return http.put('/api/clients/approved/' + id, { codeNo }).then(data => data)

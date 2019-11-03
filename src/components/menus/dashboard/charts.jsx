@@ -132,8 +132,12 @@ const Charts = props => {
               </span>
             </li>
             <li className="header-list py-1 list-group-item d-flex justify-content-between align-items-center">
-              <span className="font-weight-light">Name</span>
-              <span className="font-weight-light">Remarks</span>
+              <span style={{ color: '#eee' }} className="font-weight-light">
+                Name
+              </span>
+              <span style={{ color: '#eee' }} className="font-weight-light">
+                Remarks
+              </span>
             </li>
             <div className="wrapper-list">
               {reports.map(client => (
@@ -167,8 +171,12 @@ const Charts = props => {
               <span className="font-weight-bold">SPIF</span>
             </li>
             <li className="header-list py-1 list-group-item d-flex justify-content-between align-items-center">
-              <span className="font-weight-light">Tab</span>
-              <span className="font-weight-light">Tab</span>
+              <span style={{ color: '#eee' }} className="font-weight-light">
+                Tab
+              </span>
+              <span style={{ color: '#eee' }} className="font-weight-light">
+                Tab
+              </span>
             </li>
             <li className="list-group-item d-flex justify-content-between align-items-center">
               No record/s found!
