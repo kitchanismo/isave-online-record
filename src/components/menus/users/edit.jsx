@@ -215,15 +215,13 @@ const EditUser = ({ auth, ...props }) => {
                       }
                     )}
                     {renderInput('codeNo', 'Code Number')}
-                    {user.position !== 'super' &&
-                      user.position !== 'admin' &&
-                      renderSelect(
-                        'branch',
-                        'Branch',
-                        selectedBranch,
-                        handleChangeBranch,
-                        branches
-                      )}
+                    {renderSelect(
+                      'branch',
+                      'Branch',
+                      selectedBranch,
+                      handleChangeBranch,
+                      branches
+                    )}
 
                     {isAgent() &&
                       renderInput('manager', 'Manager', 'manager', '', {
