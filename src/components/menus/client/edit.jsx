@@ -49,7 +49,9 @@ const EditClient = props => {
   useEffect(() => {
     setIsLoaded(false)
     getClient(id).then(
-      ({ client: { id, coverage, isNear, isDue, isLapsed, ...client } }) => {
+      ({
+        client: { id, branch, coverage, isNear, isDue, isLapsed, ...client }
+      }) => {
         setClient({
           ...client,
           promo: client.promo.value,
@@ -302,6 +304,7 @@ const EditClient = props => {
       birthdate: formatDate(date)
     })
   }
+
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">

@@ -52,6 +52,7 @@ const EditClient = props => {
           userInsured,
           expiredDate,
           promo,
+          branch,
           ...client
         }
       }) => {
