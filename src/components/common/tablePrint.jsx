@@ -12,16 +12,16 @@ class TablePrint extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="d-flex justify-content-center mt-5 pt-5">
-          <div className="m-0 p-0">
+        <div className="d-flex justify-content-center  mt-5 pt-5">
+          <div className="m-0 p-0 text-center">
             <h2>COCOLIFE</h2>
-            <h4>
+            <h4 className="mb-4">
               Report: &nbsp; {this.props.title ? this.props.title : ''} | Date
               Printed: &nbsp;{formatDate(Date.now())} | Count: &nbsp;{' '}
               {this.props.data.length}
             </h4>
 
-            <table className="table ">
+            <table className="table">
               <thead className="thead-light">
                 <tr>
                   {this.props.columns.map((column, i) => (
