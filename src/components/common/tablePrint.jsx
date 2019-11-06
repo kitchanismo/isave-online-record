@@ -17,7 +17,7 @@ class TablePrint extends React.Component {
             <h4>COCOLIFE</h4>
             <p>
               Report in: &nbsp; {this.props.title ? this.props.title : ''}{' '}
-              &nbsp; Date Reported: &nbsp;{formatDate(Date.now())}
+              &nbsp; Date Printed: &nbsp;{formatDate(Date.now())}
             </p>
 
             <table className="table ">
