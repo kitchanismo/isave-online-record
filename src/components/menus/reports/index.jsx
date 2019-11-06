@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import Table from '../../common/table'
 import useReport from '../../../hooks/useReport'
 import { sortBy } from '../../../services/utilsService'
@@ -10,9 +10,10 @@ import EnforcedModal from '../../common/modalEnforced'
 import ApprovedModal from '../../common/modalApproved'
 import Spinner from './../../common/spinner'
 import auth from '../../../services/authService'
-
+import TablePrint from '../../common/tablePrint'
 import CustomModal from '../../common/modal'
 import Select from 'react-select'
+import ReactToPrint from 'react-to-print'
 
 const Reports = props => {
   const [search, setSearch] = useState('')
@@ -138,11 +139,6 @@ const Reports = props => {
       label: 'Mode'
     },
     {
-      path: 'dateInsured',
-      label: 'Date Insured',
-      content: client => formatDate(client.dateInsured)
-    },
-    {
       key: 'actions',
       label: 'Actions',
       content: client => (
@@ -256,6 +252,7 @@ const Reports = props => {
     },
 
     {
+      key: 'notify',
       path: 'isDue',
       label: 'Notify',
       content: client => {
@@ -321,6 +318,7 @@ const Reports = props => {
       content: client => formatDate(client.expiredDate)
     },
     {
+      key: 'notify',
       path: 'isNear',
       label: 'Notify',
       content: client => {
@@ -506,6 +504,12 @@ const Reports = props => {
       : _columns.filter(c => c.key !== 'actions')
   }
 
+  const printColums = () => {
+    const _columns = [...preparedColumns()]
+
+    return _columns.filter(c => c.key !== 'notify' && c.key !== 'actions')
+  }
+
   const title = () => {
     switch (name) {
       case 'enforced':
@@ -556,10 +560,10 @@ const Reports = props => {
 
   const [modalApproved, setModalApproved] = useState(false)
 
-  const toggleApproved = (e, codeNo) => {
+  const toggleApproved = (e, _client) => {
     setModalApproved(modal => !modal)
     if (e.target && e.target.name === 'primary') {
-      onApproved(client.id, codeNo).then(data => {
+      onApproved(client.id, _client).then(data => {
         setClient(null)
         setRefresh(r => !r)
       })
@@ -569,6 +573,7 @@ const Reports = props => {
   const renderModalApproved = () => {
     return (
       <ApprovedModal
+        client={client}
         title="Cocolife"
         modal={modalApproved}
         toggle={toggleApproved}
@@ -626,6 +631,7 @@ const Reports = props => {
 
   const handleChangeGender = gender => setGender(gender)
 
+  const componentRef = useRef()
   return (
     <React.Fragment>
       {client && renderModalEnforced(client)}
@@ -634,10 +640,17 @@ const Reports = props => {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">{title()}</h1>
 
-        {/* <button className="btn btn-sm btn-grad-primary ">
-          <span className="fa fa-print mr-1"></span>
-          PRINT
-        </button> */}
+        {reports.length > 0 && (
+          <ReactToPrint
+            trigger={() => (
+              <button className="btn btn-sm btn-grad-primary ">
+                <span className="fa fa-print mr-1"></span>
+                PRINT PREVIEW
+              </button>
+            )}
+            content={() => componentRef.current}
+          />
+        )}
       </div>
       {name !== 'user-archived' && (
         <React.Fragment>
@@ -705,6 +718,14 @@ const Reports = props => {
             sortColumn={sortColumn}
             onSort={handleSort}
           />
+          <div style={{ display: 'none' }}>
+            <TablePrint
+              title={title()}
+              ref={componentRef}
+              columns={printColums()}
+              data={reports}
+            />
+          </div>
         </Spinner>
         {isLoaded && reports.length === 0 && (
           <h6 className="mt-2 mb-5">No records found!</h6>
@@ -712,11 +733,13 @@ const Reports = props => {
       </div>
 
       <style jsx="">{`
-        .fa-print, .fa-check, .fa-close {
+        .fa-print,
+        .fa-check,
+        .fa-close {
           margin-top: 0 !important;
-        }
+        }import TablePrint from './../../common/tablePrint';
 
-      
+
         .wrapper-client {
           margin: 0;
           padding: 0;

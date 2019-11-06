@@ -6,7 +6,8 @@ import {
   formatDate,
   joiLettersOnly,
   joiMobileNumber,
-  calculateAge
+  calculateAge,
+  getExpiredDate
 } from '../../../services/utilsService'
 import auth from '../../../services/authService'
 import { getPromos } from '../../../services/userService'
@@ -90,9 +91,7 @@ const AddClient = props => {
     birthdate: Joi.string()
       .required()
       .label('Birthdate'),
-    dateInsured: Joi.string()
-      .required()
-      .label('Date Insured'),
+    dateInsured: Joi.optional(),
     forApproval: Joi.optional(),
     userInsured: Joi.optional(),
     gender: Joi.string()
@@ -127,16 +126,6 @@ const AddClient = props => {
         expiredDate
       })
     }
-  }
-
-  const getExpiredDate = (date, mode) => {
-    const dateInsured = new Date(date)
-
-    const expiredDate = new Date(dateInsured)
-
-    expiredDate.setMonth(dateInsured.getMonth() + getAddedMonth(mode))
-
-    return formatDate(expiredDate)
   }
 
   const handleSubmit = async (e, client) => {
@@ -249,21 +238,6 @@ const AddClient = props => {
     }
   ]
 
-  const getAddedMonth = mode => {
-    switch (mode) {
-      case 'monthly':
-        return 1
-      case 'quarterly':
-        return 3
-      case 'semi':
-        return 6
-      case 'annually':
-        return 12
-      default:
-        return 0
-    }
-  }
-
   const handleDateInsured = date => {
     const expiredDate = selectedMode
       ? getExpiredDate(date, selectedMode.value)
@@ -328,7 +302,6 @@ const AddClient = props => {
                     )}
                   </div>
                 </div>
-
                 {renderDatePicker('birthdate', 'Birthdate', {
                   onChange: handleBirthdate
                 })}
@@ -337,10 +310,6 @@ const AddClient = props => {
               </div>
 
               <div className="col-6">
-                {renderDatePicker('dateInsured', 'Date Insured', {
-                  onChange: handleDateInsured
-                })}
-
                 {renderSelect(
                   'mode',
                   'Mode of Payment',
@@ -348,9 +317,7 @@ const AddClient = props => {
                   handleChangeMode,
                   modes
                 )}
-                {renderInput('expiredDate', 'Due Date', 'text', '', {
-                  disabled: true
-                })}
+
                 {renderSelect(
                   'promo',
                   'Promo Officer',
@@ -358,6 +325,22 @@ const AddClient = props => {
                   handleChangePromo,
                   promos
                 )}
+
+                {!client.forApproval && (
+                  <div className="row m-0 p-0">
+                    <div className="col-6 m-0 py-0 pl-0 pr-2">
+                      {renderDatePicker('dateInsured', 'Date Insured', {
+                        onChange: handleDateInsured
+                      })}
+                    </div>
+                    <div className="col-6 m-0 py-0 pr-0 pl-2">
+                      {renderInput('expiredDate', 'Due Date', 'text', '', {
+                        disabled: true
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 {!client.forApproval && renderInput('codeNo', 'Policy No')}
 
                 {renderCheckbox('forApproval', 'For Approval', {

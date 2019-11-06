@@ -29,7 +29,7 @@ const Login = ({ auth, ...props }) => {
     auth
       .login(data)
       .then(() => {
-        props.history.replace('/')
+        props.history.replace('/dashboard')
       })
       .catch(({ response }) => {
         if (response && response.status === 401) {

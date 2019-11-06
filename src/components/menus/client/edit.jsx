@@ -355,9 +355,18 @@ const EditClient = props => {
                 </div>
 
                 <div className="col-6">
-                  {renderDatePicker('dateInsured', 'Date Insured', {
-                    onChange: handleDateInsured
-                  })}
+                  <div className="row m-0 p-0">
+                    <div className="col-6 m-0 py-0 pl-0 pr-2">
+                      {renderDatePicker('dateInsured', 'Date Insured', {
+                        onChange: handleDateInsured
+                      })}
+                    </div>
+                    <div className="col-6 m-0 py-0 pr-0 pl-2">
+                      {renderInput('expiredDate', 'Due Date', 'text', '', {
+                        disabled: true
+                      })}
+                    </div>
+                  </div>
                   {renderSelect(
                     'mode',
                     'Mode of Payment',
@@ -365,9 +374,7 @@ const EditClient = props => {
                     handleChangeMode,
                     modes
                   )}
-                  {renderInput('expiredDate', 'Due Date', 'text', '', {
-                    disabled: true
-                  })}
+
                   {renderSelect(
                     'promo',
                     'Promo Officer',
