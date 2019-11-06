@@ -14,11 +14,12 @@ class TablePrint extends React.Component {
       <React.Fragment>
         <div className="d-flex justify-content-center mt-5 pt-5">
           <div className="m-0 p-0">
-            <h4>COCOLIFE</h4>
-            <p>
-              Report in: &nbsp; {this.props.title ? this.props.title : ''}{' '}
-              &nbsp; Date Printed: &nbsp;{formatDate(Date.now())}
-            </p>
+            <h2>COCOLIFE</h2>
+            <h4>
+              Report: &nbsp; {this.props.title ? this.props.title : ''} | Date
+              Printed: &nbsp;{formatDate(Date.now())} | Count: &nbsp;{' '}
+              {this.props.data.length}
+            </h4>
 
             <table className="table ">
               <thead className="thead-light">
@@ -34,7 +35,7 @@ class TablePrint extends React.Component {
                 {this.props.data.map(item => (
                   <tr key={item.id}>
                     {this.props.columns.map((column, i) => (
-                      <td className="text-left pr-2" key={i}>
+                      <td className="data-cell text-left pr-2" key={i}>
                         {this.renderCell(item, column)}
                       </td>
                     ))}
@@ -51,6 +52,12 @@ class TablePrint extends React.Component {
             color: white;
             background: black !important;
             border-color: black !important;
+          }
+          .tcell {
+            font-size: 20px !important;
+          }
+          .data-cell {
+            font-size: 18px !important;
           }
         `}</style>
       </React.Fragment>
