@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { apiUrl } from '../config.json'
 
 axios.interceptors.response.use(
   response => response,
@@ -9,8 +8,14 @@ axios.interceptors.response.use(
   }
 )
 
+const getAPIUrl = () => {
+  return process.env.NODE_ENV === 'development'
+    ? 'http://127.0.0.1:3333'
+    : 'https://isave-online-record.herokuapp.com'
+}
+
 axios.interceptors.request.use(config => {
-  config.baseURL = process.env.API_URL || apiUrl
+  config.baseURL = getAPIUrl()
   return config
 })
 

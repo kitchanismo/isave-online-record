@@ -21,8 +21,6 @@ const Backup = () => {
     return `${month}-${day}-${year}-${time}`
   }
 
-  console.log(process.env)
-
   const handleBackup = e => {
     e.preventDefault()
 
