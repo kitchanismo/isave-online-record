@@ -21,6 +21,8 @@ const Backup = () => {
     return `${month}-${day}-${year}-${time}`
   }
 
+  console.log(process.env)
+
   const handleBackup = e => {
     e.preventDefault()
 
@@ -78,7 +80,7 @@ const Backup = () => {
           </div>
         </form>
         <Help.Info text="Create a backup of database(.sql) file in a server. Filename will be the restore point."></Help.Info>
- </div>
+      </div>
 
       <style jsx="">{`
         .side-content {
