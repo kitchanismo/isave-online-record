@@ -194,13 +194,13 @@ const SideMenu = ({ auth, ...props }) => {
                 >
                   Backup Database
                 </Link>
-                <Link
+                {/* <Link
                   onClick={() => setToggleSetting(false)}
                   className="dropdown-item"
                   to={`/settings/restore`}
                 >
                   Restore Database
-                </Link>
+                </Link> */}
               </div>
             )}
           </li>
