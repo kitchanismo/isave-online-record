@@ -13,6 +13,16 @@ const Routes = props => {
   return (
     <Switch>
       <AuthRoute
+        isAdmin
+        path="/settings/backup"
+        render={props => <Home {...props} menu="settings" sub="backup" />}
+      />
+      <AuthRoute
+        isAdmin
+        path="/settings/restore"
+        render={props => <Home {...props} menu="settings" sub="restore" />}
+      />
+      <AuthRoute
         path="/dashboard/new-fs"
         render={props => <Home {...props} menu="dashboard" sub="newFs" />}
       />

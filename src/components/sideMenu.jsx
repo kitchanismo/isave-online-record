@@ -5,8 +5,8 @@ import { theme } from './../config.json'
 import { UserContext, ClientContext } from './../context'
 
 const SideMenu = ({ auth, ...props }) => {
-  const [toggle, setToggle] = useState(false)
-
+  const [toggleReport, setToggleReport] = useState(false)
+  const [toggleSetting, setToggleSetting] = useState(false)
   const {
     state: { unverify },
     onSetStatus
@@ -19,7 +19,7 @@ const SideMenu = ({ auth, ...props }) => {
   const reportMenu = (name, label, value) => {
     return (
       <Link
-        onClick={() => setToggle(false)}
+        onClick={() => setToggleReport(false)}
         className="dropdown-item"
         to={`/reports/${name}`}
       >
@@ -37,7 +37,10 @@ const SideMenu = ({ auth, ...props }) => {
         <ul className="nav flex-column mb-2 mt-2 pr-0">
           <li className="nav-item">
             <NavLink
-              onClick={() => setToggle(false)}
+              onClick={() => {
+                setToggleSetting(false)
+                setToggleReport(false)
+              }}
               name="dashboard"
               to="/dashboard"
               className={`nav-link text-white `}
@@ -49,7 +52,10 @@ const SideMenu = ({ auth, ...props }) => {
           {auth.isAdmin() && (
             <li className="nav-item">
               <NavLink
-                onClick={() => setToggle(false)}
+                onClick={() => {
+                  setToggleSetting(false)
+                  setToggleReport(false)
+                }}
                 name="branch"
                 to="/branches"
                 className={`nav-link text-white`}
@@ -66,7 +72,8 @@ const SideMenu = ({ auth, ...props }) => {
                 <div className="d-flex ml-3">
                   <NavLink
                     onClick={() => {
-                      setToggle(false)
+                      setToggleReport(false)
+                      setToggleSetting(false)
                       onSetStatus(null)
                     }}
                     to="/users"
@@ -81,7 +88,7 @@ const SideMenu = ({ auth, ...props }) => {
                     data-toggle="tooltip"
                     title={`You have ${unverify} unverify user/s!`}
                     onClick={() => {
-                      setToggle(false)
+                      setToggleReport(false)
                       onSetStatus(0)
                     }}
                     to="/users"
@@ -100,13 +107,18 @@ const SideMenu = ({ auth, ...props }) => {
             <div className="row">
               <div className="d-flex ml-3">
                 <a
-                  onClick={() => setToggle(!toggle)}
+                  onClick={() => {
+                    setToggleReport(!toggleReport)
+                    setToggleSetting(false)
+                  }}
                   className="nav-link text-white pr-1"
                 >
                   <span className="fa fa-file mr-2"></span>
                   Reports
                   <span
-                    className={`fa fa-angle-${!toggle ? 'down' : 'up'} ml-1`}
+                    className={`fa fa-angle-${
+                      !toggleReport ? 'down' : 'up'
+                    } ml-1`}
                   ></span>
                 </a>
               </div>
@@ -125,7 +137,7 @@ const SideMenu = ({ auth, ...props }) => {
               </div>
             </div>
 
-            {toggle && (
+            {toggleReport && (
               <div className="dropdown">
                 {reportMenu('for-approval', 'For Approval', forApproval)}
                 {reportMenu(
@@ -146,6 +158,49 @@ const SideMenu = ({ auth, ...props }) => {
                     {reportMenu('user-archived', 'User Archived')}
                   </React.Fragment>
                 )}
+              </div>
+            )}
+          </li>
+
+          <li className="nav-item">
+            <div className="row">
+              <div className="d-flex ml-3">
+                <a
+                  onClick={() => {
+                    setToggleSetting(!toggleSetting)
+                    setToggleReport(false)
+                  }}
+                  className="nav-link text-white pr-1"
+                >
+                  <span className="fa fa-gear mr-2"></span>
+                  Settings
+                  <span
+                    className={`fa fa-angle-${
+                      !toggleSetting ? 'down' : 'up'
+                    } ml-1`}
+                  ></span>
+                </a>
+              </div>
+            </div>
+
+            {toggleSetting && (
+              <div className="dropdown">
+                <Link
+                  onClick={() => {
+                    setToggleSetting(false)
+                  }}
+                  className="dropdown-item"
+                  to={`/settings/backup`}
+                >
+                  Backup Database
+                </Link>
+                <Link
+                  onClick={() => setToggleSetting(false)}
+                  className="dropdown-item"
+                  to={`/settings/restore`}
+                >
+                  Restore Database
+                </Link>
               </div>
             )}
           </li>

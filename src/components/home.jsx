@@ -19,6 +19,9 @@ import EditBranch from './menus/branch/edit'
 import NewBranch from './menus/branch/new'
 import EditClient from './menus/client/edit'
 import EditGPA from './menus/client/editgpa'
+import Backup from './menus/settings/backup'
+import Restore from './menus/settings/restore'
+
 const Home = ({ menu, sub, ...props }) => {
   return (
     <React.Fragment>
@@ -64,9 +67,15 @@ const Home = ({ menu, sub, ...props }) => {
                       {!sub && <Users {...props} />}
                     </React.Fragment>
                   )}
-                  {menu === 'reports' && <Reports {...props} />}
-
                   {menu === 'clients' && <EditClient {...props} />}
+
+                  {menu === 'reports' && <Reports {...props} />}
+                  {menu === 'settings' && (
+                    <React.Fragment>
+                      {sub === 'backup' && <Backup {...props} />}
+                      {sub === 'restore' && <Restore {...props} />}
+                    </React.Fragment>
+                  )}
                 </main>
               </SideMenu>
 
@@ -79,7 +88,6 @@ const Home = ({ menu, sub, ...props }) => {
         .dashboard {
           border-radius: 5px px 0 0;
         }
-       
       `}</style>
     </React.Fragment>
   )

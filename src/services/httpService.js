@@ -49,8 +49,8 @@ function throwError(error) {
     error.response.status >= 400 &&
     error.response.status < 500
   if (!expectedError) {
-    toast.error('An unexpected error occurrred.')
-    console.log(error)
+    // toast.error('An unexpected error occurrred.')
+    console.log(error.message)
   }
 
   return Promise.reject(error)

@@ -22,17 +22,20 @@ async function signUp(user) {
   return false
 }
 function logout() {
-  http.sendJwt(jwt())
-  http
-    .post('/token/revoke', { refreshToken: jwt().refreshToken })
-    .then(() => {
-      removeTokens()
-      window.location.href = window.location.origin
-    })
-    .catch(() => {
-      removeTokens()
-      window.location.href = window.location.origin
-    })
+  // http.sendJwt(jwt())
+  // http
+  //   .post('/token/revoke', { refreshToken: jwt().refreshToken })
+  //   .then(() => {
+  //     removeTokens()
+  //     window.location.href = window.location.origin
+  //   })
+  //   .catch(() => {
+  //     removeTokens()
+  //     window.location.href = window.location.origin
+  //   })
+
+  removeTokens()
+  window.location.href = window.location.origin
 }
 
 function removeTokens() {
