@@ -7,8 +7,7 @@ function saveJwt({ token, refreshToken }) {
 }
 
 async function login(user) {
-  const now = new Date(Date.now())
-  return await http.post('/auth/login', { now, user }).then(data => {
+  return await http.post('/auth/login', { user }).then(data => {
     saveJwt(data.data.jwt)
     localStorage.setItem('log-id', data.data.logId)
   })
@@ -27,10 +26,9 @@ function logout() {
   http.sendJwt(jwt())
 
   const logId = localStorage.getItem('log-id')
-  const now = new Date(Date.now())
 
   http
-    .post('/auth/logout', { logId, now })
+    .post('/auth/logout', { logId })
     .then(() => {
       removeTokens()
       window.location.href = window.location.origin
