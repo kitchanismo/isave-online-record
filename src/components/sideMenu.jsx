@@ -162,48 +162,50 @@ const SideMenu = ({ auth, ...props }) => {
             )}
           </li>
 
-          <li className="nav-item">
-            <div className="row">
-              <div className="d-flex ml-3">
-                <a
-                  onClick={() => {
-                    setToggleSetting(!toggleSetting)
-                    setToggleReport(false)
-                  }}
-                  className="nav-link text-white pr-1"
-                >
-                  <span className="fa fa-gear mr-2"></span>
-                  Settings
-                  <span
-                    className={`fa fa-angle-${
-                      !toggleSetting ? 'down' : 'up'
-                    } ml-1`}
-                  ></span>
-                </a>
+          {auth.isAdmin() && (
+            <li className="nav-item">
+              <div className="row">
+                <div className="d-flex ml-3">
+                  <a
+                    onClick={() => {
+                      setToggleSetting(!toggleSetting)
+                      setToggleReport(false)
+                    }}
+                    className="nav-link text-white pr-1"
+                  >
+                    <span className="fa fa-gear mr-2"></span>
+                    Settings
+                    <span
+                      className={`fa fa-angle-${
+                        !toggleSetting ? 'down' : 'up'
+                      } ml-1`}
+                    ></span>
+                  </a>
+                </div>
               </div>
-            </div>
 
-            {toggleSetting && (
-              <div className="dropdown">
-                <Link
-                  onClick={() => {
-                    setToggleSetting(false)
-                  }}
-                  className="dropdown-item"
-                  to={`/settings/backup`}
-                >
-                  Backup Database
-                </Link>
-                {/* <Link
+              {toggleSetting && (
+                <div className="dropdown">
+                  <Link
+                    onClick={() => {
+                      setToggleSetting(false)
+                    }}
+                    className="dropdown-item"
+                    to={`/settings/backup`}
+                  >
+                    Backup Database
+                  </Link>
+                  {/* <Link
                   onClick={() => setToggleSetting(false)}
                   className="dropdown-item"
                   to={`/settings/restore`}
                 >
                   Restore Database
                 </Link> */}
-              </div>
-            )}
-          </li>
+                </div>
+              )}
+            </li>
+          )}
         </ul>
 
         <style jsx="">{`

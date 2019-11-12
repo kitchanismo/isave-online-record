@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { onBackup } from './../../../services/databaseService'
+import { onBackup, getFiles, getSql } from './../../../services/databaseService'
 import Help from './../../common/help'
+import { theme } from '../../../config.json'
+import _ from 'lodash'
 
 const Backup = () => {
   const [file, setFile] = useState('')
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isBackedUp, setIsBackedUp] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const [files, setFiles] = useState([])
 
   useEffect(() => {
+    fetchFiles()
     setFile(getFile())
   }, [])
+
+  const fetchFiles = () => {
+    getFiles().then(files => {
+      setFiles(_.sortBy(files, f => f.date).reverse())
+    })
+  }
 
   const getFile = () => {
     const now = new Date(Date.now())
@@ -21,20 +33,56 @@ const Backup = () => {
     return `${month}-${day}-${year}-${time}`
   }
 
+  const downloadSQLFile = (sql, filename) => {
+    const element = document.createElement('a')
+    const file = new Blob([sql], { type: '*.sql' })
+    element.href = URL.createObjectURL(file)
+    element.download = `${filename}.sql`
+    document.body.appendChild(element) // Required for this to work in FireFox
+    element.click()
+  }
+
   const handleBackup = e => {
     e.preventDefault()
 
     if (!file) return
 
-    setIsLoaded(true)
+    setIsBackedUp(true)
 
     onBackup(file)
       .then(() => {
         setFile(getFile())
-        setIsLoaded(false)
+        setIsBackedUp(false)
         toast.success('Successfully backed up!')
+        fetchFiles()
       })
       .catch(e => console.log(e))
+  }
+  const handleDownload = file => {
+    setIsLoading(true)
+    getSql(file).then(sql => {
+      downloadSQLFile(sql, file)
+
+      setIsLoading(false)
+    })
+  }
+
+  const filenames = files => {
+    return files.map(file => (
+      <li
+        key={file.date}
+        className="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <a className="text-secondary">{file.name}</a>
+        <button
+          disabled={isLoading}
+          onClick={() => handleDownload(file.name)}
+          className="btn btn-outline-info btn-sm ml-5"
+        >
+          <span className="fa fa-download "></span> Download
+        </button>
+      </li>
+    ))
   }
 
   return (
@@ -42,50 +90,80 @@ const Backup = () => {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">Backup Database</h1>
       </div>
-
-      <div className="col-6 p-0 m-0">
-        <form onSubmit={handleBackup}>
-          <div className="form-group">
-            <label htmlFor="file">Filename</label>
-            <div className="row m-0 p-0">
-              <div className="col-11 m-0 p-0">
-                <input
-                  type="text"
-                  name="file"
-                  value={file}
-                  onChange={e => setFile(e.currentTarget.value)}
-                  className="form-control"
-                />
+      <div className="row m-0 p-0">
+        <div className="col-6 pr-2 m-0">
+          <form onSubmit={handleBackup}>
+            <div className="form-group">
+              <label htmlFor="file">Filename</label>
+              <div className="row m-0 p-0">
+                <div className="col-11 m-0 p-0">
+                  <input
+                    type="text"
+                    name="file"
+                    value={file}
+                    onChange={e => setFile(e.currentTarget.value)}
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-1 m-0 p-0">
+                  <a
+                    title="Generate new filename by date"
+                    onClick={() => setFile(getFile())}
+                    className="fa fa-refresh text-info ml-3"
+                  ></a>
+                </div>
               </div>
-              <div className="col-1 m-0 p-0">
-                <a
-                  title="Generate new filename by date"
-                  onClick={() => setFile(getFile())}
-                  className="fa fa-refresh text-info ml-2"
-                ></a>
-              </div>
+              <p className="error-message text-danger p-1">
+                {file ? '' : `"Filename" is not allowed to be empty!`}
+              </p>
+              <button
+                disabled={isBackedUp}
+                type="submit"
+                className="btn btn-grad-primary"
+              >
+                {!isBackedUp ? 'BACK UP NOW' : 'BACKING UP...'}
+              </button>
             </div>
-            <p className="error-message text-danger p-1">
-              {file ? '' : `"Filename" is not allowed to be empty!`}
-            </p>
-            <button
-              disabled={isLoaded}
-              type="submit"
-              className="btn btn-grad-primary"
-            >
-              {!isLoaded ? 'BACK UP NOW' : 'BACKING UP...'}
-            </button>
-          </div>
-        </form>
-        <Help.Info text="Create a backup of database(.sql) file in a server. Filename will be the restore point."></Help.Info>
-      </div>
+          </form>
+          <Help.Info text="Create a backup to a server and download a database(.sql) file."></Help.Info>
+        </div>
 
+        <div className="col-6 pl-2 m-0">
+          <ul className="list-group mb-3 mt-2">
+            {isLoading && <p className="text-secondary"> Please wait...</p>}
+            <li className="header-list  list-group-item d-flex justify-content-between align-items-center">
+              <span className="font-weight-bold">Backup list</span>
+              <span className="font-weight-bold">Action</span>
+            </li>
+
+            {filenames(files)}
+
+            {files.length === 0 && (
+              <li className="list-group-item d-flex justify-content-between align-items-center">
+                No record/s found!
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
       <style jsx="">{`
+        .fa-download {
+          margin-top: 0 !important;
+        }
         .side-content {
           border-radius: 5px 0 0 5px;
         }
         .fa-refresh {
           cursor: pointer;
+        }
+        .link-policy {
+          color: ${theme.secondary};
+          cursor: pointer;
+        }
+        .header-list {
+          background-color: ${theme.secondary};
+          border-color: ${theme.secondary};
+          color: white;
         }
       `}</style>
     </React.Fragment>

@@ -17,3 +17,10 @@ export function getFiles() {
   http.sendJwt(auth.jwt())
   return http.get('/api/database/read-files').then(data => data.data.files)
 }
+
+export function getSql(filename) {
+  http.sendJwt(auth.jwt())
+  return http
+    .post('/api/database/get-sql', { filename })
+    .then(data => data.data.sql)
+}
