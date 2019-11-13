@@ -171,7 +171,10 @@ const AddGPA = props => {
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <h1 className="h2">GPA Form</h1>
+        <span className="m-0 p-0">
+          <h1 className="h2">Client Record Management</h1>
+          <h5 className="text-secondary">Add New GPA</h5>
+        </span>
         <a data-tip="Fill up all the necessary informations.">
           <Help />
         </a>
@@ -232,16 +235,6 @@ const AddGPA = props => {
                 )}
                 <button className="btn btn-grad-primary btn-block" name="back">
                   Save
-                </button>
-                <button
-                  onClick={e => {
-                    e.preventDefault()
-                    props.history.replace('/dashboard')
-                  }}
-                  className="btn btn-grad-secondary btn-block"
-                  name="back"
-                >
-                  Back
                 </button>
               </div>
             </div>

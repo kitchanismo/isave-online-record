@@ -111,7 +111,7 @@ const EditUser = ({ auth, ...props }) => {
     codeNo: Joi.number()
       .required()
       .min(8)
-      .label('Code Number')
+      .label('License Code Number')
   }
 
   const handleChangePosition = selectedPosition =>
@@ -182,7 +182,10 @@ const EditUser = ({ auth, ...props }) => {
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <h1 className="h2">Edit User</h1>
+        <span>
+          <h1 className="h2">User Record Management</h1>
+          <h5 className="text-secondary">Edit User</h5>
+        </span>
       </div>
 
       <Spinner isLoaded={isLoaded} className="spinner">
@@ -214,7 +217,7 @@ const EditUser = ({ auth, ...props }) => {
                             : false
                       }
                     )}
-                    {renderInput('codeNo', 'Code Number')}
+                    {renderInput('codeNo', 'License Code Number')}
                     {renderSelect(
                       'branch',
                       'Branch',

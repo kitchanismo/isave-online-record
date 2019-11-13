@@ -26,10 +26,9 @@ const Users = ({ auth, ...props }) => {
     onSetStatus
   } = useContext(UserContext)
 
-
-  useEffect(()=>{
-    getLogs().then(logs=>console.log(logs))
-  },[])
+  useEffect(() => {
+    getLogs().then(logs => console.log(logs))
+  }, [])
 
   const [search, setSearch] = useState('')
 
@@ -38,10 +37,6 @@ const Users = ({ auth, ...props }) => {
   const [sortColumn, setSortColumn] = useState({ path: 'name', order: 'asc' })
 
   const columns = [
-    {
-      path: 'id',
-      label: '#'
-    },
     {
       path: 'username',
       label: 'Username'
@@ -65,7 +60,7 @@ const Users = ({ auth, ...props }) => {
     {
       path: 'profile.codeNo',
       key: 'codeNo',
-      label: 'Code #',
+      label: 'License Code #',
       content: ({ profile }) => profile.codeNo
     },
     {
@@ -90,7 +85,7 @@ const Users = ({ auth, ...props }) => {
       content: user => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-around">
-            <Link to={`/users/${user.id}`}>
+            <Link to={`/users/show/${user.id}`}>
               <button className="btn btn-sm btn-outline-primary ml-1">
                 VIEW
               </button>
@@ -153,7 +148,7 @@ const Users = ({ auth, ...props }) => {
   const renderModal = () => {
     return (
       <CustomModal
-        title="Cocolife"
+        title="Infomatech"
         modal={modal}
         toggle={toggle}
         label={`Are you sure to ${
@@ -167,7 +162,7 @@ const Users = ({ auth, ...props }) => {
   const renderModalDelete = () => {
     return (
       <CustomModal
-        title="Cocolife"
+        title="Infomatech"
         modal={modalDelete}
         toggle={toggleDelete}
         label={`Are you sure to archive ${selectedUser.username}?`}
@@ -209,16 +204,32 @@ const Users = ({ auth, ...props }) => {
       {renderModalDelete()}
 
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <h1 className="h2">Users Management</h1>
-        {auth.isAdmin() && (
+        <h1 className="h2">User Record Management</h1>
+        <span>
+          {auth.isAdmin() && (
+            <button
+              onClick={() => props.history.replace('/users/new')}
+              className="btn btn-sm btn-grad-primary ml-1"
+            >
+              <span className="fa fa-plus mr-1"></span>
+              MANAGER
+            </button>
+          )}
+          {auth.isAdmin() && (
+            <button
+              onClick={() => props.history.replace('/users/user-logs')}
+              className="btn btn-sm btn-outline-secondary ml-1"
+            >
+              View Logs
+            </button>
+          )}
           <button
-            onClick={() => props.history.replace('/users/new')}
-            className="btn btn-sm btn-grad-primary ml-1"
+            onClick={() => props.history.replace('/users/user-archived')}
+            className="btn btn-sm btn-outline-secondary ml-1"
           >
-            <span className="fa fa-plus mr-1"></span>
-            MANAGER
+            View Archived
           </button>
-        )}
+        </span>
       </div>
 
       <div className="col-12">

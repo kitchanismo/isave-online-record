@@ -277,7 +277,7 @@ const EditClient = props => {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      props.history.replace('/reports/gpa')
+                      props.history.replace('/clients/gpa')
                     }}
                     className="btn btn-grad-secondary btn-block"
                     name="back"

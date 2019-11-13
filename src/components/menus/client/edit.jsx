@@ -308,7 +308,10 @@ const EditClient = props => {
   return (
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <h1 className="h2">Edit Client</h1>
+        <span className="m-0 p-0">
+          <h1 className="h2">Client Record Management</h1>
+          <h5 className="text-secondary">Edit Client</h5>
+        </span>
       </div>
       <Spinner isLoaded={isLoaded} className="spinner">
         <Form
@@ -391,7 +394,7 @@ const EditClient = props => {
                   <button
                     onClick={e => {
                       e.preventDefault()
-                      props.history.replace('/reports/enforced')
+                      props.history.replace('/clients/enforced')
                     }}
                     className="btn btn-grad-secondary btn-block"
                     name="back"

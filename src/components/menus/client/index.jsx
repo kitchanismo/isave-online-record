@@ -3,12 +3,12 @@ import Table from '../../common/table'
 import useReport from '../../../hooks/useReport'
 import { sortBy } from '../../../services/utilsService'
 import { Link } from 'react-router-dom'
-import { formatDate } from './../../../services/utilsService'
-import { restoreUser } from './../../../services/userService'
+import { formatDate } from '../../../services/utilsService'
+import { restoreUser } from '../../../services/userService'
 import { ClientContext } from '../../../context'
 import EnforcedModal from '../../common/modalEnforced'
 import ApprovedModal from '../../common/modalApproved'
-import Spinner from './../../common/spinner'
+import Spinner from '../../common/spinner'
 import auth from '../../../services/authService'
 import TablePrint from '../../common/tablePrint'
 import CustomModal from '../../common/modal'
@@ -56,10 +56,7 @@ const Reports = props => {
   }
 
   const enforcedCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -77,7 +74,7 @@ const Reports = props => {
     },
     {
       path: 'codeNo',
-      label: 'Code Number'
+      label: 'Policy #'
     },
     {
       path: 'mode',
@@ -94,7 +91,7 @@ const Reports = props => {
       content: client => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-between">
-            <Link to={`/clients/edit/${client.id}`}>
+            <Link to={`/clients/edit/fs/${client.id}`}>
               <button className="btn btn-sm btn-outline-warning ml-1">
                 EDIT
               </button>
@@ -115,10 +112,7 @@ const Reports = props => {
   ]
 
   const forApprovalCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -159,10 +153,7 @@ const Reports = props => {
   ]
 
   const lapsedCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+
     {
       path: 'firstname',
       label: 'Fullname',
@@ -216,10 +207,7 @@ const Reports = props => {
   ]
 
   const dueCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+ 
     {
       path: 'firstname',
       label: 'Fullname',
@@ -284,10 +272,7 @@ const Reports = props => {
   ]
 
   const nearExpirationCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -332,10 +317,7 @@ const Reports = props => {
   ]
 
   const cancelledCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -354,7 +336,7 @@ const Reports = props => {
     },
     {
       path: 'codeNo',
-      label: 'Code Number'
+      label: 'Policy #'
     },
     {
       path: 'mode',
@@ -383,10 +365,7 @@ const Reports = props => {
   ]
 
   const gpaCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -414,7 +393,7 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <Link to={`/dashboard/edit-gpa/${client.id}`}>
+        <Link to={`/clients/edit/gpa/${client.id}`}>
           <button className="btn btn-sm btn-outline-warning ml-1">EDIT</button>
         </Link>
       )
@@ -422,10 +401,7 @@ const Reports = props => {
   ]
 
   const archivedCol = [
-    {
-      path: 'id',
-      label: '#'
-    },
+  
     {
       path: 'username',
       label: 'Username'
@@ -475,8 +451,11 @@ const Reports = props => {
     {
       path: 'user.profile.firstname',
       label: 'Fullname',
-      content: ({ user }) =>
-        `${user.profile.firstname}, ${user.profile.lastname} ${user.profile.middlename}`
+      content: ({ user }) => {
+        return user
+          ? `${user.profile.firstname}, ${user.profile.lastname} ${user.profile.middlename}`
+          : ''
+      }
     },
     {
       path: 'user.position',
@@ -576,11 +555,11 @@ const Reports = props => {
       case 'gpa':
         return 'GPA'
       case 'user-archived':
-        return 'User Archived'
+        return 'View Archived'
       case 'user-logs':
-        return 'User Logs'
+        return 'View Logs'
       default:
-        return 'Reports'
+        return ''
     }
   }
 
@@ -663,7 +642,7 @@ const Reports = props => {
     e.preventDefault()
 
     setSearch(search)
-    props.history.replace('/reports/' + name + '?search=' + search)
+    props.history.replace('/clients/' + name + '?search=' + search)
     setRefresh(r => !r)
   }
 
@@ -689,7 +668,12 @@ const Reports = props => {
       {renderModalApproved()}
       {user && renderModalRestore()}
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <h1 className="h2">{title()}</h1>
+        <span className="m-0 p-0">
+          <h1 className="h2">{`${
+            name.match(/user.*/) ? 'User' : 'Client'
+          } Record Management`}</h1>
+          <h5 className="text-secondary">{title()}</h5>
+        </span>
 
         {reports.length > 0 && (
           <ReactToPrint
@@ -789,8 +773,7 @@ const Reports = props => {
         .fa-check,
         .fa-close {
           margin-top: 0 !important;
-        }import TablePrint from './../../common/tablePrint';
-
+        }
 
         .wrapper-client {
           margin: 0;

@@ -86,6 +86,12 @@ function isUsernameTaken(username) {
   return http.get('/auth/is-taken?username=' + username).then(data => data.data)
 }
 
+function isCodeNoTaken(codeNo) {
+  return http
+    .get('/auth/is-codeno-taken?codeNo=' + codeNo)
+    .then(data => data.data)
+}
+
 function isEmailTaken(email) {
   return http.get('/auth/is-taken?email=' + email).then(data => data.data)
 }
@@ -108,5 +114,6 @@ export default {
   isValidUser,
   isAdmin,
   isAdminOrManager,
-  isPromo
+  isPromo,
+  isCodeNoTaken
 }

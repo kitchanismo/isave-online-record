@@ -83,7 +83,7 @@ const SignUp = ({ auth, ...props }) => {
     codeNo: Joi.number()
       .required()
       .min(8)
-      .label('Code Number'),
+      .label('License Code Number'),
     manager: Joi.optional()
   }
 
@@ -110,6 +110,20 @@ const SignUp = ({ auth, ...props }) => {
 
   const handleCheckUser = async ({ currentTarget: input }) => {
     const { isTaken } = await auth.isUsernameTaken(input.value)
+
+    const _errors = { ...errors }
+
+    if (isTaken) {
+      _errors[input.name] = `"${input.value}" is taken`
+    }
+
+    setErrors(_errors)
+
+    return _errors
+  }
+
+  const handleCheckCodeNo = async ({ currentTarget: input }) => {
+    const { isTaken } = await auth.isCodeNoTaken(input.value)
 
     const _errors = { ...errors }
 
@@ -222,7 +236,9 @@ const SignUp = ({ auth, ...props }) => {
                     handleChangePosition,
                     agents
                   )}
-                  {renderInput('codeNo', 'Code Number')}
+                  {renderInput('codeNo', 'License Code Number', 'text', '', {
+                    onBlur: handleCheckCodeNo
+                  })}
                   {!hasBranches && <label>No Available Branch</label>}
                   {hasBranches &&
                     renderSelect(

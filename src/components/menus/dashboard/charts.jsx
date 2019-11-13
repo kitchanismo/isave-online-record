@@ -113,11 +113,11 @@ const Charts = props => {
     return 'info'
   }
   const toView = remarks => {
-    if (remarks === 'near expiration') return '/reports/near-expiration'
-    if (remarks === 'on due') return '/reports/due'
-    if (remarks === 'on lapsed') return '/reports/lapsed'
+    if (remarks === 'near expiration') return '/clients/near-expiration'
+    if (remarks === 'on due') return '/clients/due'
+    if (remarks === 'on lapsed') return '/clients/lapsed'
 
-    return '/reports/for-approval'
+    return '/clients/for-approval'
   }
 
   const chart = () => (

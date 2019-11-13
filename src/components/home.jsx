@@ -6,7 +6,7 @@ import AddGPA from './menus/client/addgpa'
 import Branch from './menus/branch/index'
 import { toast } from 'react-toastify'
 import Users from './menus/users/index'
-import Reports from './menus/reports/index'
+import Clients from './menus/client/index'
 import Footer from './common/footer'
 import UserProvider from '../providers/userProvider'
 import ClientProvider from '../providers/clientProvider'
@@ -17,7 +17,7 @@ import EditUser from './menus/users/edit'
 import NewUser from './menus/users/new'
 import EditBranch from './menus/branch/edit'
 import NewBranch from './menus/branch/new'
-import EditClient from './menus/client/edit'
+import EditFs from './menus/client/edit'
 import EditGPA from './menus/client/editgpa'
 import Backup from './menus/settings/backup'
 import Restore from './menus/settings/restore'
@@ -38,14 +38,8 @@ const Home = ({ menu, sub, ...props }) => {
                   role="main"
                   className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"
                 >
-                  {menu === 'dashboard' && (
-                    <React.Fragment>
-                      {sub === 'newFs' && <AddFS {...props} />}
-                      {sub === 'newGPA' && <AddGPA {...props} />}
-                      {sub === 'editGPA' && <EditGPA {...props} />}
-                      {!sub && <Dashboard {...props} />}
-                    </React.Fragment>
-                  )}
+                  {menu === 'dashboard' && <Dashboard {...props} />}
+
                   {menu === 'profile' && (
                     <React.Fragment>
                       {sub === 'me' && <Me {...props} />}
@@ -68,9 +62,15 @@ const Home = ({ menu, sub, ...props }) => {
                       {!sub && <Users {...props} />}
                     </React.Fragment>
                   )}
-                  {menu === 'clients' && <EditClient {...props} />}
-
-                  {menu === 'reports' && <Reports {...props} />}
+                  {menu === 'clients' && (
+                    <React.Fragment>
+                      {sub === 'editFs' && <EditFs {...props} />}
+                      {sub === 'newFs' && <AddFS {...props} />}
+                      {sub === 'newGPA' && <AddGPA {...props} />}
+                      {sub === 'editGPA' && <EditGPA {...props} />}
+                      {!sub && <Clients {...props} />}
+                    </React.Fragment>
+                  )}
                   {menu === 'settings' && (
                     <React.Fragment>
                       {sub === 'backup' && <Backup {...props} />}

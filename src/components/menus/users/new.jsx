@@ -67,11 +67,14 @@ const NewManager = ({ auth, ...props }) => {
     codeNo: Joi.number()
       .required()
       .min(8)
-      .label('Code Number')
+      .label('License Code Number')
   }
 
-  const handleCheckUser = async ({ currentTarget: input }) => {
-    const { isTaken } = await auth.isUsernameTaken(input.value)
+  const handleCheckTaken = async ({ currentTarget: input }) => {
+    const { isTaken } =
+      input.name === 'username'
+        ? await auth.isUsernameTaken(input.value)
+        : await auth.isCodeNoTaken(input.value)
 
     const _errors = { ...errors }
 
@@ -88,7 +91,7 @@ const NewManager = ({ auth, ...props }) => {
     e,
     { username, email, password, firstname, middlename, lastname, codeNo }
   ) => {
-    const _errors = await handleCheckUser(e)
+    const _errors = await handleCheckTaken(e)
 
     if (Object.keys(_errors).length > 0) {
       setErrors(_errors)
@@ -147,7 +150,10 @@ const NewManager = ({ auth, ...props }) => {
   return (
     <React.Fragment>
       <div className="col-12 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-        <h1 className="h2">Add New Manager</h1>
+        <span>
+          <h1 className="h2">User Record Management</h1>
+          <h5 className="text-secondary">Add New Manager</h5>
+        </span>
       </div>
       <Form
         data={{ data: user, setData: setUser }}
@@ -164,7 +170,9 @@ const NewManager = ({ auth, ...props }) => {
                   {renderInput('middlename', 'Middlename')}
                   {renderInput('lastname', 'Lastname')}
 
-                  {renderInput('codeNo', 'Code Number')}
+                  {renderInput('codeNo', 'License Code Number', 'text', '', {
+                    onBlur: handleCheckTaken
+                  })}
                   {!hasBranches && (
                     <React.Fragment>
                       <label>No Available Branch</label>
@@ -189,7 +197,7 @@ const NewManager = ({ auth, ...props }) => {
                 </div>
                 <div className="col-6 pl-2 pr-3 pt-3">
                   {renderInput('username', 'Username', 'text', 'fa-user', {
-                    onBlur: handleCheckUser
+                    onBlur: handleCheckTaken
                   })}
                   {renderInput('email', 'Email', 'email', 'fa-envelope')}
                   {renderInput('password', 'Password', 'password', 'fa-key')}

@@ -23,18 +23,6 @@ const Routes = props => {
         render={props => <Home {...props} menu="settings" sub="restore" />}
       />
       <AuthRoute
-        path="/dashboard/new-fs"
-        render={props => <Home {...props} menu="dashboard" sub="newFs" />}
-      />
-      <AuthRoute
-        path="/dashboard/new-gpa"
-        render={props => <Home {...props} menu="dashboard" sub="newGPA" />}
-      />
-      <AuthRoute
-        path="/dashboard/edit-gpa/:id"
-        render={props => <Home {...props} menu="dashboard" sub="editGPA" />}
-      />
-      <AuthRoute
         path="/dashboard"
         render={props => <Home {...props} menu="dashboard" />}
       />
@@ -55,11 +43,6 @@ const Routes = props => {
         render={props => <Home {...props} menu="agents" />}
       />
       <AuthRoute
-        isAdmin
-        path="/users/new"
-        render={props => <Home {...props} menu="users" sub="newUser" />}
-      />
-      <AuthRoute
         path="/profile/me"
         render={props => <Home {...props} menu="profile" sub="me" />}
       />
@@ -73,8 +56,17 @@ const Routes = props => {
         render={props => <Home {...props} menu="users" sub="editUser" />}
       />
       <AuthRoute
-        path="/users/:id"
+        isAdmin
+        path="/users/new"
+        render={props => <Home {...props} menu="users" sub="newUser" />}
+      />
+      <AuthRoute
+        path="/users/show/:id"
         render={props => <Home {...props} menu="users" sub="viewUser" />}
+      />
+      <AuthRoute
+        path="/users/:name"
+        render={props => <Home {...props} menu="clients" />}
       />
       <AuthRoute
         path="/users"
@@ -82,15 +74,27 @@ const Routes = props => {
         render={props => <Home {...props} menu="users" />}
       />
       <AuthRoute
-        path="/reports/:name"
-        render={props => <Home {...props} menu="reports" />}
+        path="/clients/edit/fs/:id"
+        render={props => <Home {...props} menu="clients" sub="editFs" />}
       />
       <AuthRoute
-        path="/reports"
-        render={props => <Home {...props} menu="reports" />}
+        path="/clients/new/fs"
+        render={props => <Home {...props} menu="clients" sub="newFs" />}
       />
       <AuthRoute
-        path="/clients/edit/:id"
+        path="/clients/edit/gpa/:id"
+        render={props => <Home {...props} menu="clients" sub="editGPA" />}
+      />
+      <AuthRoute
+        path="/clients/new/gpa"
+        render={props => <Home {...props} menu="clients" sub="newGPA" />}
+      />
+      <AuthRoute
+        path="/clients/:name"
+        render={props => <Home {...props} menu="clients" />}
+      />
+      <AuthRoute
+        path="/clients"
         render={props => <Home {...props} menu="clients" />}
       />
       <GuestRoute path="/login" render={props => <Login {...props}></Login>} />

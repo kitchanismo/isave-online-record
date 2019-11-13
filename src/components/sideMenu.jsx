@@ -5,10 +5,10 @@ import { theme } from './../config.json'
 import { UserContext, ClientContext } from './../context'
 
 const SideMenu = ({ auth, ...props }) => {
-  const [toggleReport, setToggleReport] = useState(false)
+  const [toggleClient, setToggleClient] = useState(false)
   const [toggleSetting, setToggleSetting] = useState(false)
   const [settingIsActive, setSettingIsActive] = useState(false)
-  const [reportIsActive, setReportIsActive] = useState(false)
+  const [clientIsActive, setClientIsActive] = useState(false)
 
   const {
     state: { unverify },
@@ -20,33 +20,30 @@ const SideMenu = ({ auth, ...props }) => {
   } = useContext(ClientContext)
 
   useEffect(() => {
- 
     const url = props.match.url
 
-    if (url.match(/reports.*/)) {
-      setReportIsActive(true)
+    if (url.match(/clients.*/)) {
+      setClientIsActive(true)
     }
 
-      if (url.match(/settings.*/)) {
+    if (url.match(/settings.*/)) {
       setSettingIsActive(true)
     }
-  
-    
   }, [])
 
-  const reportMenu = (name, label, value) => {
+  const clientMenu = (name, label, value) => {
     return (
       <Link
         onClick={() => {
-          setToggleReport(false)
+          setToggleClient(false)
           setSettingIsActive(false)
-          setReportIsActive(true)
+          setClientIsActive(true)
         }}
         className="dropdown-item"
-        to={`/reports/${name}`}
+        to={`/clients/${name}`}
       >
         {label}
-        <span className="badge badge-sm badge-secondary ml-2 mt-0">
+        <span className="badge badge-sm badge-danger ml-2 mt-0">
           {value ? value : ''}
         </span>
       </Link>
@@ -61,9 +58,9 @@ const SideMenu = ({ auth, ...props }) => {
             <NavLink
               onClick={() => {
                 setToggleSetting(false)
-                setToggleReport(false)
+                setToggleClient(false)
                 setSettingIsActive(false)
-                setReportIsActive(false)
+                setClientIsActive(false)
               }}
               name="dashboard"
               to="/dashboard"
@@ -78,9 +75,9 @@ const SideMenu = ({ auth, ...props }) => {
               <NavLink
                 onClick={() => {
                   setToggleSetting(false)
-                  setToggleReport(false)
+                  setToggleClient(false)
                   setSettingIsActive(false)
-                  setReportIsActive(false)
+                  setClientIsActive(false)
                 }}
                 name="branch"
                 to="/branches"
@@ -98,11 +95,11 @@ const SideMenu = ({ auth, ...props }) => {
                 <div className="d-flex ml-3">
                   <NavLink
                     onClick={() => {
-                      setToggleReport(false)
+                      setToggleClient(false)
                       setToggleSetting(false)
                       onSetStatus(null)
                       setSettingIsActive(false)
-                      setReportIsActive(false)
+                      setClientIsActive(false)
                     }}
                     to="/users"
                     className={`nav-link text-white pr-1`}
@@ -116,11 +113,11 @@ const SideMenu = ({ auth, ...props }) => {
                     data-toggle="tooltip"
                     title={`You have ${unverify} unverify user/s!`}
                     onClick={() => {
-                      setToggleReport(false)
+                      setToggleClient(false)
                       setToggleSetting(false)
                       onSetStatus(0)
                       setSettingIsActive(false)
-                      setReportIsActive(false)
+                      setClientIsActive(false)
                     }}
                     to="/users"
                     className={`nav-link text-white pt-0 pl-0`}
@@ -139,19 +136,19 @@ const SideMenu = ({ auth, ...props }) => {
               <div className="d-flex ml-3">
                 <a
                   onClick={() => {
-                    setToggleReport(!toggleReport)
+                    setToggleClient(!toggleClient)
                     setToggleSetting(false)
                     setSettingIsActive(false)
                   }}
                   className={`nav-link text-white pr-1 ${
-                    reportIsActive ? 'active' : ''
+                    clientIsActive ? 'active' : ''
                   }`}
                 >
                   <span className="fa fa-file mr-2"></span>
-                  Reports
+                  Clients
                   <span
                     className={`fa fa-angle-${
-                      !toggleReport ? 'down' : 'up'
+                      !toggleClient ? 'down' : 'up'
                     } ml-1`}
                   ></span>
                 </a>
@@ -159,9 +156,9 @@ const SideMenu = ({ auth, ...props }) => {
               <div className="m-0 p-0">
                 <a
                   data-toggle="tooltip"
-                  title={`You have ${total} client reports!`}
+                  title={`You have ${total} client clients!`}
                   className={`nav-link text-white pt-1 pl-0 ${
-                    reportIsActive ? 'active' : ''
+                    clientIsActive ? 'active' : ''
                   }`}
                 >
                   {total > 0 && (
@@ -173,32 +170,48 @@ const SideMenu = ({ auth, ...props }) => {
               </div>
             </div>
 
-            {toggleReport && (
+            {toggleClient && (
               <div className="dropdown">
-                {reportMenu('for-approval', 'For Approval', forApproval)}
-                {reportMenu(
+                {!auth.isPromo() && !auth.isAdmin() && (
+                  <React.Fragment>
+                    <Link
+                      onClick={() => {
+                        setToggleClient(false)
+                        setSettingIsActive(false)
+                        setClientIsActive(true)
+                      }}
+                      className="dropdown-item"
+                      to={`/clients/new/fs`}
+                    >
+                      Add New FSP
+                    </Link>
+                    <Link
+                      onClick={() => {
+                        setToggleClient(false)
+                        setSettingIsActive(false)
+                        setClientIsActive(true)
+                      }}
+                      className="dropdown-item"
+                      to={`/clients/new/gpa`}
+                    >
+                      Add New GPA
+                    </Link>
+                    <hr className="mx-2" />
+                  </React.Fragment>
+                )}
+
+                {clientMenu('for-approval', 'For Approval', forApproval)}
+                {clientMenu(
                   'near-expiration',
                   'Near Expiration',
                   nearExpiration
                 )}
-                {reportMenu('due', 'Due Policy', due)}
-                {reportMenu('lapsed', 'Lapsed Policy', lapsed)}
+                {clientMenu('due', 'Due Policy', due)}
+                {clientMenu('lapsed', 'Lapsed Policy', lapsed)}
                 <hr className="mx-2" />
-                {reportMenu('enforced', 'Enforced Client')}
-                {reportMenu('gpa', 'GPA')}
-                {reportMenu('cancelled', 'Cancelled Policy')}
-                {auth.isAdminOrManager() && (
-                  <React.Fragment>
-                    <hr className="mx-2" />
-
-                    {reportMenu('user-archived', 'User Archived')}
-                  </React.Fragment>
-                )}
-                {auth.isAdmin() && (
-                  <React.Fragment>
-                    {reportMenu('user-logs', 'User Logs')}
-                  </React.Fragment>
-                )}
+                {clientMenu('enforced', 'Enforced Client')}
+                {clientMenu('gpa', 'GPA')}
+                {clientMenu('cancelled', 'Cancelled Policy')}
               </div>
             )}
           </li>
@@ -210,8 +223,8 @@ const SideMenu = ({ auth, ...props }) => {
                   <a
                     onClick={() => {
                       setToggleSetting(!toggleSetting)
-                      setToggleReport(false)
-                      setReportIsActive(false)
+                      setToggleClient(false)
+                      setClientIsActive(false)
                     }}
                     className={`nav-link text-white pr-1 ${
                       settingIsActive ? 'active' : ''
@@ -240,13 +253,6 @@ const SideMenu = ({ auth, ...props }) => {
                   >
                     Backup Database
                   </Link>
-                  {/* <Link
-                  onClick={() => setToggleSetting(false)}
-                  className="dropdown-item"
-                  to={`/settings/restore`}
-                >
-                  Restore Database
-                </Link> */}
                 </div>
               )}
             </li>

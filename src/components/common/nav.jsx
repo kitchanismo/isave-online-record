@@ -18,7 +18,7 @@ const Nav = props => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <h6 className="text-white mt-1">
-            <span style={{ color: theme.secondary }}>COCOLIFE </span>: Hybrid
+            <span style={{ color: theme.secondary }}>INFOMATECH </span>: Hybrid
             Management Information System with SMS Notification
           </h6>
 
