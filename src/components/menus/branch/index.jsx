@@ -22,7 +22,7 @@ const Branch = props => {
       </div>
 
       <div className="row mb-4">
-        <div className="col-12 side-content pt-4">
+        <div className="col-12 side-content pt-2">
           <Spinner isLoaded={isLoaded} className="spinner">
             <TableBranch branches={branches} setBranches={setBranches} />
           </Spinner>

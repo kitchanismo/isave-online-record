@@ -21,6 +21,7 @@ import EditClient from './menus/client/edit'
 import EditGPA from './menus/client/editgpa'
 import Backup from './menus/settings/backup'
 import Restore from './menus/settings/restore'
+import ReactTooltip from 'react-tooltip'
 
 const Home = ({ menu, sub, ...props }) => {
   return (
@@ -32,7 +33,7 @@ const Home = ({ menu, sub, ...props }) => {
               className="row"
               style={{ backgroundColor: 'transparent', minHeight: '800px' }}
             >
-              <SideMenu>
+              <SideMenu {...props}>
                 <main
                   role="main"
                   className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"
@@ -84,6 +85,8 @@ const Home = ({ menu, sub, ...props }) => {
           </div>
         </ClientProvider>
       </UserProvider>
+      <ReactTooltip type="info" effect="float" />
+
       <style jsx="">{`
         .dashboard {
           border-radius: 5px px 0 0;

@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import auth from '../../services/authService'
 import { cap } from '../../services/utilsService'
 import { theme } from '../../config.json'
+import ReactTooltip from 'react-tooltip'
 
 const Nav = props => {
   const handleLogout = () => {
@@ -11,6 +12,9 @@ const Nav = props => {
 
   return (
     <React.Fragment>
+      <ReactTooltip id="user">
+        <span>View my profile</span>
+      </ReactTooltip>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <h6 className="text-white mt-1">
@@ -27,7 +31,8 @@ const Nav = props => {
                 <React.Fragment>
                   <li className="nav-item ml-1">
                     <NavLink
-                      title="View your profile"
+                      data-tip
+                      data-for="user"
                       className="nav-link active"
                       to={`/profile/me`}
                     >

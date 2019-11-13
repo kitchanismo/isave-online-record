@@ -22,6 +22,7 @@
     "react-select2-wrapper": "^1.0.4-beta6",
     "react-to-print": "^2.5.0",
     "react-toastify": "^4.5.2",
+    "react-tooltip": "^3.11.1",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"

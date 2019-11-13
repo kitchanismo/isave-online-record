@@ -471,6 +471,28 @@ const Reports = props => {
     }
   ]
 
+  const logsCol = [
+    {
+      path: 'user.profile.firstname',
+      label: 'Fullname',
+      content: ({ user }) =>
+        `${user.profile.firstname}, ${user.profile.lastname} ${user.profile.middlename}`
+    },
+    {
+      path: 'user.position',
+      label: 'Position'
+    },
+    {
+      path: 'dateTimeIn',
+      label: 'Logged In',
+      content: log => new Date(log.dateTimeIn).toLocaleString()
+    },
+    {
+      path: 'dateTimeOut',
+      label: 'Logged Out',
+      content: log => getLogStatus(log)
+    }
+  ]
   const columns = () => {
     switch (name) {
       case 'enforced':
@@ -489,10 +511,37 @@ const Reports = props => {
         return gpaCol
       case 'user-archived':
         return archivedCol
+      case 'user-logs':
+        return logsCol
       default:
         break
     }
   }
+
+  const getLogStatus = log => {
+    if (log.dateTimeOut) {
+      return new Date(log.dateTimeOut).toLocaleString()
+    }
+
+    const now = new Date(Date.now())
+    const login = new Date(log.dateTimeIn)
+    const days = now.getDate() - login.getDate()
+
+    if (days > 0) {
+      return 'session expired'
+    }
+    return 'active'
+  }
+
+  // const getDuration = dateIn => {
+  //   const now = new Date(Date.now())
+  //   const logIn = new Date(dateIn)
+  //   const hours = now.getHours() - logIn.getHours()
+  //   const minutes = now.getMinutes() - logIn.getMinutes()
+  //   const seconds = now.getSeconds() - logIn.getSeconds()
+
+  //   return `${hours}:${minutes}:${seconds}`
+  // }
 
   const preparedColumns = () => {
     if (!auth.isPromo() && !auth.isAdmin()) return columns()
@@ -528,6 +577,8 @@ const Reports = props => {
         return 'GPA'
       case 'user-archived':
         return 'User Archived'
+      case 'user-logs':
+        return 'User Logs'
       default:
         return 'Reports'
     }
@@ -652,9 +703,10 @@ const Reports = props => {
           />
         )}
       </div>
-      {name !== 'user-archived' && (
-        <React.Fragment>
-          {/* <SearchForm
+      {name !== 'user-archived' &&
+        (name !== 'user-logs' && (
+          <React.Fragment>
+            {/* <SearchForm
             handleSearch={handleSearch}
             search={search}
             setSearch={setSearch}
@@ -663,52 +715,52 @@ const Reports = props => {
               setGender(null)
             }}
           /> */}
-          <form onSubmit={e => handleSearch({ e, search })}>
-            <div className="col-6 m-0 p-0">
-              <input
-                type={'text'}
-                name={search}
-                value={search}
-                onChange={e => {
-                  setSearch(e.target.value)
-                }}
-                className="form-control"
-                placeholder="Search here..."
-              />
-            </div>
-            <div className="col-3 m-0 py-0 pl-2">
-              <Select
-                placeholder="Filter gender..."
-                isClearable
-                value={gender}
-                onChange={handleChangeGender}
-                options={genders}
-              />
-            </div>
-            <div className="col-3 m-0 p-0  d-flex justify-content-end">
-              <button className="btn btn-grad-primary ml-2">SEARCH</button>
-              <button
-                onClick={() => {
-                  setSearch('')
-                  setGender(null)
-                }}
-                className="btn btn-grad-secondary ml-2"
-              >
-                REFRESH
-              </button>
-            </div>
-          </form>
-          <style jsx="">{`
-            form {
-              display: flex;
-            }
-            .btn-search {
-              width: 15%;
-            }
-          `}</style>
-          <div className="offset-9 col-3 p-0 mt-2"></div>
-        </React.Fragment>
-      )}
+            <form onSubmit={e => handleSearch({ e, search })}>
+              <div className="col-6 m-0 p-0">
+                <input
+                  type={'text'}
+                  name={search}
+                  value={search}
+                  onChange={e => {
+                    setSearch(e.target.value)
+                  }}
+                  className="form-control"
+                  placeholder="Search here..."
+                />
+              </div>
+              <div className="col-3 m-0 py-0 pl-2">
+                <Select
+                  placeholder="Filter gender..."
+                  isClearable
+                  value={gender}
+                  onChange={handleChangeGender}
+                  options={genders}
+                />
+              </div>
+              <div className="col-3 m-0 p-0  d-flex justify-content-end">
+                <button className="btn btn-grad-primary ml-2">SEARCH</button>
+                <button
+                  onClick={() => {
+                    setSearch('')
+                    setGender(null)
+                  }}
+                  className="btn btn-grad-secondary ml-2"
+                >
+                  REFRESH
+                </button>
+              </div>
+            </form>
+            <style jsx="">{`
+              form {
+                display: flex;
+              }
+              .btn-search {
+                width: 15%;
+              }
+            `}</style>
+            <div className="offset-9 col-3 p-0 mt-2"></div>
+          </React.Fragment>
+        ))}
 
       <div className="wrapper-client mt-2">
         <Spinner isLoaded={isLoaded} className="spinner mt-5 pt-5">

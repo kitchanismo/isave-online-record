@@ -9,6 +9,7 @@ function saveJwt({ token, refreshToken }) {
 async function login(user) {
   return await http.post('/auth/login', user).then(data => {
     saveJwt(data.data.jwt)
+    localStorage.setItem('log-id', data.data.logId)
   })
 }
 
@@ -22,25 +23,26 @@ async function signUp(user) {
   return false
 }
 function logout() {
-  // http.sendJwt(jwt())
-  // http
-  //   .post('/token/revoke', { refreshToken: jwt().refreshToken })
-  //   .then(() => {
-  //     removeTokens()
-  //     window.location.href = window.location.origin
-  //   })
-  //   .catch(() => {
-  //     removeTokens()
-  //     window.location.href = window.location.origin
-  //   })
+  http.sendJwt(jwt())
 
-  removeTokens()
-  window.location.href = window.location.origin
+  const logId = localStorage.getItem('log-id')
+
+  http
+    .post('/auth/logout', { logId })
+    .then(() => {
+      removeTokens()
+      window.location.href = window.location.origin
+    })
+    .catch(() => {
+      removeTokens()
+      window.location.href = window.location.origin
+    })
 }
 
 function removeTokens() {
   localStorage.removeItem('refresh-token')
   localStorage.removeItem('access-token')
+  localStorage.removeItem('log-id')
 }
 
 function getDecodeToken() {

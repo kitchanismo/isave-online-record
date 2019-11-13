@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import withAuth from './hoc/withAuth'
 import { NavLink, Link } from 'react-router-dom'
 import { theme } from './../config.json'
@@ -7,6 +7,9 @@ import { UserContext, ClientContext } from './../context'
 const SideMenu = ({ auth, ...props }) => {
   const [toggleReport, setToggleReport] = useState(false)
   const [toggleSetting, setToggleSetting] = useState(false)
+  const [settingIsActive, setSettingIsActive] = useState(false)
+  const [reportIsActive, setReportIsActive] = useState(false)
+
   const {
     state: { unverify },
     onSetStatus
@@ -16,10 +19,29 @@ const SideMenu = ({ auth, ...props }) => {
     status: { total, forApproval, lapsed, nearExpiration, due }
   } = useContext(ClientContext)
 
+  useEffect(() => {
+ 
+    const url = props.match.url
+
+    if (url.match(/reports.*/)) {
+      setReportIsActive(true)
+    }
+
+      if (url.match(/settings.*/)) {
+      setSettingIsActive(true)
+    }
+  
+    
+  }, [])
+
   const reportMenu = (name, label, value) => {
     return (
       <Link
-        onClick={() => setToggleReport(false)}
+        onClick={() => {
+          setToggleReport(false)
+          setSettingIsActive(false)
+          setReportIsActive(true)
+        }}
         className="dropdown-item"
         to={`/reports/${name}`}
       >
@@ -40,6 +62,8 @@ const SideMenu = ({ auth, ...props }) => {
               onClick={() => {
                 setToggleSetting(false)
                 setToggleReport(false)
+                setSettingIsActive(false)
+                setReportIsActive(false)
               }}
               name="dashboard"
               to="/dashboard"
@@ -55,6 +79,8 @@ const SideMenu = ({ auth, ...props }) => {
                 onClick={() => {
                   setToggleSetting(false)
                   setToggleReport(false)
+                  setSettingIsActive(false)
+                  setReportIsActive(false)
                 }}
                 name="branch"
                 to="/branches"
@@ -75,6 +101,8 @@ const SideMenu = ({ auth, ...props }) => {
                       setToggleReport(false)
                       setToggleSetting(false)
                       onSetStatus(null)
+                      setSettingIsActive(false)
+                      setReportIsActive(false)
                     }}
                     to="/users"
                     className={`nav-link text-white pr-1`}
@@ -89,7 +117,10 @@ const SideMenu = ({ auth, ...props }) => {
                     title={`You have ${unverify} unverify user/s!`}
                     onClick={() => {
                       setToggleReport(false)
+                      setToggleSetting(false)
                       onSetStatus(0)
+                      setSettingIsActive(false)
+                      setReportIsActive(false)
                     }}
                     to="/users"
                     className={`nav-link text-white pt-0 pl-0`}
@@ -110,8 +141,11 @@ const SideMenu = ({ auth, ...props }) => {
                   onClick={() => {
                     setToggleReport(!toggleReport)
                     setToggleSetting(false)
+                    setSettingIsActive(false)
                   }}
-                  className="nav-link text-white pr-1"
+                  className={`nav-link text-white pr-1 ${
+                    reportIsActive ? 'active' : ''
+                  }`}
                 >
                   <span className="fa fa-file mr-2"></span>
                   Reports
@@ -126,7 +160,9 @@ const SideMenu = ({ auth, ...props }) => {
                 <a
                   data-toggle="tooltip"
                   title={`You have ${total} client reports!`}
-                  className={`nav-link text-white pt-1 pl-0`}
+                  className={`nav-link text-white pt-1 pl-0 ${
+                    reportIsActive ? 'active' : ''
+                  }`}
                 >
                   {total > 0 && (
                     <span className="badge badge-sm badge-danger ml-1">
@@ -158,6 +194,11 @@ const SideMenu = ({ auth, ...props }) => {
                     {reportMenu('user-archived', 'User Archived')}
                   </React.Fragment>
                 )}
+                {auth.isAdmin() && (
+                  <React.Fragment>
+                    {reportMenu('user-logs', 'User Logs')}
+                  </React.Fragment>
+                )}
               </div>
             )}
           </li>
@@ -170,8 +211,11 @@ const SideMenu = ({ auth, ...props }) => {
                     onClick={() => {
                       setToggleSetting(!toggleSetting)
                       setToggleReport(false)
+                      setReportIsActive(false)
                     }}
-                    className="nav-link text-white pr-1"
+                    className={`nav-link text-white pr-1 ${
+                      settingIsActive ? 'active' : ''
+                    }`}
                   >
                     <span className="fa fa-gear mr-2"></span>
                     Settings
@@ -189,6 +233,7 @@ const SideMenu = ({ auth, ...props }) => {
                   <Link
                     onClick={() => {
                       setToggleSetting(false)
+                      setSettingIsActive(true)
                     }}
                     className="dropdown-item"
                     to={`/settings/backup`}

@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { onBackup, getFiles, getSql } from './../../../services/databaseService'
 import Help from './../../common/help'
+import Spinner from './../../common/spinner'
 import { theme } from '../../../config.json'
+
 import _ from 'lodash'
 
 const Backup = () => {
   const [file, setFile] = useState('')
   const [isBackedUp, setIsBackedUp] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
+  const [isLoadedFiles, setIsLoadedFiles] = useState(false)
   const [files, setFiles] = useState([])
 
   useEffect(() => {
@@ -18,8 +20,10 @@ const Backup = () => {
   }, [])
 
   const fetchFiles = () => {
+    setIsLoadedFiles(false)
     getFiles().then(files => {
       setFiles(_.sortBy(files, f => f.date).reverse())
+      setIsLoadedFiles(true)
     })
   }
 
@@ -58,6 +62,7 @@ const Backup = () => {
       })
       .catch(e => console.log(e))
   }
+
   const handleDownload = file => {
     setIsLoading(true)
     getSql(file).then(sql => {
@@ -89,9 +94,32 @@ const Backup = () => {
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">Backup Database</h1>
+        <a data-tip="Create a backup to a server and download a database(.sql) file.">
+          <Help />
+        </a>
       </div>
       <div className="row m-0 p-0">
         <div className="col-6 pr-2 m-0">
+          <ul className="list-group mb-3 mt-2">
+            {isLoading && <p className="text-secondary"> Please wait...</p>}
+            <li className="header-list  list-group-item d-flex justify-content-between align-items-center">
+              <span className="font-weight-bold">Backup list</span>
+              <span className="font-weight-bold">Action</span>
+            </li>
+
+            <Spinner className="mt-5" isLoaded={isLoadedFiles}>
+              <div className="wrapper-list">
+                {filenames(files)}
+                {files.length === 0 && (
+                  <li className="list-group-item d-flex justify-content-between align-items-center">
+                    No record/s found!
+                  </li>
+                )}
+              </div>
+            </Spinner>
+          </ul>
+        </div>
+        <div className="col-6 pl-2 m-0">
           <form onSubmit={handleBackup}>
             <div className="form-group">
               <label htmlFor="file">Filename</label>
@@ -105,9 +133,10 @@ const Backup = () => {
                     className="form-control"
                   />
                 </div>
+
                 <div className="col-1 m-0 p-0">
                   <a
-                    title="Generate new filename by date"
+                    data-tip="Generate new filename"
                     onClick={() => setFile(getFile())}
                     className="fa fa-refresh text-info ml-3"
                   ></a>
@@ -119,37 +148,19 @@ const Backup = () => {
               <button
                 disabled={isBackedUp}
                 type="submit"
-                className="btn btn-grad-primary"
+                className="btn btn-grad-primary d-flex"
               >
                 {!isBackedUp ? 'BACK UP NOW' : 'BACKING UP...'}
               </button>
             </div>
           </form>
-          <Help.Info text="Create a backup to a server and download a database(.sql) file."></Help.Info>
-        </div>
-
-        <div className="col-6 pl-2 m-0">
-          <ul className="list-group mb-3 mt-2">
-            {isLoading && <p className="text-secondary"> Please wait...</p>}
-            <li className="header-list  list-group-item d-flex justify-content-between align-items-center">
-              <span className="font-weight-bold">Backup list</span>
-              <span className="font-weight-bold">Action</span>
-            </li>
-
-            {filenames(files)}
-
-            {files.length === 0 && (
-              <li className="list-group-item d-flex justify-content-between align-items-center">
-                No record/s found!
-              </li>
-            )}
-          </ul>
         </div>
       </div>
       <style jsx="">{`
         .fa-download {
           margin-top: 0 !important;
-        }
+        }import AddBranch from './../branch/new';
+
         .side-content {
           border-radius: 5px 0 0 5px;
         }
@@ -164,6 +175,14 @@ const Backup = () => {
           background-color: ${theme.secondary};
           border-color: ${theme.secondary};
           color: white;
+        }
+
+        .wrapper-list {
+          margin: 0;
+          padding: 0;
+          height: 400px;
+          overflow-x: hidden;
+          overflow-y: auto;
         }
       `}</style>
     </React.Fragment>

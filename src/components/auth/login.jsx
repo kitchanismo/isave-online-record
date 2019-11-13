@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 import withAuth from '../hoc/withAuth'
 import Form from '../common/form'
 import Logo from '../common/logo'
-import { UserContext } from '../../context'
 import Footer from '../common/footer'
 import forest from '../../img/forest.jpg'
 
@@ -14,7 +13,7 @@ const Login = ({ auth, ...props }) => {
   const [user, setUser] = useState({ username: '', password: '' })
   const [errors, setErrors] = useState({})
 
-  const { onRefresh } = useContext(UserContext)
+   
 
   const schema = {
     username: Joi.string()
@@ -26,16 +25,14 @@ const Login = ({ auth, ...props }) => {
   }
 
   const handleSubmit = async (e, data) => {
-    auth
-      .login(data)
-      .then(() => {
-        props.history.replace('/dashboard')
-      })
-      .catch(({ response }) => {
-        if (response && response.status === 401) {
-          toast.error(response.data.status.errors)
-        }
-      })
+    try {
+      await auth.login(data)
+      props.history.replace('/dashboard')
+    } catch ({ response }) {
+      if (response && response.status === 401) {
+        toast.error(response.data.status.errors)
+      }
+    }
   }
 
   const navigateSignUp = () => {

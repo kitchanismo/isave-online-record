@@ -261,6 +261,9 @@ const AddClient = props => {
     <React.Fragment>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 className="h2">Future Savings</h1>
+        <a data-tip="Fill up all the necessary informations. Uncheck the checkbox if there is a given policy number.">
+          <Help />
+        </a>
       </div>
       <Form
         data={{ data: client, setData: setClient }}
@@ -363,11 +366,6 @@ const AddClient = props => {
                 >
                   Back
                 </button>
-
-                <Help
-                  className="mt-5"
-                  text="Fill up all the necessary informations. Uncheck the checkbox if there is a given policy number."
-                ></Help>
               </div>
             </div>
           )
