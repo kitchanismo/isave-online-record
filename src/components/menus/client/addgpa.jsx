@@ -8,6 +8,7 @@ import {
   joiMobileNumber,
   calculateAge
 } from '../../../services/utilsService'
+import auth from '../../../services/authService'
 
 import { ClientContext } from '../../../context'
 import Help from './../../common/help'
@@ -82,7 +83,8 @@ const AddGPA = props => {
       await onAddClient({
         ...client,
         isGPA: true,
-        dateInsured: new Date(client.dateInsured).toISOString()
+        dateInsured: new Date(client.dateInsured).toISOString(),
+        userInsured: auth.getCurrentUser().id
       })
 
       toast.success('Saved')
