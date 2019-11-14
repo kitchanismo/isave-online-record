@@ -90,6 +90,10 @@ const Routes = props => {
         render={props => <Home {...props} menu="clients" sub="newGPA" />}
       />
       <AuthRoute
+        path="/clients/show/:id"
+        render={props => <Home {...props} menu="clients" sub="show" />}
+      />
+      <AuthRoute
         path="/clients/:name"
         render={props => <Home {...props} menu="clients" />}
       />

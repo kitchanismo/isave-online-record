@@ -13,8 +13,6 @@ const Login = ({ auth, ...props }) => {
   const [user, setUser] = useState({ username: '', password: '' })
   const [errors, setErrors] = useState({})
 
-   
-
   const schema = {
     username: Joi.string()
       .required()
@@ -58,7 +56,8 @@ const Login = ({ auth, ...props }) => {
               <div className="card ">
                 <div className="card-body">
                   <p className="card-text text-white font-italic">
-                    "Cocolife, We're Big on Life. Cocolife, We're Big on Life."
+                    "Infomatech, We're Big on Life. Infomatech, We're Big on
+                    Life."
                   </p>
                 </div>
               </div>
@@ -68,7 +67,7 @@ const Login = ({ auth, ...props }) => {
                 <div className="card-body">
                   <p className="card-text text-white font-italic">
                     "We're Big on Claims and Service too. We're Big on
-                    Happiness. We're Big on you Cocolife."
+                    Happiness. We're Big on you Infomatech."
                   </p>
                 </div>
               </div>
@@ -109,7 +108,7 @@ const Login = ({ auth, ...props }) => {
             </Form>
           </div>
           <div className=" d-flex justify-content-center  py-2  sign-up px-3">
-            <p className="mb-0">Create Agent? &nbsp; &nbsp; </p>
+            <p className="mb-0">Create New Agent? &nbsp; &nbsp; </p>
             <Link to="/sign-up">Sign-Up</Link>
           </div>
         </div>

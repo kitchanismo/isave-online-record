@@ -22,6 +22,7 @@ import EditGPA from './menus/client/editgpa'
 import Backup from './menus/settings/backup'
 import Restore from './menus/settings/restore'
 import ReactTooltip from 'react-tooltip'
+import ShowClient from './menus/client/show'
 
 const Home = ({ menu, sub, ...props }) => {
   return (
@@ -68,6 +69,7 @@ const Home = ({ menu, sub, ...props }) => {
                       {sub === 'newFs' && <AddFS {...props} />}
                       {sub === 'newGPA' && <AddGPA {...props} />}
                       {sub === 'editGPA' && <EditGPA {...props} />}
+                      {sub === 'show' && <ShowClient {...props} />}
                       {!sub && <Clients {...props} />}
                     </React.Fragment>
                   )}

@@ -20,7 +20,7 @@ const Reports = props => {
 
   const [gender, setGender] = useState(null)
 
-  const { name } = props.match.params
+  const { name = '' } = props.match.params
 
   const [sortColumn, setSortColumn] = useState({ path: 'name', order: 'asc' })
 
@@ -56,7 +56,6 @@ const Reports = props => {
   }
 
   const enforcedCol = [
-   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -91,6 +90,11 @@ const Reports = props => {
       content: client => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-between">
+          <Link to={`/clients/show/${client.id}`}>
+              <button className="btn btn-sm btn-outline-info ml-1">
+                VIEW
+              </button>
+            </Link>
             <Link to={`/clients/edit/fs/${client.id}`}>
               <button className="btn btn-sm btn-outline-warning ml-1">
                 EDIT
@@ -112,7 +116,6 @@ const Reports = props => {
   ]
 
   const forApprovalCol = [
-   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -153,7 +156,6 @@ const Reports = props => {
   ]
 
   const lapsedCol = [
-
     {
       path: 'firstname',
       label: 'Fullname',
@@ -207,7 +209,6 @@ const Reports = props => {
   ]
 
   const dueCol = [
- 
     {
       path: 'firstname',
       label: 'Fullname',
@@ -272,7 +273,6 @@ const Reports = props => {
   ]
 
   const nearExpirationCol = [
-   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -317,7 +317,6 @@ const Reports = props => {
   ]
 
   const cancelledCol = [
-   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -365,7 +364,6 @@ const Reports = props => {
   ]
 
   const gpaCol = [
-   
     {
       path: 'firstname',
       label: 'Fullname',
@@ -401,7 +399,6 @@ const Reports = props => {
   ]
 
   const archivedCol = [
-  
     {
       path: 'username',
       label: 'Username'

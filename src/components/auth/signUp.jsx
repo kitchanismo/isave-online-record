@@ -222,7 +222,7 @@ const SignUp = ({ auth, ...props }) => {
 
                 <div className="col-4 pl-3 pr-2 pt-3">
                   <div className="col-12  d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-                    <h1 className="h2">Sign Up Agent</h1>
+                    <h1 className="h2">Sign Up New Agent</h1>
                   </div>
 
                   {renderInput('firstname', 'Firstname')}
