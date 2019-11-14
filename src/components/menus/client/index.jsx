@@ -90,25 +90,27 @@ const Reports = props => {
       content: client => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-between">
-          <Link to={`/clients/show/${client.id}`}>
-              <button className="btn btn-sm btn-outline-info ml-1">
-                VIEW
-              </button>
+            <Link to={`/clients/show/${client.id}`}>
+              <button className="btn btn-sm btn-outline-info ml-1">VIEW</button>
             </Link>
-            <Link to={`/clients/edit/fs/${client.id}`}>
-              <button className="btn btn-sm btn-outline-warning ml-1">
-                EDIT
-              </button>
-            </Link>
-            <button
-              onClick={e => {
-                onCancelled(client.id).then(data => setRefresh(r => !r))
-              }}
-              className="btn btn-sm btn-outline-danger ml-1"
-              name="delete"
-            >
-              CANCELLED
-            </button>
+            {!auth.isAdmin() && !auth.isPromo() && (
+              <React.Fragment>
+                <Link to={`/clients/edit/fs/${client.id}`}>
+                  <button className="btn btn-sm btn-outline-warning ml-1">
+                    EDIT
+                  </button>
+                </Link>
+                <button
+                  onClick={e => {
+                    onCancelled(client.id).then(data => setRefresh(r => !r))
+                  }}
+                  className="btn btn-sm btn-outline-danger ml-1"
+                  name="delete"
+                >
+                  CANCELLED
+                </button>
+              </React.Fragment>
+            )}
           </div>
         </div>
       )
@@ -523,6 +525,8 @@ const Reports = props => {
     if (!auth.isPromo() && !auth.isAdmin()) return columns()
 
     const _columns = [...columns()]
+
+    if (name === 'enforced') return _columns
 
     return name === 'user-archived'
       ? archivedCol
