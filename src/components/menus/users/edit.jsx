@@ -108,9 +108,9 @@ const EditUser = ({ auth, ...props }) => {
       .label('Branch'),
     manager: Joi.optional(),
     password: Joi.optional(),
-    codeNo: Joi.number()
-      .required()
+    codeNo: Joi.string()
       .min(8)
+      .max(8)
       .label('License Code Number')
   }
 

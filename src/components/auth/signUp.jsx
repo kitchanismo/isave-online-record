@@ -80,9 +80,9 @@ const SignUp = ({ auth, ...props }) => {
     branch: Joi.string()
       .required()
       .label('Branch'),
-    codeNo: Joi.number()
-      .required()
+    codeNo: Joi.string()
       .min(8)
+      .max(8)
       .label('License Code Number'),
     manager: Joi.optional()
   }
