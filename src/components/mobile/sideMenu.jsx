@@ -10,7 +10,7 @@ const SideMenuMobile = () => {
         <NavLink to="/branches" className="fa fa-home"></NavLink>
         <NavLink to="/users" className="fa fa-users"></NavLink>
         <NavLink to="/clients/enforced" className="fa fa-file"></NavLink>
-        <NavLink to="/settings/back-up" className="fa fa-gear"></NavLink>
+        <NavLink to="/settings/backup" className="fa fa-gear"></NavLink>
       </div>
       <style jsx="">{`
         .mobile-menu {
