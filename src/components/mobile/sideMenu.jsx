@@ -25,7 +25,7 @@ const SideMenuMobile = () => {
           cursor: hand;
         }
         a:hover {
-          color: #ddd !important;
+          color: ${theme.secondary} !important;
         }
         .fa-file,
         .fa-home,
