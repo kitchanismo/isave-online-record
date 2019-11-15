@@ -1,15 +1,32 @@
-import React, { Component } from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { theme } from './../../config.json'
+import { UserContext, ClientContext } from './../../context'
 
-const SideMenuMobile = () => {
+const SideMenuMobile = props => {
+  const {
+    state: { unverify },
+    onSetStatus
+  } = useContext(UserContext)
+
+  const {
+    status: { total, forApproval, lapsed, nearExpiration, due }
+  } = useContext(ClientContext)
   return (
     <React.Fragment>
       <div className="mobile-menu m-0 d-flex justify-content-around px-0 py-3">
         <NavLink to="/dashboard" className="fa fa-bar-chart"></NavLink>
         <NavLink to="/branches" className="fa fa-home"></NavLink>
-        <NavLink to="/users" className="fa fa-users"></NavLink>
-        <NavLink to="/clients/enforced" className="fa fa-file"></NavLink>
+        <NavLink to="/users" className="fa fa-users">
+          <span className="badge badge-danger badge-sm ml-1">
+            {unverify ? unverify : ''}
+          </span>
+        </NavLink>
+        <NavLink to="/clients/enforced" className="fa fa-file">
+          <span className="badge badge-danger badge-sm ml-1">
+            {total ? total : ''}
+          </span>
+        </NavLink>
         <NavLink to="/settings/backup" className="fa fa-gear"></NavLink>
       </div>
       <style jsx="">{`
