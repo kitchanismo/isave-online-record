@@ -44,28 +44,33 @@ const ShowClient = props => {
           <h5 className="text-secondary">Client Details</h5>
         </span>
 
-        <ReactToPrint
-          trigger={() => (
-            <button className="btn btn-sm btn-grad-primary ">
-              <span className="fa fa-print mr-1"></span>
-              PRINT PREVIEW
+        <div className="row m-0 p-0">
+          <div className="col-9 m-0 p-0">
+            <ReactToPrint
+              trigger={() => (
+                <button className="btn btn-sm btn-grad-primary">
+                  <span className="fa fa-print mr-1"></span>
+                  PRINT PREVIEW
+                </button>
+              )}
+              content={() => componentRef.current}
+            ></ReactToPrint>
+          </div>
+          <div className="col-3 m-0 p-0">
+            <button
+              onClick={e => {
+                e.preventDefault()
+                props.history.replace('/clients/enforced')
+              }}
+              className="btn btn-grad-secondary mb-2 btn-sm btn-block"
+              name="back"
+            >
+              Back
             </button>
-          )}
-          content={() => componentRef.current}
-        ></ReactToPrint>
+          </div>
+        </div>
       </div>
-      <div className="row m-0 p-0 d-flex justify-content-end">
-        <button
-          onClick={e => {
-            e.preventDefault()
-            props.history.replace('/clients/enforced')
-          }}
-          className="btn btn-grad-secondary mb-2"
-          name="back"
-        >
-          Back
-        </button>
-      </div>
+      <div className="row m-0 p-0 d-flex justify-content-end"></div>
       <Spinner className="mt-5 pt-5" isLoaded={!isLoading}>
         <div ref={componentRef} className="wrapper-content px-5 mb-3">
           <h5 className="text-center mb-3 pt-5">INFOMATECH SURVEY SHEET</h5>
@@ -98,7 +103,7 @@ const ShowClient = props => {
           </div>
 
           <h5 className="text-center mb-1">Other Information</h5>
-          <hr className="my-0 "></hr>
+          <hr className="my-0"></hr>
           <div className="row mt-2">
             <div className="col-6 pl-4">
               <p>Mode of Payment:</p>
@@ -126,9 +131,14 @@ const ShowClient = props => {
       <style jsx="">{`
         .wrapper-content {
           background-color: white;
+
+          border-radius: 5px;
         }
         .fa-print {
           margin-top: 0 !important;
+        }
+        hr {
+          color: gray;
         }
       `}</style>
     </React.Fragment>

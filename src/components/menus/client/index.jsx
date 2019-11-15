@@ -88,30 +88,36 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <div className="row pl-1 pt-1 pr-1">
-          <div className="d-flex justify-content-between">
-            <Link to={`/clients/show/${client.id}`}>
-              <button className="btn btn-sm btn-outline-info ml-1">VIEW</button>
-            </Link>
-            {!auth.isAdmin() && !auth.isPromo() && (
-              <React.Fragment>
-                <Link to={`/clients/edit/fs/${client.id}`}>
-                  <button className="btn btn-sm btn-outline-warning ml-1">
-                    EDIT
-                  </button>
-                </Link>
-                <button
-                  onClick={e => {
-                    onCancelled(client.id).then(data => setRefresh(r => !r))
-                  }}
-                  className="btn btn-sm btn-outline-danger ml-1"
-                  name="delete"
-                >
-                  CANCELLED
-                </button>
-              </React.Fragment>
-            )}
-          </div>
+        <div>
+          <button
+            onClick={() => props.history.replace(`/clients/show/${client.id}`)}
+            className="btn btn-sm btn-outline-info ml-1"
+          >
+            VIEW
+          </button>
+
+          {!auth.isAdmin() && !auth.isPromo() && (
+            <React.Fragment>
+              <button
+                onClick={() =>
+                  props.history.replace(`/clients/edit/fs/${client.id}`)
+                }
+                className="btn btn-sm btn-outline-warning ml-1"
+              >
+                EDIT
+              </button>
+
+              <button
+                onClick={e => {
+                  onCancelled(client.id).then(data => setRefresh(r => !r))
+                }}
+                className="btn btn-sm btn-outline-danger ml-1"
+                name="delete"
+              >
+                CANCELLED
+              </button>
+            </React.Fragment>
+          )}
         </div>
       )
     }
@@ -141,18 +147,16 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <div className="row d-flex-justify-content-center">
-          <button
-            onClick={e => {
-              setClient(client)
-              toggleApproved(e)
-            }}
-            className="btn btn-sm btn-outline-success ml-1"
-            name="delete"
-          >
-            APPROVED
-          </button>
-        </div>
+        <button
+          onClick={e => {
+            setClient(client)
+            toggleApproved(e)
+          }}
+          className="btn btn-sm btn-outline-success"
+          name="delete"
+        >
+          APPROVED
+        </button>
       )
     }
   ]
@@ -192,20 +196,18 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <div className="row pl-1 pt-1 pr-1">
-          <div className="d-flex justify-content-between">
+        
             <button
               onClick={e => {
                 setClient(client)
                 toggleEnforced(e)
               }}
-              className="btn btn-sm btn-outline-success ml-1"
+              className="btn btn-sm btn-outline-success"
               name="delete"
             >
               ENFORCED
             </button>
-          </div>
-        </div>
+        
       )
     }
   ]
@@ -258,18 +260,18 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <div className="row">
+      
           <button
             onClick={e => {
               setClient(client)
               toggleEnforced(e)
             }}
-            className="btn btn-sm btn-outline-success ml-1"
+            className="btn btn-sm btn-outline-success"
             name="delete"
           >
             ENFORCED
           </button>
-        </div>
+      
       )
     }
   ]
@@ -393,9 +395,14 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
-        <Link to={`/clients/edit/gpa/${client.id}`}>
-          <button className="btn btn-sm btn-outline-warning ml-1">EDIT</button>
-        </Link>
+        <button
+          onClick={() =>
+            props.history.replace(`/clients/edit/gpa/${client.id}`)
+          }
+          className="btn btn-sm btn-outline-warning ml-1"
+        >
+          EDIT
+        </button>
       )
     }
   ]

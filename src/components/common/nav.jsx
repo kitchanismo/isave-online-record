@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import auth from '../../services/authService'
 import { cap } from '../../services/utilsService'
 import { theme } from '../../config.json'
@@ -18,8 +18,12 @@ const Nav = props => {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <h6 className="text-white mt-1">
-            <span style={{ color: theme.secondary }}>INFOMATECH </span>: Hybrid
-            Management Information System with SMS Notification
+            <span>
+              <Link style={{ color: theme.secondary }} to="/">
+                INFOMATECH &nbsp;
+              </Link>
+            </span>
+            : Hybrid Management Information System with SMS Notification
           </h6>
 
           <div

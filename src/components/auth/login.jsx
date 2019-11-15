@@ -88,7 +88,7 @@ const Login = ({ auth, ...props }) => {
 
         <div className="login col-12 col-lg-4 p-0 m-0">
           <div className="p-3 pt-2">
-            <h3>Login</h3>
+            <h4>Login to your account</h4>
             <hr></hr>
             <Form
               data={{ data: user, setData: setUser }}
@@ -117,6 +117,7 @@ const Login = ({ auth, ...props }) => {
       <style jsx="">{`
         .login {
           background-color: white;
+          border-radius: 0 5px 0 0 !important;
         }
         .sign-up {
           background-color: white;
@@ -139,6 +140,7 @@ const Login = ({ auth, ...props }) => {
             url(${forest});
           background-repeat: no-repeat;
           background-size: 100% 100%;
+          border-radius: 5px 0px 0px 0px !important;
         }
       `}</style>
     </React.Fragment>

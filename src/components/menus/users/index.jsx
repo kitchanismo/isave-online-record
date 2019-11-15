@@ -60,7 +60,7 @@ const Users = ({ auth, ...props }) => {
     {
       path: 'profile.codeNo',
       key: 'codeNo',
-      label: 'License Code #',
+      label: 'License Code',
       content: ({ profile }) => profile.codeNo
     },
     {

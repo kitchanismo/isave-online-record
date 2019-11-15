@@ -107,11 +107,9 @@ const SideMenu = ({ auth, ...props }) => {
                     <span className="fa fa-users mr-2"></span>
                     Users
                   </NavLink>
-                </div>
-                <div className="m-0 p-0">
                   <Link
                     data-toggle="tooltip"
-                    title={`You have ${unverify} unverify user/s!`}
+                    title={`You have ${unverify} inactive user/s!`}
                     onClick={() => {
                       setToggleClient(false)
                       setToggleSetting(false)
@@ -120,7 +118,7 @@ const SideMenu = ({ auth, ...props }) => {
                       setClientIsActive(false)
                     }}
                     to="/users"
-                    className={`nav-link text-white pt-0 pl-0`}
+                    className={`nav-link text-white pt-1 pl-0`}
                   >
                     <span className="badge badge-sm badge-danger ml-1">
                       {unverify ? unverify : ''}
@@ -152,11 +150,9 @@ const SideMenu = ({ auth, ...props }) => {
                     } ml-1`}
                   ></span>
                 </a>
-              </div>
-              <div className="m-0 p-0">
                 <a
                   data-toggle="tooltip"
-                  title={`You have ${total} client clients!`}
+                  title={`You have ${total} clients!`}
                   className={`nav-link text-white pt-1 pl-0 ${
                     clientIsActive ? 'active' : ''
                   }`}
@@ -200,6 +196,10 @@ const SideMenu = ({ auth, ...props }) => {
                   </React.Fragment>
                 )}
 
+                {clientMenu('enforced', 'Enforced Client')}
+                {clientMenu('gpa', 'GPA')}
+                {clientMenu('cancelled', 'Cancelled Policy')}
+                <hr className="mx-2" />
                 {clientMenu('for-approval', 'For Approval', forApproval)}
                 {clientMenu(
                   'near-expiration',
@@ -208,10 +208,6 @@ const SideMenu = ({ auth, ...props }) => {
                 )}
                 {clientMenu('due', 'Due Policy', due)}
                 {clientMenu('lapsed', 'Lapsed Policy', lapsed)}
-                <hr className="mx-2" />
-                {clientMenu('enforced', 'Enforced Client')}
-                {clientMenu('gpa', 'GPA')}
-                {clientMenu('cancelled', 'Cancelled Policy')}
               </div>
             )}
           </li>
