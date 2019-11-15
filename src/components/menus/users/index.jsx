@@ -7,7 +7,7 @@ import { verifyUser, getLogs } from '../../../services/userService'
 import { cap } from '../../../services/utilsService'
 import SearchForm from '../../common/searchForm'
 import { pagination } from '../../../config.json'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Spinner from '../../common/spinner'
 import { toast } from 'react-toastify'
 
@@ -85,16 +85,16 @@ const Users = ({ auth, ...props }) => {
       content: user => (
         <div className="row pl-1 pt-1 pr-1">
           <div className="d-flex justify-content-around">
-            <Link to={`/users/show/${user.id}`}>
+            <NavLink to={`/users/show/${user.id}`}>
               <button className="btn btn-sm btn-outline-primary ml-1">
                 VIEW
               </button>
-            </Link>
-            <Link to={`/users/edit/${user.id}`}>
+            </NavLink>
+            <NavLink to={`/users/edit/${user.id}`}>
               <button className="btn btn-sm btn-outline-warning ml-1">
                 EDIT
               </button>
-            </Link>
+            </NavLink>
             <button
               onClick={e => {
                 if (user.status) {

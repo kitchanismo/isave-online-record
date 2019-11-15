@@ -23,64 +23,69 @@ import Backup from './menus/settings/backup'
 import Restore from './menus/settings/restore'
 import ReactTooltip from 'react-tooltip'
 import ShowClient from './menus/client/show'
+import SideMenuMobile from './mobile/sideMenu'
+
+import { useMedia } from 'react-use'
 
 const Home = ({ menu, sub, ...props }) => {
+  const isMobile = useMedia('(max-width: 600px)')
   return (
     <React.Fragment>
       <UserProvider>
         <ClientProvider>
-          <div className="container-fluid">
+          {isMobile && <SideMenuMobile {...props}> </SideMenuMobile>}
+
+          <div className="container">
             <div
               className="row"
               style={{ backgroundColor: 'transparent', minHeight: '800px' }}
             >
-              <SideMenu {...props}>
-                <main
-                  role="main"
-                  className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"
-                >
-                  {menu === 'dashboard' && <Dashboard {...props} />}
+              {!isMobile && <SideMenu {...props}> </SideMenu>}
+              <main
+                role="main"
+                className="dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary"
+              >
+                {menu === 'dashboard' && <Dashboard {...props} />}
 
-                  {menu === 'profile' && (
-                    <React.Fragment>
-                      {sub === 'me' && <Me {...props} />}
-                      {sub === 'edit' && <EditProfile {...props} />}
-                      {!sub && <Dashboard {...props} />}
-                    </React.Fragment>
-                  )}
-                  {menu === 'branches' && (
-                    <React.Fragment>
-                      {sub === 'editBranch' && <EditBranch {...props} />}
-                      {sub === 'newBranch' && <NewBranch {...props} />}
-                      {!sub && <Branch {...props} />}
-                    </React.Fragment>
-                  )}
-                  {menu === 'users' && (
-                    <React.Fragment>
-                      {sub === 'viewUser' && <ViewUser {...props} />}
-                      {sub === 'editUser' && <EditUser {...props} />}
-                      {sub === 'newUser' && <NewUser {...props} />}
-                      {!sub && <Users {...props} />}
-                    </React.Fragment>
-                  )}
-                  {menu === 'clients' && (
-                    <React.Fragment>
-                      {sub === 'editFs' && <EditFs {...props} />}
-                      {sub === 'newFs' && <AddFS {...props} />}
-                      {sub === 'newGPA' && <AddGPA {...props} />}
-                      {sub === 'editGPA' && <EditGPA {...props} />}
-                      {sub === 'show' && <ShowClient {...props} />}
-                      {!sub && <Clients {...props} />}
-                    </React.Fragment>
-                  )}
-                  {menu === 'settings' && (
-                    <React.Fragment>
-                      {sub === 'backup' && <Backup {...props} />}
-                      {sub === 'restore' && <Restore {...props} />}
-                    </React.Fragment>
-                  )}
-                </main>
-              </SideMenu>
+                {menu === 'profile' && (
+                  <React.Fragment>
+                    {sub === 'me' && <Me {...props} />}
+                    {sub === 'edit' && <EditProfile {...props} />}
+                    {!sub && <Dashboard {...props} />}
+                  </React.Fragment>
+                )}
+                {menu === 'branches' && (
+                  <React.Fragment>
+                    {sub === 'editBranch' && <EditBranch {...props} />}
+                    {sub === 'newBranch' && <NewBranch {...props} />}
+                    {!sub && <Branch {...props} />}
+                  </React.Fragment>
+                )}
+                {menu === 'users' && (
+                  <React.Fragment>
+                    {sub === 'viewUser' && <ViewUser {...props} />}
+                    {sub === 'editUser' && <EditUser {...props} />}
+                    {sub === 'newUser' && <NewUser {...props} />}
+                    {!sub && <Users {...props} />}
+                  </React.Fragment>
+                )}
+                {menu === 'clients' && (
+                  <React.Fragment>
+                    {sub === 'editFs' && <EditFs {...props} />}
+                    {sub === 'newFs' && <AddFS {...props} />}
+                    {sub === 'newGPA' && <AddGPA {...props} />}
+                    {sub === 'editGPA' && <EditGPA {...props} />}
+                    {sub === 'show' && <ShowClient {...props} />}
+                    {!sub && <Clients {...props} />}
+                  </React.Fragment>
+                )}
+                {menu === 'settings' && (
+                  <React.Fragment>
+                    {sub === 'backup' && <Backup {...props} />}
+                    {sub === 'restore' && <Restore {...props} />}
+                  </React.Fragment>
+                )}
+              </main>
 
               <Footer></Footer>
             </div>

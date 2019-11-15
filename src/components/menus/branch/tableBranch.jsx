@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Table from '../../common/table'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { sortBy, toElipse } from '../../../services/utilsService'
 

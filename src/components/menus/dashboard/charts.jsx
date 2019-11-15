@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Chart from 'react-apexcharts'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { theme } from '../../../config.json'
 import useReport from '../../../hooks/useReport'
 import { formatDate } from '../../../services/utilsService'
@@ -142,13 +142,13 @@ const Charts = props => {
             <div className="wrapper-list">
               {reports.map(client => (
                 <li className="list-group-item d-flex justify-content-between align-items-center">
-                  <Link
+                  <NavLink
                     title="View details"
                     className="link-policy"
                     to={toView(client.remarks)}
                   >
                     {`${client.lastname}, ${client.firstname} ${client.middlename}`}
-                  </Link>
+                  </NavLink>
                   <span
                     className={`badge badge-${remarksColor(
                       client.remarks

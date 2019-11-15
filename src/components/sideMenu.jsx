@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import withAuth from './hoc/withAuth'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { theme } from './../config.json'
 import { UserContext, ClientContext } from './../context'
 
@@ -33,7 +33,7 @@ const SideMenu = ({ auth, ...props }) => {
 
   const clientMenu = (name, label, value) => {
     return (
-      <Link
+      <NavLink
         onClick={() => {
           setToggleClient(false)
           setSettingIsActive(false)
@@ -46,7 +46,7 @@ const SideMenu = ({ auth, ...props }) => {
         <span className="badge badge-sm badge-danger ml-2 mt-0">
           {value ? value : ''}
         </span>
-      </Link>
+      </NavLink>
     )
   }
 
@@ -107,7 +107,7 @@ const SideMenu = ({ auth, ...props }) => {
                     <span className="fa fa-users mr-2"></span>
                     Users
                   </NavLink>
-                  <Link
+                  <NavLink
                     data-toggle="tooltip"
                     title={`You have ${unverify} inactive user/s!`}
                     onClick={() => {
@@ -123,7 +123,7 @@ const SideMenu = ({ auth, ...props }) => {
                     <span className="badge badge-sm badge-danger ml-1">
                       {unverify ? unverify : ''}
                     </span>
-                  </Link>
+                  </NavLink>
                 </div>
               </div>
             </li>
@@ -170,7 +170,7 @@ const SideMenu = ({ auth, ...props }) => {
               <div className="dropdown">
                 {!auth.isPromo() && !auth.isAdmin() && (
                   <React.Fragment>
-                    <Link
+                    <NavLink
                       onClick={() => {
                         setToggleClient(false)
                         setSettingIsActive(false)
@@ -180,8 +180,8 @@ const SideMenu = ({ auth, ...props }) => {
                       to={`/clients/new/fs`}
                     >
                       Add New FSP
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                       onClick={() => {
                         setToggleClient(false)
                         setSettingIsActive(false)
@@ -191,7 +191,7 @@ const SideMenu = ({ auth, ...props }) => {
                       to={`/clients/new/gpa`}
                     >
                       Add New GPA
-                    </Link>
+                    </NavLink>
                     <hr className="mx-2" />
                   </React.Fragment>
                 )}
@@ -239,7 +239,7 @@ const SideMenu = ({ auth, ...props }) => {
 
               {toggleSetting && (
                 <div className="dropdown">
-                  <Link
+                  <NavLink
                     onClick={() => {
                       setToggleSetting(false)
                       setSettingIsActive(true)
@@ -248,7 +248,7 @@ const SideMenu = ({ auth, ...props }) => {
                     to={`/settings/backup`}
                   >
                     Backup Database
-                  </Link>
+                  </NavLink>
                 </div>
               )}
             </li>

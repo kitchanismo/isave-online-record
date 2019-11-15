@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Joi from 'joi-browser'
 import { cap } from '../../services/utilsService'
 import { toast } from 'react-toastify'
@@ -109,7 +109,7 @@ const Login = ({ auth, ...props }) => {
           </div>
           <div className=" d-flex justify-content-center  py-2  sign-up px-3">
             <p className="mb-0">Create New Agent? &nbsp; &nbsp; </p>
-            <Link to="/sign-up">Sign-Up</Link>
+            <NavLink to="/sign-up">Sign-Up</NavLink>
           </div>
         </div>
       </div>
