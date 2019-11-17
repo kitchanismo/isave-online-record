@@ -92,6 +92,13 @@ const EditUser = ({auth, ...props}) => {
 
 	const [errors, setErrors] = useState({})
 
+	const branchJoi = () => {
+		if (auth.canAccess('admin')) return Joi.optional()
+
+		return Joi.string()
+			.required()
+			.label('Branch')
+	}
 	const schema = {
 		username: Joi.string()
 			.required()
@@ -106,9 +113,7 @@ const EditUser = ({auth, ...props}) => {
 		position: Joi.string()
 			.required()
 			.label('Position'),
-		branch: Joi.string()
-			.required()
-			.label('Branch'),
+		branch: branchJoi(),
 		manager: Joi.optional(),
 		password: Joi.optional(),
 		codeNo: Joi.string()
