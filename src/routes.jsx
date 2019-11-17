@@ -102,7 +102,6 @@ const Routes = props => {
 				render={props => <Home {...props} menu='clients' />}
 			/>
 			<GuestRoute path='/login' render={props => <Login {...props}></Login>} />
-			<GuestRoute path='/sign-up' component={SignUp} />
 			<Route path='/not-found' component={NotFound} />>
 			<Redirect from='/' exact to='/dashboard' />
 			<Redirect to='/not-found' />

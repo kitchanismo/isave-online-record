@@ -212,7 +212,7 @@ const Users = ({auth, ...props}) => {
 							className='btn btn-sm btn-grad-primary ml-1'
 						>
 							<span className='fa fa-plus mr-1'></span>
-							MANAGER
+							USER
 						</button>
 					)}
 					{auth.canAccess('admin', 'general', 'manager') && (
