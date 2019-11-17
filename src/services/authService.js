@@ -39,10 +39,18 @@ function logout() {
 		})
 }
 
+function refreshToken() {
+	http.sendJwt(jwt())
+
+	http
+		.get('/auth/refresh-token')
+		.then(() => {})
+		.catch(() => {})
+}
+
 function removeTokens() {
-	localStorage.removeItem('refresh-token')
 	localStorage.removeItem('access-token')
-	localStorage.removeItem('log-id')
+	localStorage.removeItem('refresh-token')
 }
 
 function getDecodeToken() {
@@ -125,5 +133,7 @@ export default {
 	isPromo,
 	isCodeNoTaken,
 	isGeneral,
-	canAccess
+	canAccess,
+	refreshToken,
+	saveJwt
 }

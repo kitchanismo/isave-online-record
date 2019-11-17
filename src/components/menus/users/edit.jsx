@@ -40,7 +40,7 @@ const EditUser = ({auth, ...props}) => {
 				firstname: profile.firstname,
 				middlename: profile.middlename,
 				lastname: profile.lastname,
-				codeNo: profile.codeNo,
+				codeNo: '' + profile.codeNo,
 				manager: profile.branch ? profile.branch.manager : '',
 				branch: profile.branch ? profile.branch.name : '',
 				position
@@ -235,7 +235,7 @@ const EditUser = ({auth, ...props}) => {
 									<div className='col-6 pl-3 pr-5 pt-4'>
 										{renderInput('username', 'Username', 'text', 'fa-user')}
 										{renderInput('email', 'Email', 'email', 'fa-envelope')}
-										{user.position === 'admin' &&
+										{auth.canAccess('admin') &&
 											renderInput(
 												'password',
 												'New Password',
