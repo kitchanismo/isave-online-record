@@ -561,7 +561,7 @@ const Reports = props => {
       case 'near-expiration':
         return 'Near Expiration'
       case 'gpa':
-        return 'GPA'
+        return 'Group Personal Accident'
       case 'user-archived':
         return 'View Archived'
       case 'user-logs':
