@@ -12,6 +12,8 @@ import auth from '../../../services/authService'
 
 import {ClientContext} from '../../../context'
 import Help from './../../common/help'
+import ReactTooltip from 'react-tooltip'
+
 const AddGPA = props => {
 	const {onAddClient} = useContext(ClientContext)
 
@@ -178,6 +180,7 @@ const AddGPA = props => {
 				<a data-tip='Fill up all the necessary informations.'>
 					<Help />
 				</a>
+				<ReactTooltip type='info' effect='float' />
 			</div>
 
 			<Form
