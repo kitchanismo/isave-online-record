@@ -46,7 +46,7 @@ const NewManager = ({auth, ...props}) => {
 			setHasBranches(branches.length > 0)
 			setIsLoading(false)
 			if (branches.length === 0)
-				toast.error('No available branch for manager! Please add branch first.')
+				toast.error('No available branch! Please add branch first.')
 		})
 	}
 
