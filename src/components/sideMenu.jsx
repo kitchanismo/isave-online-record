@@ -131,87 +131,89 @@ const SideMenu = ({auth, ...props}) => {
 						</li>
 					)}
 
-					<li className='nav-item'>
-						<div className='row'>
-							<div className='d-flex ml-3'>
-								<a
-									onClick={() => {
-										setToggleClient(!toggleClient)
-										setToggleSetting(false)
-										setSettingIsActive(false)
-									}}
-									className={`nav-link text-white pr-1 ${
-										clientIsActive ? 'active' : ''
-									}`}
-								>
-									<span className='fa fa-file mr-2'></span>
-									Clients
-									<span
-										className={`fa fa-angle-${
-											!toggleClient ? 'down' : 'up'
-										} ml-1`}
-									></span>
-								</a>
-								<a
-									data-toggle='tooltip'
-									title={`You have ${total} clients!`}
-									className={`nav-link text-white pt-1 pl-0 ${
-										clientIsActive ? 'active' : ''
-									}`}
-								>
-									{total > 0 && (
-										<span className='badge badge-sm badge-danger ml-1'>
-											{total > 9 ? '9+' : total}
-										</span>
+					{!auth.canAccess('admin') && (
+						<li className='nav-item'>
+							<div className='row'>
+								<div className='d-flex ml-3'>
+									<a
+										onClick={() => {
+											setToggleClient(!toggleClient)
+											setToggleSetting(false)
+											setSettingIsActive(false)
+										}}
+										className={`nav-link text-white pr-1 ${
+											clientIsActive ? 'active' : ''
+										}`}
+									>
+										<span className='fa fa-file mr-2'></span>
+										Clients
+										<span
+											className={`fa fa-angle-${
+												!toggleClient ? 'down' : 'up'
+											} ml-1`}
+										></span>
+									</a>
+									<a
+										data-toggle='tooltip'
+										title={`You have ${total} clients!`}
+										className={`nav-link text-white pt-1 pl-0 ${
+											clientIsActive ? 'active' : ''
+										}`}
+									>
+										{total > 0 && (
+											<span className='badge badge-sm badge-danger ml-1'>
+												{total > 9 ? '9+' : total}
+											</span>
+										)}
+									</a>
+								</div>
+							</div>
+							{toggleClient && (
+								<div className='dropdown'>
+									{auth.canAccess('sales') && (
+										<React.Fragment>
+											<NavLink
+												onClick={() => {
+													setToggleClient(false)
+													setSettingIsActive(false)
+													setClientIsActive(true)
+												}}
+												className='dropdown-item'
+												to={`/clients/new/fs`}
+											>
+												Add New FSP
+											</NavLink>
+											<NavLink
+												onClick={() => {
+													setToggleClient(false)
+													setSettingIsActive(false)
+													setClientIsActive(true)
+												}}
+												className='dropdown-item'
+												to={`/clients/new/gpa`}
+											>
+												Add New GPA
+											</NavLink>
+											<hr className='mx-2' />
+										</React.Fragment>
 									)}
-								</a>
-							</div>
-						</div>
-						{toggleClient && (
-							<div className='dropdown'>
-								{auth.canAccess('sales') && (
-									<React.Fragment>
-										<NavLink
-											onClick={() => {
-												setToggleClient(false)
-												setSettingIsActive(false)
-												setClientIsActive(true)
-											}}
-											className='dropdown-item'
-											to={`/clients/new/fs`}
-										>
-											Add New FSP
-										</NavLink>
-										<NavLink
-											onClick={() => {
-												setToggleClient(false)
-												setSettingIsActive(false)
-												setClientIsActive(true)
-											}}
-											className='dropdown-item'
-											to={`/clients/new/gpa`}
-										>
-											Add New GPA
-										</NavLink>
-										<hr className='mx-2' />
-									</React.Fragment>
-								)}
 
-								{clientMenu('enforced', 'Enforced Client')}
-								{clientMenu('gpa', 'GPA')}
-								{clientMenu('cancelled', 'Cancelled Policy')}
-								<hr className='mx-2' />
-								{clientMenu('for-approval', 'For Approval', forApproval)}
-								{clientMenu(
-									'near-expiration',
-									'Near Expiration',
-									nearExpiration
-								)}
-								{clientMenu('due', 'Due Policy', due)}
-								{clientMenu('lapsed', 'Lapsed Policy', lapsed)}
-							</div>
-						)}
-					</li>
+									{clientMenu('enforced', 'Enforced Client')}
+									{clientMenu('gpa', 'GPA')}
+									{clientMenu('cancelled', 'Cancelled Policy')}
+									<hr className='mx-2' />
+									{clientMenu('for-approval', 'For Approval', forApproval)}
+									{clientMenu(
+										'near-expiration',
+										'Near Expiration',
+										nearExpiration
+									)}
+									{clientMenu('due', 'Due Policy', due)}
+									{clientMenu('lapsed', 'Lapsed Policy', lapsed)}
+								</div>
+							)}
+						</li>
+					)}
 
 					{auth.canAccess('admin') && (
 						<li className='nav-item'>
