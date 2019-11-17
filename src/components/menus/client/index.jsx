@@ -96,7 +96,7 @@ const Reports = props => {
             VIEW
           </button>
 
-          {!auth.isAdmin() && !auth.isPromo() && (
+          {!auth.canAccess('promo','admin','general')&& (
             <React.Fragment>
               <button
                 onClick={() =>
@@ -529,7 +529,7 @@ const Reports = props => {
   // }
 
   const preparedColumns = () => {
-    if (!auth.isPromo() && !auth.isAdmin()) return columns()
+    if (!auth.canAccess('promo','admin','general')) return columns()
 
     const _columns = [...columns()]
 

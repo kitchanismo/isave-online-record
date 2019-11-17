@@ -21,7 +21,7 @@ const AddClient = props => {
   useEffect(() => {
     getPromos().then(promos => {
       setPromos(promos)
-      if (promos.length === 0) alert('No promo officers available!')
+      if (promos.length === 0) toast.warning('No Promo Officers  Available!')
     })
   }, [])
 

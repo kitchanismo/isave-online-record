@@ -80,6 +80,7 @@ const Login = ({ auth, ...props }) => {
 
   return (
     <React.Fragment>
+      <div className="container">
       <div className="row mt-3 mx-0 bg-dark">
         <div className="bg-content col-0 col-lg-8 p-0 bg-dark">
           <Logo />
@@ -143,6 +144,7 @@ const Login = ({ auth, ...props }) => {
           border-radius: 5px 0px 0px 0px !important;
         }
       `}</style>
+      </div>
     </React.Fragment>
   )
 }
