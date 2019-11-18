@@ -91,8 +91,12 @@ const Routes = props => {
 				render={props => <Home {...props} menu='clients' sub='newGPA' />}
 			/>
 			<AuthRoute
-				path='/clients/show/:id'
-				render={props => <Home {...props} menu='clients' sub='show' />}
+				path='/clients/show/fs/:id'
+				render={props => <Home {...props} menu='clients' sub='showFS' />}
+			/>
+			<AuthRoute
+				path='/clients/show/gpa/:id'
+				render={props => <Home {...props} menu='clients' sub='showGPA' />}
 			/>
 			<AuthRoute
 				path='/clients/:name'

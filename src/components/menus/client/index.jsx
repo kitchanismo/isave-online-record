@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import Table from '../../common/table'
 import useReport from '../../../hooks/useReport'
-import { sortBy } from '../../../services/utilsService'
+import { sortBy, cap } from '../../../services/utilsService'
 import { NavLink } from 'react-router-dom'
 import { formatDate } from '../../../services/utilsService'
 import { restoreUser } from '../../../services/userService'
@@ -14,6 +14,7 @@ import TablePrint from '../../common/tablePrint'
 import CustomModal from '../../common/modal'
 import Select from 'react-select'
 import ReactToPrint from 'react-to-print'
+
 
 const Reports = props => {
   const [search, setSearch] = useState('')
@@ -29,6 +30,8 @@ const Reports = props => {
     new URLSearchParams(props.location.search).get('search'),
     gender ? gender.value : ''
   )
+
+  
 
   useEffect(() => {
     setSearch('')
@@ -90,7 +93,7 @@ const Reports = props => {
       content: client => (
         <div>
           <button
-            onClick={() => props.history.replace(`/clients/show/${client.id}`)}
+            onClick={() => props.history.replace(`/clients/show/fs/${client.id}`)}
             className="btn btn-sm btn-outline-info ml-1"
           >
             VIEW
@@ -395,6 +398,14 @@ const Reports = props => {
       key: 'actions',
       label: 'Actions',
       content: client => (
+        <span><button
+        onClick={() =>
+          props.history.replace(`/clients/show/gpa/${client.id}`)
+        }
+        className="btn btn-sm btn-outline-info ml-1"
+      >
+        VIEW
+      </button>
         <button
           onClick={() =>
             props.history.replace(`/clients/edit/gpa/${client.id}`)
@@ -403,6 +414,7 @@ const Reports = props => {
         >
           EDIT
         </button>
+        </span>
       )
     }
   ]

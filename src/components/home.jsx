@@ -64,6 +64,7 @@ const Home = ({menu, sub, ...props}) => {
 								{menu === 'users' && (
 									<React.Fragment>
 										{sub === 'viewUser' && <ViewUser {...props} />}
+
 										{sub === 'editUser' && <EditUser {...props} />}
 										{sub === 'newUser' && <NewUser {...props} />}
 										{!sub && <Users {...props} />}
@@ -75,7 +76,8 @@ const Home = ({menu, sub, ...props}) => {
 										{sub === 'newFs' && <AddFS {...props} />}
 										{sub === 'newGPA' && <AddGPA {...props} />}
 										{sub === 'editGPA' && <EditGPA {...props} />}
-										{sub === 'show' && <ShowClient {...props} />}
+										{sub === 'showFS' && <ShowClient {...props} />}
+										{sub === 'showGPA' && <ShowClient {...props} />}
 										{!sub && <Clients {...props} />}
 									</React.Fragment>
 								)}
