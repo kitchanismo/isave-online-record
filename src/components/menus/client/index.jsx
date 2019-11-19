@@ -2,14 +2,14 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import Table from '../../common/table'
 import useReport from '../../../hooks/useReport'
 import { sortBy, cap } from '../../../services/utilsService'
-import { NavLink } from 'react-router-dom'
+import auth from './../../../services/authService'
 import { formatDate } from '../../../services/utilsService'
-import { restoreUser } from '../../../services/userService'
+import { restoreUser,getUser } from '../../../services/userService'
 import { ClientContext } from '../../../context'
 import EnforcedModal from '../../common/modalEnforced'
 import ApprovedModal from '../../common/modalApproved'
 import Spinner from '../../common/spinner'
-import auth from '../../../services/authService'
+
 import TablePrint from '../../common/tablePrint'
 import CustomModal from '../../common/modal'
 import Select from 'react-select'
@@ -31,11 +31,15 @@ const Reports = props => {
     gender ? gender.value : ''
   )
 
-  
+  const [profile,setProfile] =useState({firstname:'',lastname: '', middlename:''})
 
+  
   useEffect(() => {
     setSearch('')
-    //setGender(null)
+    getUser(auth.getCurrentUser().id).then(({profile})=>{
+      setProfile(profile)
+     
+    })
   }, [name])
 
   const [client, setClient] = useState(null)
@@ -454,7 +458,7 @@ const Reports = props => {
       content: user => (
         <button
           onClick={e => {
-            setUser(user)
+            setSelectedUser(user)
             setModalRestore(modalRestore => !modalRestore)
           }}
           className="btn btn-sm btn-outline-primary ml-1"
@@ -634,14 +638,14 @@ const Reports = props => {
 
   const [modalRestore, setModalRestore] = useState(false)
 
-  const [user, setUser] = useState(null)
+  const [selectedUser, setSelectedUser] = useState(null)
 
   const toggleRestore = e => {
     setModalRestore(modalRestore => !modalRestore)
     if (e.target && e.target.name === 'primary') {
-      restoreUser(user.id).then(data => {
+      restoreUser(selectedUser.id).then(data => {
         setRefresh(r => !r)
-        setUser(null)
+        setSelectedUser(null)
       })
     }
   }
@@ -652,7 +656,7 @@ const Reports = props => {
         title="Cocolife"
         modal={modalRestore}
         toggle={toggleRestore}
-        label={`Are you sure to restore ${user.username}?`}
+        label={`Are you sure to restore ${selectedUser.username}?`}
         primary={{ type: 'primary', label: 'RESTORE' }}
       />
     )
@@ -686,7 +690,7 @@ const Reports = props => {
     <React.Fragment>
       {client && renderModalEnforced(client)}
       {renderModalApproved()}
-      {user && renderModalRestore()}
+      {selectedUser && renderModalRestore()}
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <span className="m-0 p-0">
           <h1 className="h2">{`${
@@ -774,12 +778,13 @@ const Reports = props => {
             sortColumn={sortColumn}
             onSort={handleSort}
           />
-          <div style={{ display: 'none' }}>
+          <div style={{display: 'none'}}>
             <TablePrint
               title={title()}
               ref={componentRef}
               columns={printColums()}
               data={reports}
+              name={`${profile.lastname}, ${profile.firstname} ${profile.middlename}`}
             />
           </div>
         </Spinner>

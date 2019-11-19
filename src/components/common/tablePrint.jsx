@@ -23,9 +23,12 @@ class TablePrint extends React.Component {
 						></img>
 						<h2>INFOMATECH</h2>
 						<h4 className='mb-4'>
-							Report: &nbsp; {this.props.title ? this.props.title : ''} | Date
-							Printed: &nbsp;{formatDate(Date.now())} | Count: &nbsp;{' '}
-							{this.props.data.length}
+							Reported in: &nbsp; {this.props.title ? this.props.title : ''} |
+							Date Printed: &nbsp;{formatDate(Date.now())}
+						</h4>
+						<h4 className='mb-4'>
+							Reported by: {this.props.name ? this.props.name : ''} | Count:
+							&nbsp; {this.props.data.length}
 						</h4>
 
 						<table className='table'>
