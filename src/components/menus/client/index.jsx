@@ -471,7 +471,7 @@ const Reports = props => {
       label: 'Fullname',
       content: ({ user }) => {
         return user
-          ? `${user.profile.firstname}, ${user.profile.lastname} ${user.profile.middlename}`
+          ? `${user.profile.lastname}, ${user.profile.firstname} ${user.profile.middlename}`
           : ''
       }
     },
