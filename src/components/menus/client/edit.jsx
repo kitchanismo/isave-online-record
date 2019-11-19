@@ -50,7 +50,16 @@ const EditClient = props => {
 		setIsLoaded(false)
 		getClient(id).then(
 			({
-				client: {id, branch, coverage, isNear, isDue, isLapsed, ...client}
+				client: {
+					id,
+					insuredUser,
+					branch,
+					coverage,
+					isNear,
+					isDue,
+					isLapsed,
+					...client
+				}
 			}) => {
 				setClient({
 					...client,
