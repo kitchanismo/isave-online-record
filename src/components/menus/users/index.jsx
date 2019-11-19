@@ -59,7 +59,8 @@ const Users = ({auth, ...props}) => {
 		},
 		{
 			path: 'profile.branch.name',
-			label: 'Branch'
+			label: 'Branch',
+			content: user => (user.profile.branch ? user.profile.branch.name : 'All')
 		},
 		{
 			path: 'profile.codeNo',
