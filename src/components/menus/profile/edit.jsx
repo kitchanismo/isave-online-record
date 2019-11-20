@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import Joi from 'joi-browser'
 import {getMe, editUser} from '../../../services/userService'
 import {toast} from 'react-toastify'
-import {joiLettersOnly} from '../../../services/utilsService'
+import {joiLettersOnly, joiMobileNumber} from '../../../services/utilsService'
 import withAuth from '../../hoc/withAuth'
 import Form from './../../common/form'
 import Spinner from './../../common/spinner'
@@ -15,7 +15,8 @@ const EditUser = ({auth, ...props}) => {
 		firstname: '',
 		middlename: '',
 		lastname: '',
-		password: ''
+		password: '',
+		contact: ''
 	})
 	const [isLoaded, setIsLoaded] = useState(false)
 
@@ -28,7 +29,8 @@ const EditUser = ({auth, ...props}) => {
 				email: profile.email,
 				firstname: profile.firstname,
 				middlename: profile.middlename,
-				lastname: profile.lastname
+				lastname: profile.lastname,
+				contact: profile.contact
 			})
 			setIsLoaded(true)
 		})
@@ -50,13 +52,14 @@ const EditUser = ({auth, ...props}) => {
 		firstname: joiLettersOnly('Firstname'),
 		middlename: joiLettersOnly('Middlename'),
 		lastname: joiLettersOnly('Lastname'),
+		contact: joiMobileNumber('Mobile Number'),
 		id: Joi.optional(),
 		password: Joi.optional()
 	}
 
 	const handleSubmit = async (
 		e,
-		{username, email, password, firstname, middlename, lastname, id}
+		{username, email, password, firstname, middlename, lastname, id, contact}
 	) => {
 		const user = {
 			id,
@@ -66,7 +69,8 @@ const EditUser = ({auth, ...props}) => {
 				firstname,
 				middlename,
 				lastname,
-				email
+				email,
+				contact
 			}
 		}
 
@@ -114,6 +118,7 @@ const EditUser = ({auth, ...props}) => {
 									<div className='col-6 pl-3 pr-5 pt-4'>
 										{renderInput('username', 'Username', 'text', 'fa-user')}
 										{renderInput('email', 'Email', 'email', 'fa-envelope')}
+										{renderInput('contact', 'Mobile Contact')}
 										{renderInput(
 											'password',
 											'New Password',

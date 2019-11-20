@@ -95,19 +95,21 @@ const Charts = props => {
 
 	const [isLoadedStat, setIsLoadedStat] = useState(false)
 
+	const currentYear = new Date(Date.now()).getFullYear()
+
 	const {options: fspOptions, series: fsp, setSeries: setFSP} = useOptions(
-		'2019 Future Savings Plan Statistic'
+		currentYear + ' Future Savings Plan Statistic'
 	)
 
 	const {options: gpaOptions, series: gpa, setSeries: setGPA} = useOptions(
-		'2019 Group Personal Accident Statistic'
+		currentYear + ' Group Personal Accident Statistic'
 	)
 
 	useEffect(() => {
 		setIsLoadedStat(false)
-		getStatistics().then(data => {
-			setFSP([{name: 'series-1', data: data.fsp}])
-			setGPA([{name: 'series-1', data: data.gpa}])
+		getStatistics(currentYear).then(data => {
+			setFSP([{name: 'count', data: data.fsp}])
+			setGPA([{name: 'count', data: data.gpa}])
 			setIsLoadedStat(true)
 		})
 		getInsentives().then(data => setInsentives(data))
@@ -187,7 +189,7 @@ const Charts = props => {
 								Employee Name
 							</span>
 							<span style={{color: '#eee'}} className='font-weight-light'>
-								Month
+								Prize
 							</span>
 						</li>
 						<div className='wrapper-list'>
@@ -201,19 +203,20 @@ const Charts = props => {
 										{`${insentive.user.profile.lastname}, ${insentive.user.profile.firstname} ${insentive.user.profile.middlename}`}
 									</NavLink>
 									<span className={`badge badge-info badge-pill`}>
-										{insentive.month}
+										₱{insentive.prize}
 									</span>
 								</li>
 							))}
+							{insentives.length === 0 && (
+								<li className='list-group-item d-flex justify-content-between align-items-center'>
+									No record/s found!
+								</li>
+							)}
 						</div>
-
-						{/* <li className='list-group-item d-flex justify-content-between align-items-center'>
-							No record/s found!
-						</li> */}
-					</ul>
+s					</ul>
 				</div>
 
-				<div className='row d-flex mt-4 justify-content-around'>
+				<div className='row d-flex mt-5 justify-content-around'>
 					<Chart
 						key='Sales'
 						type='line'

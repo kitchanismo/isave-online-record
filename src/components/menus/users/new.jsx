@@ -3,7 +3,11 @@ import Joi from 'joi-browser'
 import Form from '../../common/form'
 import {getBranches, addManager} from '../../../services/userService'
 import {toast} from 'react-toastify'
-import {cap, joiLettersOnly} from '../../../services/utilsService'
+import {
+	cap,
+	joiLettersOnly,
+	joiMobileNumber
+} from '../../../services/utilsService'
 import withAuth from './../../hoc/withAuth'
 import Spinner from './../../common/spinner'
 import {UserContext} from './../../../context'
@@ -19,7 +23,8 @@ const NewManager = ({auth, ...props}) => {
 		codeNo: '',
 		branch: '',
 		position: '',
-		confirmPassword: ''
+		confirmPassword: '',
+		contact: ''
 	})
 
 	const {onRefresh} = useContext(UserContext)
@@ -75,6 +80,7 @@ const NewManager = ({auth, ...props}) => {
 		firstname: joiLettersOnly('Firstname'),
 		middlename: joiLettersOnly('Middlename'),
 		lastname: joiLettersOnly('Lastname'),
+		contact: joiMobileNumber('Mobile Contact'),
 		branch: Joi.string()
 			.required()
 			.label('Branch'),
@@ -146,7 +152,8 @@ const NewManager = ({auth, ...props}) => {
 			middlename,
 			lastname,
 			codeNo,
-			position
+			position,
+			contact
 		}
 	) => {
 		const _errors = await handleCheckTaken(e)
@@ -166,6 +173,7 @@ const NewManager = ({auth, ...props}) => {
 				lastname,
 				email,
 				codeNo,
+				contact,
 				branch_id: selectedBranch ? selectedBranch.id : 0
 			}
 		}
@@ -183,6 +191,7 @@ const NewManager = ({auth, ...props}) => {
 				middlename: '',
 				lastname: '',
 				codeNo: '',
+				contact: '',
 				confirmPassword: ''
 			})
 
@@ -254,6 +263,7 @@ const NewManager = ({auth, ...props}) => {
 										onBlur: handleCheckTaken
 									})}
 									{renderInput('email', 'Email', 'email', 'fa-envelope')}
+									{renderInput('contact', 'Mobile Contact')}
 									{renderInput('password', 'Password', 'password', 'fa-key')}
 									{renderInput(
 										'confirmPassword',

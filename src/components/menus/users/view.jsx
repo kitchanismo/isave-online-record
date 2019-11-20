@@ -88,6 +88,11 @@ const ViewUser = props => {
 								<p className='card-subtitle'>
 									Email:&nbsp;
 									<span className='text-secondary'>{user.profile.email}</span>
+								</p>{' '}
+								<br></br>
+								<p className='card-subtitle'>
+									Mobile Contact:&nbsp;
+									<span className='text-secondary'>{user.profile.contact}</span>
 								</p>
 							</div>
 						</div>

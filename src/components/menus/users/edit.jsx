@@ -7,7 +7,11 @@ import {
 	editUser
 } from '../../../services/userService'
 import {toast} from 'react-toastify'
-import {cap, joiLettersOnly} from '../../../services/utilsService'
+import {
+	cap,
+	joiLettersOnly,
+	joiMobileNumber
+} from '../../../services/utilsService'
 import withAuth from '../../hoc/withAuth'
 import Form from './../../common/form'
 import Spinner from './../../common/spinner'
@@ -27,7 +31,8 @@ const EditUser = ({auth, ...props}) => {
 		codeNo: '',
 		position: '',
 		branch: '',
-		password: ''
+		password: '',
+		contact: ''
 	})
 	const [isLoaded, setIsLoaded] = useState(false)
 
@@ -43,7 +48,8 @@ const EditUser = ({auth, ...props}) => {
 				codeNo: '' + profile.codeNo,
 				manager: profile.branch ? profile.branch.manager : '',
 				branch: profile.branch ? profile.branch.name : '',
-				position
+				position,
+				contact: profile.contact
 			})
 			setSelectedPosition({
 				id: position === 'sales' ? 1 : 2,
@@ -110,6 +116,7 @@ const EditUser = ({auth, ...props}) => {
 		firstname: joiLettersOnly('Firstname'),
 		middlename: joiLettersOnly('Middlename'),
 		lastname: joiLettersOnly('Lastname'),
+		contact: joiMobileNumber('Mobile Contact'),
 		position: Joi.string()
 			.required()
 			.label('Position'),
@@ -145,7 +152,8 @@ const EditUser = ({auth, ...props}) => {
 			middlename,
 			lastname,
 			position,
-			codeNo
+			codeNo,
+			contact
 		}
 	) => {
 		const user = {
@@ -158,6 +166,7 @@ const EditUser = ({auth, ...props}) => {
 				lastname,
 				email,
 				codeNo,
+				contact,
 				branch_id: selectedBranch ? selectedBranch.id : null
 			}
 		}
@@ -240,6 +249,7 @@ const EditUser = ({auth, ...props}) => {
 									<div className='col-6 pl-3 pr-5 pt-4'>
 										{renderInput('username', 'Username', 'text', 'fa-user')}
 										{renderInput('email', 'Email', 'email', 'fa-envelope')}
+										{renderInput('contact', 'Mobile Contact')}
 										{auth.canAccess('admin') &&
 											renderInput(
 												'password',
