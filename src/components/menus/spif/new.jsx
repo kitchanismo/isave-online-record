@@ -7,11 +7,16 @@ import {sortBy, toElipse} from '../../../services/utilsService'
 import PostInsentiveModal from '../../common/postInsentiveModal'
 import {storeInsentive} from './../../../services/insentiveService'
 import {toast} from 'react-toastify'
+import Spinner from '../../common/spinner'
+import ReactTooltip from 'react-tooltip'
+import Help from '../../common/help'
 
 const NewSPIF = props => {
 	const now = new Date(Date.now())
 
 	const [top, setTop] = useState([])
+
+	const [isLoading, setIsLoading] = useState(false)
 
 	const [count, setCount] = useState(0)
 
@@ -72,7 +77,10 @@ const NewSPIF = props => {
 	}
 
 	const handleSubmit = async (e, data) => {
-		setTop(await getTop(data))
+		setIsLoading(true)
+		const top = await getTop(data)
+		setTop(top)
+		setIsLoading(false)
 	}
 
 	const handleChangePosition = position => setSelectedPosition(position)
@@ -80,6 +88,7 @@ const NewSPIF = props => {
 	const handleChangeYear = year => setSelectedYear(year)
 
 	const handleChangeMonth = month => setSelectedMonth(month)
+
 	const positions = [
 		{
 			id: 1,
@@ -202,18 +211,32 @@ const NewSPIF = props => {
 
 	return (
 		<React.Fragment>
+			<ReactTooltip id='spif' type='info' effect='float'>
+				<span>How to add insentive funds?</span>
+				<ul className='ml-4 mt-2'>
+					<li>Select categories by year, month and position.</li>
+					<li>Click Generate Employee.</li>
+					<li>
+						Show the list of employees from top to bottom based on client count
+						insured.
+					</li>
+					<li>
+						Click post to select from list the desire employee to have an
+						insentive.
+					</li>
+					<li>Enter the prize rewards of employee.</li>
+				</ul>
+			</ReactTooltip>
 			{renderModal()}
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
 				<span>
 					<h1 className='h2'>Sales Performance Insentive Funds</h1>
 					<h5 className='text-secondary'>Add New Insentive</h5>
 				</span>
-				<button
-					onClick={() => props.history.replace('/spif')}
-					className='btn btn-sm btn-grad-secondary ml-1'
-				>
-					Back
-				</button>
+
+				<a data-tip data-for='spif'>
+					<Help></Help>
+				</a>
 			</div>
 			<Form
 				data={{data: insentive, setData: setInsentive}}
@@ -253,21 +276,26 @@ const NewSPIF = props => {
 									)}
 								</div>
 								<div className='col-3 pt-3'>
-									{renderButton(
-										'Generate Top Employee',
-										null,
-										'Generating...',
-										true
-									)}
+									{renderButton('Generate Employee', null, 'Generating...')}
+									<button
+										onClick={() => props.history.replace('/spif')}
+										className='btn mt-3  btn-grad-secondary ml-1'
+									>
+										Back
+									</button>
 								</div>
 							</div>
-
-							<Table
-								columns={columns}
-								data={top}
-								sortColumn={sortColumn}
-								onSort={handleSort}
-							/>
+							<Spinner
+								isLoaded={!isLoading}
+								className='mt-5 pt-5 col-12 d-flex justify-content-center'
+							>
+								<Table
+									columns={columns}
+									data={top}
+									sortColumn={sortColumn}
+									onSort={handleSort}
+								/>
+							</Spinner>
 						</React.Fragment>
 					)
 				}}

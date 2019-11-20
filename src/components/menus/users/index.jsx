@@ -230,7 +230,7 @@ const Users = ({auth, ...props}) => {
 						onClick={() => props.history.replace('/users/user-archived')}
 						className='btn btn-sm btn-outline-secondary ml-1'
 					>
-						View Archived
+						View Archives
 					</button>
 				</span>
 			</div>

@@ -93,12 +93,19 @@ const Backup = () => {
 
 	return (
 		<React.Fragment>
+			<ReactTooltip id='backup' type='info' effect='float'>
+				<span>How to backup the database?</span>
+				<ul className='ml-4 mt-2'>
+					<li>Name the filename</li>
+					<li>Click Backup</li>
+					<li>Click Download</li>
+				</ul>
+			</ReactTooltip>
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
 				<h1 className='h2'>Backup Database</h1>
-				<a data-tip='Create a backup to a server and download a database(.sql) file.'>
-					<Help />
+				<a data-tip data-for='backup'>
+					<Help></Help>
 				</a>
-				<ReactTooltip type='info' effect='float' />
 			</div>
 			<div className='row m-0 p-0'>
 				<div className='col-6 pr-2 m-0'>

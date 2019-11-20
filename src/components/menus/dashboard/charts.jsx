@@ -6,6 +6,7 @@ import useReport from '../../../hooks/useReport'
 import {formatDate} from '../../../services/utilsService'
 import {getStatistics} from '../../../services/clientService'
 import Spinner from './../../common/spinner'
+import {getInsentives} from '../../../services/insentiveService.js'
 
 const useOptions = title => {
 	const [series, setSeries] = useState([
@@ -90,6 +91,8 @@ const useOptions = title => {
 const Charts = props => {
 	const {reports = [], isLoaded} = useReport('policy-monitoring')
 
+	const [insentives, setInsentives] = useState([])
+
 	const [isLoadedStat, setIsLoadedStat] = useState(false)
 
 	const {options: fspOptions, series: fsp, setSeries: setFSP} = useOptions(
@@ -107,6 +110,7 @@ const Charts = props => {
 			setGPA([{name: 'series-1', data: data.gpa}])
 			setIsLoadedStat(true)
 		})
+		getInsentives().then(data => setInsentives(data))
 	}, [])
 
 	const remarksColor = remarks => {
@@ -174,6 +178,9 @@ const Charts = props => {
 							<span className='font-weight-bold'>
 								Sales Performance Insentive Fund
 							</span>
+							<span className='badge badge-danger badge-pill'>
+								{insentives.length ? insentives.length : ''}
+							</span>
 						</li>
 						<li className='header-list py-1 list-group-item d-flex justify-content-between align-items-center'>
 							<span style={{color: '#eee'}} className='font-weight-light'>
@@ -183,12 +190,23 @@ const Charts = props => {
 								Month
 							</span>
 						</li>
-						<li className='list-group-item d-flex justify-content-between align-items-center'>
-							<NavLink title='View details' className='link-policy' to={'/'}>
-								Lname, Fname Mname
-							</NavLink>
-							<span className={`badge badge-info badge-pill`}>November</span>
-						</li>
+						<div className='wrapper-list'>
+							{insentives.map(insentive => (
+								<li className='list-group-item d-flex justify-content-between align-items-center'>
+									<NavLink
+										title='View details'
+										className='link-policy'
+										to={'/spif/' + insentive.id}
+									>
+										{`${insentive.user.profile.lastname}, ${insentive.user.profile.firstname} ${insentive.user.profile.middlename}`}
+									</NavLink>
+									<span className={`badge badge-info badge-pill`}>
+										{insentive.month}
+									</span>
+								</li>
+							))}
+						</div>
+
 						{/* <li className='list-group-item d-flex justify-content-between align-items-center'>
 							No record/s found!
 						</li> */}

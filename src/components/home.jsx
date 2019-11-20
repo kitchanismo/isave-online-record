@@ -28,6 +28,7 @@ import SideMenuMobile from './mobile/sideMenu'
 import {useMedia} from 'react-use'
 import SPIF from './menus/spif/index'
 import NewSPIF from './menus/spif/new'
+import ShowInsentive from './menus/spif/show'
 
 const Home = ({menu, sub, ...props}) => {
 	const isMobile = useMedia('(max-width: 600px)')
@@ -50,6 +51,8 @@ const Home = ({menu, sub, ...props}) => {
 								{menu === 'dashboard' && <Dashboard {...props} />}
 								{menu === 'spif' && (
 									<React.Fragment>
+										{console.log(sub)}
+										{sub === 'show' && <ShowInsentive {...props} />}
 										{sub === 'new' && <NewSPIF {...props} />}
 										{!sub && <SPIF {...props} />}
 									</React.Fragment>

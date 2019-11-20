@@ -23,6 +23,10 @@ const Routes = props => {
 				render={props => <Home {...props} menu='spif' sub='new' />}
 			/>
 			<AuthRoute
+				path='/spif/:id'
+				render={props => <Home {...props} menu='spif' sub='show' />}
+			/>
+			<AuthRoute
 				isAdmin
 				path='/spif'
 				render={props => <Home {...props} menu='spif' />}

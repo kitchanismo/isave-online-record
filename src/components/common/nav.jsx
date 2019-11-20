@@ -64,15 +64,6 @@ const Nav = props => {
 												labelPosition(auth.getCurrentUser().position)}
 										</NavLink>
 									</li>
-									{/* <li className="nav-item">
-                    <a
-                      href="/login"
-                      className="nav-link"
-                      onClick={handleLogout}
-                    >
-                      Logout
-                    </a>
-                  </li> */}
 								</React.Fragment>
 							)}
 						</ul>

@@ -5,13 +5,49 @@ import {
 	getInsentives,
 	deleteInsentive
 } from '../../../services/insentiveService'
+import CustomModal from '../../common/modal'
+import Spinner from '../../common/spinner'
 
 const SPIF = props => {
 	const [insentives, setInsentives] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
+
+	const [selectedInsentive, setSelectedInsentive] = useState(null)
 
 	useEffect(() => {
-		getInsentives().then(data => setInsentives(data))
+		setIsLoading(false)
+		getInsentives().then(data => {
+			setInsentives(data)
+			setIsLoading(true)
+		})
 	}, [])
+
+	const [modal, setModal] = useState(false)
+
+	const toggle = e => {
+		setModal(!modal)
+
+		if (e.target.name === 'primary') {
+			if (!selectedInsentive) return
+
+			deleteInsentive(selectedInsentive.id).then(data => {
+				getInsentives().then(data => setInsentives(data))
+				setSelectedInsentive(null)
+			})
+		}
+	}
+
+	const renderModal = () => {
+		return (
+			<CustomModal
+				title='Infomatech'
+				modal={modal}
+				toggle={toggle}
+				label={`Are you sure you want to delete?`}
+				primary={{type: 'primary', label: 'DELETE'}}
+			/>
+		)
+	}
 
 	const columns = [
 		{
@@ -43,7 +79,8 @@ const SPIF = props => {
 
 		{
 			path: 'prize',
-			label: 'Prize Reward'
+			label: 'Prize Reward',
+			content: insentive => `₱${insentive.prize}`
 		},
 		{
 			path: 'month',
@@ -55,10 +92,9 @@ const SPIF = props => {
 			label: 'Actions',
 			content: insentive => (
 				<button
-					onClick={async () => {
-						await deleteInsentive(insentive.id)
-						const insentives = await getInsentives()
-						setInsentives(insentives)
+					onClick={async e => {
+						setModal(!modal)
+						setSelectedInsentive(insentive)
 					}}
 					className='btn btn-sm btn-outline-danger ml-1'
 				>
@@ -76,6 +112,7 @@ const SPIF = props => {
 	}
 	return (
 		<React.Fragment>
+			{renderModal()}
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
 				<h1 className='h2'>Sales Performance Insentive Funds</h1>
 				<button
@@ -87,12 +124,17 @@ const SPIF = props => {
 				</button>
 			</div>
 			<div className='row mx-2'>
-				<Table
-					columns={columns}
-					data={insentives}
-					sortColumn={sortColumn}
-					onSort={handleSort}
-				/>
+				<Spinner
+					className='mt-5 pt-5 col-12 d-flex justify-content-center'
+					isLoaded={isLoading}
+				>
+					<Table
+						columns={columns}
+						data={insentives}
+						sortColumn={sortColumn}
+						onSort={handleSort}
+					/>
+				</Spinner>
 			</div>
 			<style jsx=''>{`
 				.fa-plus {

@@ -116,7 +116,9 @@ const Reports = props => {
 
               <button
                 onClick={e => {
-                  onCancelled(client.id).then(data => setRefresh(r => !r))
+                  
+                  setModalCancelled(!modalCancelled)
+                  setClient(client)
                 }}
                 className="btn btn-sm btn-outline-danger ml-1"
                 name="delete"
@@ -534,15 +536,6 @@ const Reports = props => {
     return 'active'
   }
 
-  // const getDuration = dateIn => {
-  //   const now = new Date(Date.now())
-  //   const logIn = new Date(dateIn)
-  //   const hours = now.getHours() - logIn.getHours()
-  //   const minutes = now.getMinutes() - logIn.getMinutes()
-  //   const seconds = now.getSeconds() - logIn.getSeconds()
-
-  //   return `${hours}:${minutes}:${seconds}`
-  // }
 
   const preparedColumns = () => {
     if (!auth.canAccess('promo','admin','general')) return columns()
@@ -662,6 +655,31 @@ const Reports = props => {
     )
   }
 
+  const [modalCancelled,setModalCancelled] = useState(false)
+
+  const toggleCancelled = (e)=>{
+    setModalCancelled(!modalCancelled)
+
+    if (e.target.name === 'primary') {
+      if (!client) return
+      
+        onCancelled(client.id).then(data => setRefresh(r => !r))
+    }
+
+  }
+  
+  const renderModalCancelled = () => {
+    return (
+      <CustomModal
+        title="Infomatech"
+        modal={modalCancelled}
+        toggle={toggleCancelled}
+        label={`Are you sure to cancel ${client.firstname}?`}
+        primary={{ type: 'primary', label: 'OK' }}
+      />
+    )
+  }
+
   const handleSearch = ({ e, search }) => {
     e.preventDefault()
 
@@ -691,6 +709,7 @@ const Reports = props => {
       {client && renderModalEnforced(client)}
       {renderModalApproved()}
       {selectedUser && renderModalRestore()}
+      {client && renderModalCancelled()}
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <span className="m-0 p-0">
           <h1 className="h2">{`${
