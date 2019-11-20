@@ -5,11 +5,15 @@ import Table from '../../common/table'
 import {getTop} from './../../../services/clientService'
 import {sortBy, toElipse} from '../../../services/utilsService'
 import PostInsentiveModal from '../../common/postInsentiveModal'
+import {storeInsentive} from './../../../services/insentiveService'
+import {toast} from 'react-toastify'
 
 const NewSPIF = props => {
 	const now = new Date(Date.now())
 
 	const [top, setTop] = useState([])
+
+	const [count, setCount] = useState(0)
 
 	const [insentive, setInsentive] = useState({
 		year: now.getFullYear(),
@@ -148,6 +152,7 @@ const NewSPIF = props => {
 					onClick={() => {
 						setModal(!modal)
 						setSelectedUser(top.user)
+						setCount(top.count)
 					}}
 					className='btn btn-sm btn-outline-primary ml-1'
 				>
@@ -171,12 +176,16 @@ const NewSPIF = props => {
 		if (!prize) return
 
 		const insentive = {
-			userId: selectedUser.id,
+			user_id: selectedUser.id,
 			prize,
 			month: selectedMonth ? selectedMonth.label : null,
-			year: selectedYear ? selectedYear.value : null
+			year: selectedYear ? selectedYear.value : null,
+			count
 		}
-		console.log(insentive)
+
+		storeInsentive(insentive)
+			.then(data => toast.info('Insentive Posted'))
+			.catch(data => toast.error(data.response.data.message))
 	}
 
 	const renderModal = client => {
@@ -199,6 +208,12 @@ const NewSPIF = props => {
 					<h1 className='h2'>Sales Performance Insentive Funds</h1>
 					<h5 className='text-secondary'>Add New Insentive</h5>
 				</span>
+				<button
+					onClick={() => props.history.replace('/spif')}
+					className='btn btn-sm btn-grad-secondary ml-1'
+				>
+					Back
+				</button>
 			</div>
 			<Form
 				data={{data: insentive, setData: setInsentive}}

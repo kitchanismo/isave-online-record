@@ -1,5 +1,5 @@
 import http from './httpService'
-import auth from './authService'
+
 import {mapToSelect} from './utilsService'
 
 export function addClient(client) {
@@ -7,7 +7,8 @@ export function addClient(client) {
 }
 
 export function getTop(data) {
-	return http.post('/test', data).then(data => data.data.top)
+	http.sendJwt(auth.jwt())
+	return http.post('/api/clients/spif', data).then(data => data.data.top)
 }
 
 export function getStatus() {
