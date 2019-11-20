@@ -19,6 +19,16 @@ const Routes = props => {
 			/>
 			<AuthRoute
 				isAdmin
+				path='/spif/new'
+				render={props => <Home {...props} menu='spif' sub='new' />}
+			/>
+			<AuthRoute
+				isAdmin
+				path='/spif'
+				render={props => <Home {...props} menu='spif' />}
+			/>
+			<AuthRoute
+				isAdmin
 				path='/settings/restore'
 				render={props => <Home {...props} menu='settings' sub='restore' />}
 			/>

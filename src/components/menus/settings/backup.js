@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import {toast} from 'react-toastify'
-import {onBackup, getFiles, getSql} from './../../../services/databaseService'
-import Help from './../../common/help'
-import Spinner from './../../common/spinner'
+import {onBackup, getFiles, getSql} from '../../../services/databaseService'
+import Help from '../../common/help'
+import Spinner from '../../common/spinner'
 import {theme} from '../../../config.json'
 import ReactTooltip from 'react-tooltip'
 

@@ -603,7 +603,7 @@ const Reports = props => {
     return (
       <EnforcedModal
         client={client}
-        title="Cocolife"
+        title="Infomatech"
         modal={modalEnforced}
         toggle={toggleEnforced}
         label={`Are you sure to enforce ${client.firstname}?`}
@@ -628,7 +628,7 @@ const Reports = props => {
     return (
       <ApprovedModal
         client={client}
-        title="Cocolife"
+        title="Infomatech"
         modal={modalApproved}
         toggle={toggleApproved}
         primary={{ type: 'primary', label: 'CONFIRM' }}
@@ -653,7 +653,7 @@ const Reports = props => {
   const renderModalRestore = () => {
     return (
       <CustomModal
-        title="Cocolife"
+        title="Infomatech"
         modal={modalRestore}
         toggle={toggleRestore}
         label={`Are you sure to restore ${selectedUser.username}?`}

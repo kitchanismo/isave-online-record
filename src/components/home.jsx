@@ -26,6 +26,8 @@ import ShowClient from './menus/client/show'
 import SideMenuMobile from './mobile/sideMenu'
 
 import {useMedia} from 'react-use'
+import SPIF from './menus/spif/index'
+import NewSPIF from './menus/spif/new'
 
 const Home = ({menu, sub, ...props}) => {
 	const isMobile = useMedia('(max-width: 600px)')
@@ -46,7 +48,12 @@ const Home = ({menu, sub, ...props}) => {
 								className='dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary'
 							>
 								{menu === 'dashboard' && <Dashboard {...props} />}
-
+								{menu === 'spif' && (
+									<React.Fragment>
+										{sub === 'new' && <NewSPIF {...props} />}
+										{!sub && <SPIF {...props} />}
+									</React.Fragment>
+								)}
 								{menu === 'profile' && (
 									<React.Fragment>
 										{sub === 'me' && <Me {...props} />}

@@ -72,6 +72,24 @@ const SideMenu = ({auth, ...props}) => {
 							</NavLink>
 						</li>
 					)}
+					{auth.canAccess('admin') && (
+						<li className='nav-item'>
+							<NavLink
+								onClick={() => {
+									setToggleSetting(false)
+									setToggleClient(false)
+									setSettingIsActive(false)
+									setClientIsActive(false)
+								}}
+								name='spif'
+								to='/spif'
+								className={`nav-link text-white`}
+							>
+								<span className='fa fa-trophy mr-2'></span>
+								SPIF
+							</NavLink>
+						</li>
+					)}
 					{auth.canAccess('admin', 'general') && (
 						<li className='nav-item'>
 							<NavLink

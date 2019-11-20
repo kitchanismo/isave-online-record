@@ -136,7 +136,7 @@ const Charts = props => {
 						</li>
 						<li className='header-list py-1 list-group-item d-flex justify-content-between align-items-center'>
 							<span style={{color: '#eee'}} className='font-weight-light'>
-								Name
+								Client Name
 							</span>
 							<span style={{color: '#eee'}} className='font-weight-light'>
 								Remarks
@@ -177,7 +177,7 @@ const Charts = props => {
 						</li>
 						<li className='header-list py-1 list-group-item d-flex justify-content-between align-items-center'>
 							<span style={{color: '#eee'}} className='font-weight-light'>
-								Name
+								Employee Name
 							</span>
 							<span style={{color: '#eee'}} className='font-weight-light'>
 								Month
