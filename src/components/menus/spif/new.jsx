@@ -276,7 +276,7 @@ const NewSPIF = props => {
 									)}
 								</div>
 								<div className='col-3 pt-3'>
-									{renderButton('Generate Employee', null, 'Generating...')}
+									{renderButton('Generate', null, 'Generating...')}
 									<button
 										onClick={() => props.history.replace('/spif')}
 										className='btn mt-3  btn-grad-secondary ml-1'
