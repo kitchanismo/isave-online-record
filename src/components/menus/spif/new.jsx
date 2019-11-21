@@ -225,6 +225,7 @@ const NewSPIF = props => {
 						insentive.
 					</li>
 					<li>Enter the prize rewards of employee.</li>
+					<li>Send SMS notification to employee.</li>
 				</ul>
 			</ReactTooltip>
 			{renderModal()}
