@@ -11,7 +11,7 @@ axios.interceptors.response.use(
 const getAPIUrl = () => {
 	return process.env.NODE_ENV === 'development'
 		? 'http://127.0.0.1:3333'
-		: process.env.API_URL
+		: process.env.APP_API_URL
 }
 
 axios.interceptors.request.use(config => {
