@@ -14,6 +14,8 @@ const getAPIUrl = () => {
 		: process.env.APP_API_URL
 }
 
+console.log(process.env)
+
 axios.interceptors.request.use(config => {
 	config.baseURL = getAPIUrl()
 	return config
