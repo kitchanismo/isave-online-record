@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import {getInsentive} from '../../../services/insentiveService'
 import {cap} from '../../../services/utilsService'
+import Spinner from '../../common/spinner'
 
 const ShowInsentive = props => {
 	const {id} = props.match.params
 
 	const [insentive, setInsentive] = useState(null)
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
+		setIsLoading(true)
 		getInsentive(id).then(data => {
 			setInsentive(data)
+			setIsLoading(false)
 		})
 	}, [])
 
@@ -44,49 +48,52 @@ const ShowInsentive = props => {
 					Back
 				</button>
 			</div>
-			<div className='insentive-wrapper row mx-2 pt-5'>
-				<div className='col-4 offset-2 text-right'>
-					<p>Firstname:</p>
-					<p>Middlename:</p>
-					<p>Lastname:</p>
-					<p>License Code:</p>
-					<p>Branch:</p>
-					<p>Position:</p>
-					<p>Client Count Insured:</p>
-					<p>Prize:</p>
-					<p>Month/Year:</p>
+			<Spinner className='mt-5 pt-5' isLoaded={!isLoading}>
+				<div className='insentive-wrapper row mx-2 pt-5'>
+					<div className='col-4 offset-2 text-right'>
+						<p>Firstname:</p>
+						<p>Middlename:</p>
+						<p>Lastname:</p>
+						<p>License Code:</p>
+						<p>Branch:</p>
+						<p>Position:</p>
+						<p>Client Count Insured:</p>
+						<p>Prize:</p>
+						<p>Month/Year:</p>
+					</div>
+					<div className='col-4 text-left'>
+						<p className='text-secondary'>
+							{insentive ? cap(insentive.user.profile.firstname) : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive ? cap(insentive.user.profile.middlename) : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive ? cap(insentive.user.profile.lastname) : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive ? cap(insentive.user.profile.codeNo) : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive ? cap(insentive.user.profile.branch.name) : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive ? labelPosition(insentive.user.position) : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive ? cap(insentive.count) : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive ? `₱${cap(insentive.prize)}` : ''}
+						</p>
+						<p className='text-secondary'>
+							{insentive
+								? `${cap(insentive.month)}, ${cap(insentive.year)}`
+								: ''}
+						</p>
+					</div>
 				</div>
-				<div className='col-4 text-left'>
-					<p className='text-secondary'>
-						{insentive ? cap(insentive.user.profile.firstname) : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? cap(insentive.user.profile.middlename) : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? cap(insentive.user.profile.lastname) : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? cap(insentive.user.profile.codeNo) : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? cap(insentive.user.profile.branch.name) : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? labelPosition(insentive.user.position) : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? cap(insentive.count) : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? `₱${cap(insentive.prize)}` : ''}
-					</p>
-					<p className='text-secondary'>
-						{insentive ? `${cap(insentive.month)}, ${cap(insentive.year)}` : ''}
-					</p>
-				</div>
-			</div>
-
+			</Spinner>
 			<style jsx=''>{`
 				.insentive-wrapper {
 					background-color: white;
