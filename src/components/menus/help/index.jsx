@@ -25,7 +25,7 @@ const Help = () => {
 				<h1 className='h2'>Help and Support</h1>
 			</div>
 			<div className='row mb-3'>
-				<div className='col-8 offset-2'>
+				<div className='col-6 offset-3'>
 					{!auth.canAccess('promo', 'sales') && (
 						<UserHelp instruction={instruction}></UserHelp>
 					)}
