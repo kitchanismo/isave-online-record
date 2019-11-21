@@ -235,9 +235,9 @@ const NewSPIF = props => {
 					<h5 className='text-secondary'>Add New Insentive</h5>
 				</span>
 
-				<a data-tip data-for='spif'>
+				{/* <a data-tip data-for='spif'>
 					<Help></Help>
-				</a>
+				</a> */}
 			</div>
 			<Form
 				data={{data: insentive, setData: setInsentive}}
@@ -276,8 +276,8 @@ const NewSPIF = props => {
 										positions
 									)}
 								</div>
-								<div className='col-3 pt-3'>
-									{renderButton('Generate', null, 'Generating...')}
+								<div className='col-3 pt-3 px-0'>
+									{renderButton('Generate Employee', null, 'Generating...')}
 									<button
 										onClick={() => props.history.replace('/spif')}
 										className='btn mt-3  btn-grad-secondary ml-1'

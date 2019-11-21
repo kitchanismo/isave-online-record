@@ -274,9 +274,31 @@ const SideMenu = ({auth, ...props}) => {
 							)}
 						</li>
 					)}
+
+					{!auth.canAccess('promo') && (
+						<li className='nav-item '>
+							<NavLink
+								onClick={() => {
+									setToggleSetting(false)
+									setToggleClient(false)
+									setSettingIsActive(false)
+									setClientIsActive(false)
+								}}
+								name='branch'
+								to='/help'
+								className={`nav-link text-white `}
+							>
+								<span className='fa fa-question mr-2 '></span>
+								Help
+							</NavLink>
+						</li>
+					)}
 				</ul>
 
 				<style jsx=''>{`
+					.fa-question {
+						font-size: 1.3em;
+					}
 					.nav-item {
 						height: 40px !important;
 					}

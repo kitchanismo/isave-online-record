@@ -25,7 +25,11 @@ const ViewUser = props => {
 	}, [])
 
 	const isAgent = () => {
-		return user.position !== 'manager' && user.position !== 'admin'
+		return (
+			user.position !== 'manager' &&
+			user.position !== 'admin' &&
+			user.position !== 'general'
+		)
 	}
 	return (
 		<React.Fragment>
@@ -50,12 +54,6 @@ const ViewUser = props => {
 								>
 									{user.status === 1 ? 'active' : 'unverify'}
 								</span>
-								<p className='mt-2'>
-									Registered:
-									<span className='text-secondary'>
-										&nbsp; {formatDate(user.created_at)}
-									</span>
-								</p>
 							</div>
 						</div>
 					</div>
@@ -108,7 +106,9 @@ const ViewUser = props => {
 								<p className='card-subtitle'>
 									Branch:&nbsp;
 									<span className='text-secondary'>
-										{cap(user.profile.branch ? user.profile.branch.name : '')}
+										{cap(
+											user.profile.branch ? user.profile.branch.name : 'All'
+										)}
 									</span>
 								</p>
 								<br></br>
@@ -118,17 +118,26 @@ const ViewUser = props => {
 										{cap(user.profile.codeNo)}
 									</span>
 								</p>
-								<br></br>
+
 								{isAgent() && (
-									<p className='card-subtitle'>
-										Under by:&nbsp;
-										<span className='text-secondary'>
-											{cap(
-												user.profile.branch ? user.profile.branch.manager : ''
-											)}
-										</span>
-									</p>
+									<React.Fragment>
+										<br></br>
+										<p className='card-subtitle'>
+											Under by:&nbsp;
+											<span className='text-secondary'>
+												{cap(
+													user.profile.branch ? user.profile.branch.manager : ''
+												)}
+											</span>
+										</p>
+									</React.Fragment>
 								)}
+								<p className='mt-3'>
+									Registered:
+									<span className='text-secondary'>
+										&nbsp; {formatDate(user.created_at)}
+									</span>
+								</p>
 							</div>
 						</div>
 					</div>

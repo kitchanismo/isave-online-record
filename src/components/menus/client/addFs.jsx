@@ -266,9 +266,9 @@ const AddClient = props => {
 					<h1 className='h2'>Client Record Management</h1>
 					<h5 className='text-secondary'>Add New Future Savings Plan</h5>
 				</span>
-				<a data-tip='Fill up all the necessary informations. Uncheck the checkbox if there is a given policy number.'>
+				{/* <a data-tip='Fill up all the necessary informations. Uncheck the checkbox if there is a given policy number.'>
 					<Help />
-				</a>
+				</a> */}
 				<ReactTooltip type='info' effect='float' />
 			</div>
 			<Form

@@ -120,7 +120,7 @@ const SPIF = props => {
 					className='btn btn-sm btn-grad-primary ml-1'
 				>
 					<span className='fa fa-plus mr-1'></span>
-					Insentive
+					INSENTIVE
 				</button>
 			</div>
 			<div className='row mx-2'>

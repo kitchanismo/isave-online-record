@@ -29,6 +29,7 @@ import {useMedia} from 'react-use'
 import SPIF from './menus/spif/index'
 import NewSPIF from './menus/spif/new'
 import ShowInsentive from './menus/spif/show'
+import Help from './menus/help'
 
 const Home = ({menu, sub, ...props}) => {
 	const isMobile = useMedia('(max-width: 600px)')
@@ -97,6 +98,7 @@ const Home = ({menu, sub, ...props}) => {
 										{sub === 'restore' && <Restore {...props} />}
 									</React.Fragment>
 								)}
+								{menu === 'help' && <Help {...props} />}
 							</main>
 
 							<Footer></Footer>
