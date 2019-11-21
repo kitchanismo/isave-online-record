@@ -213,7 +213,7 @@ const Charts = props => {
 								</li>
 							)}
 						</div>
-s					</ul>
+					</ul>
 				</div>
 
 				<div className='row d-flex mt-5 justify-content-around'>
