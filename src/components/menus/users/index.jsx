@@ -74,6 +74,7 @@ const Users = ({auth, ...props}) => {
 			label: 'Status',
 			content: user => (
 				<span
+					title={`click to ${user.status === 1 ? 'deactive' : 'activate'}`}
 					onClick={async e => {
 						setSelectedUser(user)
 						await toggle(e)
