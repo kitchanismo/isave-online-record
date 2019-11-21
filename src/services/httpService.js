@@ -11,10 +11,8 @@ axios.interceptors.response.use(
 const getAPIUrl = () => {
 	return process.env.NODE_ENV === 'development'
 		? 'http://127.0.0.1:3333'
-		: process.env.APP_API_URL
+		: 'https://infomatech.herokuapp.com'
 }
-
-console.log(process.env)
 
 axios.interceptors.request.use(config => {
 	config.baseURL = getAPIUrl()
