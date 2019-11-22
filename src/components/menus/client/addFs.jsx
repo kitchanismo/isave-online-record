@@ -14,8 +14,10 @@ import {getPromos} from '../../../services/userService'
 import {ClientContext} from '../../../context'
 import Help from './../../common/help'
 import ReactTooltip from 'react-tooltip'
+import {useMedia} from 'react-use'
 
 const AddClient = props => {
+	const isMobile = useMedia('(max-width: 600px)')
 	const {onAddClient, status} = useContext(ClientContext)
 	const [promos, setPromos] = useState([])
 
@@ -287,12 +289,16 @@ const AddClient = props => {
 				}) => {
 					return (
 						<div className='row'>
-							<div className='col-6'>
+							<div className={isMobile ? 'col-12' : 'col-6'}>
 								{renderInput('firstname', 'Firstname')}
 								{renderInput('middlename', 'Middlename')}
 								{renderInput('lastname', 'Lastname')}
 								<div className='row m-0 p-0'>
-									<div className='col-6 m-0 py-0 pl-0 pr-2'>
+									<div
+										className={
+											isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pl-0 pr-2'
+										}
+									>
 										{renderSelect(
 											'gender',
 											'Gender',
@@ -301,7 +307,11 @@ const AddClient = props => {
 											genders
 										)}
 									</div>
-									<div className='col-6 m-0 py-0 pr-0 pl-2'>
+									<div
+										className={
+											isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pr-0 pl-2'
+										}
+									>
 										{renderSelect(
 											'civil',
 											'Civil Status',
@@ -318,7 +328,7 @@ const AddClient = props => {
 								{renderTextArea('address', 'Address')}
 							</div>
 
-							<div className='col-6'>
+							<div className={isMobile ? 'col-12' : 'col-6'}>
 								{renderSelect(
 									'mode',
 									'Mode of Payment',
@@ -337,12 +347,20 @@ const AddClient = props => {
 
 								{!client.forApproval && (
 									<div className='row m-0 p-0'>
-										<div className='col-6 m-0 py-0 pl-0 pr-2'>
+										<div
+											className={
+												isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pl-0 pr-2'
+											}
+										>
 											{renderDatePicker('dateInsured', 'Date Insured', {
 												onChange: handleDateInsured
 											})}
 										</div>
-										<div className='col-6 m-0 py-0 pr-0 pl-2'>
+										<div
+											className={
+												isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pr-0 pl-2'
+											}
+										>
 											{renderInput('expiredDate', 'Due Date', 'text', '', {
 												disabled: true
 											})}
