@@ -58,7 +58,7 @@ const Me = props => {
 								<p className='card-subtitle'>{cap(user.username)}</p>
 								<button
 									onClick={() => props.history.replace('/profile/edit')}
-									className={`mt-4 btn btn-sm btn-grad-primary`}
+									className={`mt-4 btn btn-sm btn-outline-warning`}
 								>
 									EDIT
 								</button>
@@ -67,8 +67,11 @@ const Me = props => {
 					</div>
 					<div className={isMobile ? 'col-12' : 'col-8'}>
 						<div className='card' style={{width: 'auto'}}>
-							<div className='card-body'>
-								<h5 className='card-title'>Personal Details</h5>
+							<h5 className='card-title text-center mt-3 mb-0 p-0'>
+								Personal Details
+							</h5>
+							<hr></hr>
+							<div className='card-body m-0 pt-0'>
 								<br></br>
 								<p className='card-subtitle'>
 									Firstname:{' '}
@@ -103,8 +106,11 @@ const Me = props => {
 							</div>
 						</div>
 						<div className='card mt-3' style={{width: 'auto'}}>
-							<div className='card-body'>
-								<h5 className='card-title'>Employment Details</h5>
+							<h5 className='card-title text-center mt-3 mb-0 p-0'>
+								Employement Details
+							</h5>
+							<hr></hr>
+							<div className='card-body m-0 pt-0'>
 								<br></br>
 								<p className='card-subtitle'>
 									Position:{'   '}
