@@ -14,9 +14,13 @@ import TablePrint from '../../common/tablePrint'
 import CustomModal from '../../common/modal'
 import Select from 'react-select'
 import ReactToPrint from 'react-to-print'
+import { useMedia } from 'react-use'
 
 
 const Reports = props => {
+
+  const isMobile = useMedia('(max-width: 600px)')
+
   const [search, setSearch] = useState('')
 
   const [gender, setGender] = useState(null)
@@ -733,17 +737,9 @@ const Reports = props => {
       {name !== 'user-archived' &&
         (name !== 'user-logs' && (
           <React.Fragment>
-            {/* <SearchForm
-            handleSearch={handleSearch}
-            search={search}
-            setSearch={setSearch}
-            onRefresh={() => {
-              setSearch('')
-              setGender(null)
-            }}
-          /> */}
+        
             <form onSubmit={e => handleSearch({ e, search })}>
-              <div className="col-6 m-0 p-0">
+              <div className={isMobile?"col-12 mt-2 p-0":"col-6 m-0 p-0"}>
                 <input
                   type={'text'}
                   name={search}
@@ -755,7 +751,7 @@ const Reports = props => {
                   placeholder="Search here..."
                 />
               </div>
-              <div className="col-3 m-0 py-0 pl-2">
+              <div className={isMobile?"col-12 mt-2 p-0":"col-3 m-0 py-0 pl-2"}>
                 <Select
                   placeholder="Filter gender..."
                   isClearable
@@ -764,14 +760,14 @@ const Reports = props => {
                   options={genders}
                 />
               </div>
-              <div className="col-3 m-0 p-0  d-flex justify-content-end">
-                <button className="btn btn-grad-primary ml-2">SEARCH</button>
+              <div className={isMobile?"col-12 mt-2 p-0":"col-3 m-0 p-0  d-flex justify-content-end"}>
+                <button className={isMobile?"btn btn-grad-primary btn-block":"btn btn-grad-primary ml-2"}>SEARCH</button>
                 <button
                   onClick={() => {
                     setSearch('')
                     setGender(null)
                   }}
-                  className="btn btn-grad-secondary ml-2"
+                  className={isMobile?"btn btn-grad-secondary btn-block":"btn btn-grad-secondary ml-2"}
                 >
                   REFRESH
                 </button>
@@ -779,7 +775,7 @@ const Reports = props => {
             </form>
             <style jsx="">{`
               form {
-                display: flex;
+                display: ${isMobile?'block':'flex'};
               }
               .btn-search {
                 width: 15%;

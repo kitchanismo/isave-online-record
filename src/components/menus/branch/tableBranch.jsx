@@ -21,10 +21,6 @@ const TableBranch = ({branches, setBranches, ...props}) => {
 
 	const columns = [
 		{
-			path: 'id',
-			label: '#'
-		},
-		{
 			path: 'name',
 			label: 'Name'
 		},

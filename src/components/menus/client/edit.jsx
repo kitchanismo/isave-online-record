@@ -13,11 +13,12 @@ import {
 import {ClientContext} from '../../../context'
 import Spinner from './../../common/spinner'
 import {getPromos} from '../../../services/userService'
+import {useMedia} from 'react-use'
 
 const EditClient = props => {
 	const {id} = props.match.params
 	const [isLoaded, setIsLoaded] = useState(false)
-
+	const isMobile = useMedia('(max-width: 600px)')
 	const {getClient, onUpdateClient, status} = useContext(ClientContext)
 
 	const [promos, setPromos] = useState([])
@@ -338,12 +339,16 @@ const EditClient = props => {
 					}) => {
 						return (
 							<div className='row'>
-								<div className='col-6'>
+								<div className={isMobile ? 'col-12' : 'col-6'}>
 									{renderInput('firstname', 'Firstname')}
 									{renderInput('middlename', 'Middlename')}
 									{renderInput('lastname', 'Lastname')}
 									<div className='row m-0 p-0'>
-										<div className='col-6 m-0 py-0 pl-0 pr-2'>
+										<div
+											className={
+												isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pl-0 pr-2'
+											}
+										>
 											{renderSelect(
 												'gender',
 												'Gender',
@@ -352,7 +357,11 @@ const EditClient = props => {
 												genders
 											)}
 										</div>
-										<div className='col-6 m-0 py-0 pr-0 pl-2'>
+										<div
+											className={
+												isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pr-0 pl-2'
+											}
+										>
 											{renderSelect(
 												'civil',
 												'Civil Status',
@@ -369,14 +378,22 @@ const EditClient = props => {
 									{renderTextArea('address', 'Address')}
 								</div>
 
-								<div className='col-6'>
+								<div className={isMobile ? 'col-12' : 'col-6'}>
 									<div className='row m-0 p-0'>
-										<div className='col-6 m-0 py-0 pl-0 pr-2'>
+										<div
+											className={
+												isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pl-0 pr-2'
+											}
+										>
 											{renderDatePicker('dateInsured', 'Date Insured', {
 												onChange: handleDateInsured
 											})}
 										</div>
-										<div className='col-6 m-0 py-0 pr-0 pl-2'>
+										<div
+											className={
+												isMobile ? 'col-12 px-0' : 'col-6 m-0 py-0 pr-0 pl-2'
+											}
+										>
 											{renderInput('expiredDate', 'Due Date', 'text', '', {
 												disabled: true
 											})}

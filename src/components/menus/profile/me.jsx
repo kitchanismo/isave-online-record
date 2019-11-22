@@ -4,8 +4,11 @@ import {cap} from '../../../services/utilsService'
 import {appUrl} from '../../../config.json'
 import Spinner from '../../common/spinner'
 import auth from '../../../services/authService'
+import {useMedia} from 'react-use'
 
 const Me = props => {
+	const isMobile = useMedia('(max-width: 600px)')
+
 	const [user, setUser] = useState({
 		username: '',
 		profile: {
@@ -44,18 +47,8 @@ const Me = props => {
 			</div>
 			<Spinner isLoaded={user.username !== ''} className='spinner'>
 				<div className='row mb-3'>
-					<div className='col-4 pr-0'>
+					<div className={isMobile ? 'col-12 mb-3' : 'col-4 pr-0'}>
 						<div className='card' style={{width: 'auto'}}>
-							{/* <img
-                style={{
-                  padding: '10%',
-                  backgroundColor: '#343a40',
-                  height: '303px'
-                }}
-                src={`${appUrl}/user.png`}
-                className="card-img-top"
-                alt=""
-              /> */}
 							<div className='card-body'>
 								<h5 className='card-title'>{`${cap(
 									user.profile.lastname
@@ -72,7 +65,7 @@ const Me = props => {
 							</div>
 						</div>
 					</div>
-					<div className='col-8'>
+					<div className={isMobile ? 'col-12' : 'col-8'}>
 						<div className='card' style={{width: 'auto'}}>
 							<div className='card-body'>
 								<h5 className='card-title'>Personal Details</h5>

@@ -6,8 +6,10 @@ import {joiLettersOnly, joiMobileNumber} from '../../../services/utilsService'
 import withAuth from '../../hoc/withAuth'
 import Form from './../../common/form'
 import Spinner from './../../common/spinner'
+import {useMedia} from 'react-use'
 
 const EditUser = ({auth, ...props}) => {
+	const isMobile = useMedia('(max-width: 600px)')
 	const [user, setUser] = useState({
 		id: '',
 		username: '',
@@ -110,12 +112,16 @@ const EditUser = ({auth, ...props}) => {
 						return (
 							<React.Fragment>
 								<div className='row m-1'>
-									<div className='col-6 pl-5 pr-3 pt-4'>
+									<div
+										className={isMobile ? 'col-12 p-0' : 'col-6 pl-5 pr-3 pt-4'}
+									>
 										{renderInput('firstname', 'Firstname')}
 										{renderInput('middlename', 'Middlename')}
 										{renderInput('lastname', 'Lastname')}
 									</div>
-									<div className='col-6 pl-3 pr-5 pt-4'>
+									<div
+										className={isMobile ? 'col-12 p-0' : 'col-6 pl-3 pr-5 pt-4'}
+									>
 										{renderInput('username', 'Username', 'text', 'fa-user')}
 										{renderInput('email', 'Email', 'email', 'fa-envelope')}
 										{renderInput('contact', 'Mobile Contact')}

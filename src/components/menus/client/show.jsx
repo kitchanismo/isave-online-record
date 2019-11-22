@@ -3,10 +3,12 @@ import {getClient} from '../../../services/clientService'
 import {cap, formatDate} from '../../../services/utilsService'
 import ReactToPrint from 'react-to-print'
 import Spinner from './../../common/spinner'
+import {useMedia} from 'react-use'
 
 const ShowClient = props => {
 	const {id} = props.match.params
 	const [isFS, setIsFS] = useState(true)
+	const isMobile = useMedia('(max-width: 600px)')
 
 	useEffect(() => {
 		const url = props.match.url
@@ -86,95 +88,190 @@ const ShowClient = props => {
 			</div>
 			<div className='row m-0 p-0 d-flex justify-content-end'></div>
 			<Spinner className='mt-5 pt-5' isLoaded={!isLoading}>
-				<div ref={componentRef} className='wrapper-content px-5 mb-3'>
-					<h5 className='text-center mb-3 pt-5'>INFOMATECH SURVEY SHEET</h5>
+				{!isMobile && (
+					<div ref={componentRef} className='wrapper-content px-5 mb-3'>
+						<h5 className='text-center mb-3 pt-5'>INFOMATECH SURVEY SHEET</h5>
 
-					<h5 className='text-center mb-1'>Personal Information</h5>
-					<hr className='my-0'></hr>
-					<div className='row mt-2'>
-						<div className='col-6 pl-4'>
-							<p>Lastname:</p>
-							<p>Firstname:</p>
-							<p>Middlename:</p>
-							<p>Gender:</p>
-							<p>Birthdate:</p>
-							<p>Address:</p>
-							<p>Contact:</p>
-							<p>Civil Status:</p>
+						<h5 className='text-center mb-1'>Personal Information</h5>
+						<hr className='my-0'></hr>
+
+						<div className='row mt-2'>
+							<div className='col-6 pl-4'>
+								<p>Lastname:</p>
+								<p>Firstname:</p>
+								<p>Middlename:</p>
+								<p>Gender:</p>
+								<p>Birthdate:</p>
+								<p>Address:</p>
+								<p>Contact:</p>
+								<p>Civil Status:</p>
+							</div>
+							<div className='col-6'>
+								<p className='text-secondary'>{cap(client.lastname)}</p>
+								<p className='text-secondary'>{cap(client.firstname)}</p>
+								<p className='text-secondary'>{cap(client.middlename)}</p>
+								<p className='text-secondary'>{cap(client.gender)}</p>
+								<p className='text-secondary'>{formatDate(client.birthdate)}</p>
+								<p className='text-secondary'>
+									{client.address ? cap(client.address) : 'N/A'}
+								</p>
+								<p className='text-secondary'>{cap(client.contact)}</p>
+								<p className='text-secondary'>{cap(client.civil)}</p>
+							</div>
 						</div>
-						<div className='col-6'>
-							<p className='text-secondary'>{cap(client.lastname)}</p>
-							<p className='text-secondary'>{cap(client.firstname)}</p>
-							<p className='text-secondary'>{cap(client.middlename)}</p>
-							<p className='text-secondary'>{cap(client.gender)}</p>
-							<p className='text-secondary'>{formatDate(client.birthdate)}</p>
-							<p className='text-secondary'>
-								{client.address ? cap(client.address) : 'N/A'}
-							</p>
-							<p className='text-secondary'>{cap(client.contact)}</p>
-							<p className='text-secondary'>{cap(client.civil)}</p>
-						</div>
+
+						<h5 className='text-center mb-1'>Other Information</h5>
+						<hr className='my-0'></hr>
+						{isFS && (
+							<React.Fragment>
+								<div className='row mt-2'>
+									<div className='col-6 pl-4'>
+										<p>Policy Number:</p>
+										<p>Mode of Payment:</p>
+										<p>Date Insured:</p>
+										<p>Due Date:</p>
+										<p>
+											{client.promo.position === 'manager'
+												? 'Manager:'
+												: 'Sales Officer:'}
+										</p>
+										<p>Promo Officer:</p>
+										<p>Branch:</p>
+									</div>
+									<div className='col-6'>
+										<p className='text-secondary'>{client.codeNo}</p>
+										<p className='text-secondary'>{cap(client.mode)}</p>
+										<p className='text-secondary'>
+											{formatDate(client.dateInsured)}
+										</p>
+										<p className='text-secondary'>
+											{formatDate(client.expiredDate)}
+										</p>
+										<p className='text-secondary'>{cap(client.insuredUser)}</p>
+										<p className='text-secondary'>{cap(client.promo.label)}</p>
+										<p className='text-secondary'>{cap(client.branch)}</p>
+									</div>
+								</div>
+							</React.Fragment>
+						)}
+						{!isFS && (
+							<React.Fragment>
+								<div className='row mt-2'>
+									<div className='col-6 pl-4'>
+										<p>Policy Number:</p>
+										<p>Coverage:</p>
+										<p>Date Insured:</p>
+										<p>User Insured:</p>
+										<p>Branch:</p>
+									</div>
+									<div className='col-6'>
+										<p className='text-secondary'>{client.codeNo}</p>
+										<p className='text-secondary'>{cap(client.coverage)}</p>
+										<p className='text-secondary'>
+											{formatDate(client.dateInsured)}
+										</p>
+
+										<p className='text-secondary'>{cap(client.insuredUser)}</p>
+
+										<p className='text-secondary'>{cap(client.branch)}</p>
+									</div>
+								</div>
+							</React.Fragment>
+						)}
 					</div>
+				)}
 
-					<h5 className='text-center mb-1'>Other Information</h5>
-					<hr className='my-0'></hr>
-					{isFS && (
-						<React.Fragment>
-							<div className='row mt-2'>
-								<div className='col-6 pl-4'>
-									<p>Policy Number:</p>
-									<p>Mode of Payment:</p>
-									<p>Date Insured:</p>
-									<p>Due Date:</p>
-									<p>
+				{isMobile && (
+					<React.Fragment>
+						<h5 className='text-center mb-3'>INFOMATECH SURVEY SHEET</h5>
+
+						<div className='card mb-2' style={{width: 'auto'}}>
+							<h5 className='text-center mb-0 mt-3'>Personal Information</h5>
+							<hr></hr>
+							<div className='card-body pt-0 text-center'>
+								<p className='card-title mt-2'>Lastname:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{cap(client.lastname)}
+								</p>
+								<p className='card-title mt-2'>Firstname:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{cap(client.firstname)}
+								</p>
+								<p className='card-title mt-2'>Middlename:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{cap(client.middlename)}
+								</p>
+								<p className='card-title mt-2'>Gender:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{cap(client.gender)}
+								</p>
+								<p className='card-title mt-2'>Birhtdate:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{formatDate(client.birthdate)}
+								</p>
+								<p className='card-title mt-2'>Address:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{client.address ? cap(client.address) : 'N/A'}
+								</p>
+								<p className='card-title mt-2'>Contact:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{client.contact}
+								</p>
+								<p className='card-title mt-2'>Civil Status:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{cap(client.civil)}
+								</p>
+							</div>
+						</div>
+
+						{isFS && (
+							<div className='card mb-2' style={{width: 'auto'}}>
+								<h5 className='text-center mb-0 mt-3'>Other Information</h5>
+								<hr></hr>
+								<div className='card-body pt-0 text-center'>
+									<p className='card-title mt-2'>Policy Number:</p>
+									<p className='card-subtitle mt-2 text-secondary'>
+										{client.codeNo}
+									</p>
+									<p className='card-title mt-2'>
+										{isFS ? 'Mode of Payment' : 'Coverage'}:
+									</p>
+									<p className='card-subtitle mt-2 text-secondary'>
+										{isFS ? cap(client.mode) : client.coverage}
+									</p>
+									<p className='card-title mt-2'>Date Insured:</p>
+									<p className='card-subtitle mt-2 text-secondary'>
+										{formatDate(client.dateInsured)}
+									</p>
+									{isFS && <p className='card-title mt-2'>Due Date:</p>}
+									{isFS && (
+										<p className='card-subtitle mt-2 text-secondary'>
+											{formatDate(client.expiredDate)}
+										</p>
+									)}
+									<p className='card-title mt-2'>
 										{client.promo.position === 'manager'
 											? 'Manager:'
 											: 'Sales Officer:'}
 									</p>
-									<p>Promo Officer:</p>
-									<p>Branch:</p>
-								</div>
-								<div className='col-6'>
-									<p className='text-secondary'>{client.codeNo}</p>
-									<p className='text-secondary'>{cap(client.mode)}</p>
-									<p className='text-secondary'>
-										{formatDate(client.dateInsured)}
+									<p className='card-subtitle mt-2 text-secondary'>
+										{cap(client.insuredUser)}
 									</p>
-									<p className='text-secondary'>
-										{formatDate(client.expiredDate)}
+									{isFS && <p className='card-title mt-2'>Promo Officer:</p>}
+									{isFS && (
+										<p className='card-subtitle mt-2 text-secondary'>
+											{cap(client.promo.label)}
+										</p>
+									)}
+									<p className='card-title mt-2'>Branch:</p>
+									<p className='card-subtitle mt-2 text-secondary'>
+										{cap(client.branch)}
 									</p>
-									<p className='text-secondary'>{cap(client.insuredUser)}</p>
-									<p className='text-secondary'>{cap(client.promo.label)}</p>
-									<p className='text-secondary'>{cap(client.branch)}</p>
 								</div>
 							</div>
-						</React.Fragment>
-					)}
-					{!isFS && (
-						<React.Fragment>
-							<div className='row mt-2'>
-								<div className='col-6 pl-4'>
-									<p>Policy Number:</p>
-									<p>Coverage:</p>
-									<p>Date Insured:</p>
-									<p>User Insured:</p>
-									<p>Branch:</p>
-								</div>
-								<div className='col-6'>
-									<p className='text-secondary'>{client.codeNo}</p>
-									<p className='text-secondary'>{cap(client.coverage)}</p>
-									<p className='text-secondary'>
-										{formatDate(client.dateInsured)}
-									</p>
-
-									<p className='text-secondary'>{cap(client.insuredUser)}</p>
-
-									<p className='text-secondary'>{cap(client.branch)}</p>
-								</div>
-							</div>
-						</React.Fragment>
-					)}
-				</div>
+						)}
+					</React.Fragment>
+				)}
 			</Spinner>
 			<style jsx=''>{`
 				.wrapper-content {

@@ -7,9 +7,11 @@ import {theme} from '../../../config.json'
 import ReactTooltip from 'react-tooltip'
 
 import _ from 'lodash'
+import {useMedia} from 'react-use'
 
 const Backup = () => {
 	const [file, setFile] = useState('')
+	const isMobile = useMedia('(max-width: 600px)')
 	const [isBackedUp, setIsBackedUp] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isLoadedFiles, setIsLoadedFiles] = useState(false)
@@ -77,7 +79,11 @@ const Backup = () => {
 		return files.map(file => (
 			<li
 				key={file.date}
-				className='list-group-item d-flex justify-content-between align-items-center'
+				className={
+					isMobile
+						? 'list-group-item'
+						: 'list-group-item d-flex justify-content-between align-items-center'
+				}
 			>
 				<a className='text-secondary'>{file.name}</a>
 				<button
@@ -103,12 +109,9 @@ const Backup = () => {
 			</ReactTooltip>
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
 				<h1 className='h2'>Backup Database</h1>
-				<a data-tip data-for='backup'>
-					<Help></Help>
-				</a>
 			</div>
 			<div className='row m-0 p-0'>
-				<div className='col-6 pr-2 m-0'>
+				<div className={isMobile ? 'col-12 p-0' : 'col-6 pr-2 m-0'}>
 					<ul className='list-group mb-3 mt-2'>
 						{isLoading && <p className='text-secondary'> Please wait...</p>}
 						<li className='header-list  list-group-item d-flex justify-content-between align-items-center'>
@@ -128,7 +131,7 @@ const Backup = () => {
 						</Spinner>
 					</ul>
 				</div>
-				<div className='col-6 pl-2 m-0'>
+				<div className={isMobile ? 'col-12 p-0' : 'col-6 pl-2 m-0'}>
 					<form onSubmit={handleBackup}>
 						<div className='form-group'>
 							<label htmlFor='file'>Filename</label>
@@ -189,7 +192,7 @@ const Backup = () => {
         .wrapper-list {
           margin: 0;
           padding: 0;
-          height: 400px;
+          height: 200px;
           overflow-x: hidden;
           overflow-y: auto;
         }

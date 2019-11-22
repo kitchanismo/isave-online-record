@@ -135,7 +135,7 @@ const Charts = props => {
 	}
 
 	const toTrim = str => {
-		return isMobile ? toElipse(str, 15) : str
+		return isMobile ? toElipse(str, 18) : str
 	}
 
 	const chart = () => (
@@ -146,7 +146,7 @@ const Charts = props => {
 						isMobile ? '0' : '2'
 					}`}
 				>
-					<ul className='list-group'>
+					<ul className={`list-group ${isMobile ? '' : ''}`}>
 						<li className='header-list pb-0 list-group-item d-flex justify-content-between align-items-center'>
 							<span className='font-weight-bold'>Policy Monitoring</span>
 							<span className='badge badge-danger badge-pill'>
@@ -190,7 +190,7 @@ const Charts = props => {
 						</div>
 					</ul>
 
-					<ul className={`list-group ${isMobile ? 'mt-5' : ''}`}>
+					<ul className={`list-group ${isMobile ? 'mt-3' : ''}`}>
 						<li className='header-list pb-0 list-group-item d-flex justify-content-between align-items-center'>
 							<span className='font-weight-bold'>
 								Sales Performance Insentive Fund

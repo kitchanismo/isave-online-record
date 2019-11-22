@@ -7,7 +7,7 @@ import ReactTooltip from 'react-tooltip'
 import {useMedia} from 'react-use'
 
 const Nav = props => {
-	const isMobile = useMedia('(max-width: 481px)')
+	const isMobile = useMedia('(max-width: 600px)')
 
 	const labelPosition = position => {
 		switch (position) {
@@ -32,7 +32,11 @@ const Nav = props => {
 				<span>View my profile</span>
 			</ReactTooltip>
 			<nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-				<div className='container-fluid'>
+				<div
+					className={`container-fluid ${
+						isMobile ? 'd-flex justify-content-center mt-2' : ''
+					}`}
+				>
 					<h6 className='text-white mt-1'>
 						<span>
 							<NavLink style={{color: theme.secondary}} to='/'>
@@ -45,7 +49,9 @@ const Nav = props => {
 					</h6>
 
 					<div
-						className='collapse navbar-collapse d-flex justify-content-end'
+						className={`collapse navbar-collapse d-flex justify-content-${
+							isMobile ? 'center' : 'end'
+						}`}
 						id='navbarNav'
 					>
 						<ul className='navbar-nav'>
@@ -85,11 +91,11 @@ const Nav = props => {
 					i {
 						cursor: pointer;
 					}
-					.navbar {
-						position: fixed !important;
-						z-index: 2;
-						width: 100% !important;
-					}
+					// .navbar {
+					// 	position: fixed !important;
+					// 	z-index: 2;
+					// 	width: 100% !important;
+					// }
 				`}</style>
 			</nav>
 		</React.Fragment>

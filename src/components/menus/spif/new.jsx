@@ -10,10 +10,11 @@ import {toast} from 'react-toastify'
 import Spinner from '../../common/spinner'
 import ReactTooltip from 'react-tooltip'
 import Help from '../../common/help'
+import {useMedia} from 'react-use'
 
 const NewSPIF = props => {
 	const now = new Date(Date.now())
-
+	const isMobile = useMedia('(max-width: 600px)')
 	const [top, setTop] = useState([])
 
 	const [isLoading, setIsLoading] = useState(false)
@@ -248,8 +249,8 @@ const NewSPIF = props => {
 				{({renderInput, renderSelect, renderButton}) => {
 					return (
 						<React.Fragment>
-							<div className='row'>
-								<div className='col-3'>
+							<div className='row mb-3'>
+								<div className={isMobile ? 'col-12' : 'col-3'}>
 									{renderSelect(
 										'year',
 										'Year',
@@ -258,7 +259,7 @@ const NewSPIF = props => {
 										years
 									)}
 								</div>
-								<div className='col-3'>
+								<div className={isMobile ? 'col-12' : 'col-3'}>
 									{renderSelect(
 										'month',
 										'Month',
@@ -267,7 +268,7 @@ const NewSPIF = props => {
 										months
 									)}
 								</div>
-								<div className='col-3'>
+								<div className={isMobile ? 'col-12' : 'col-3'}>
 									{renderSelect(
 										'position',
 										'Position',
@@ -276,7 +277,7 @@ const NewSPIF = props => {
 										positions
 									)}
 								</div>
-								<div className='col-3 pt-3 px-0'>
+								<div className={isMobile ? 'col-12 mb-' : 'col-3 pt-3 px-0'}>
 									{renderButton('Generate Employee', null, 'Generating...')}
 									<button
 										onClick={() => props.history.replace('/spif')}

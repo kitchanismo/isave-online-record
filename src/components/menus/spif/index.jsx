@@ -123,7 +123,7 @@ const SPIF = props => {
 					INSENTIVE
 				</button>
 			</div>
-			<div className='row mx-2'>
+			<div className='col-12 m-0 p-0'>
 				<Spinner
 					className='mt-5 pt-5 col-12 d-flex justify-content-center'
 					isLoaded={isLoading}

@@ -47,7 +47,9 @@ const Home = ({menu, sub, ...props}) => {
 							{!isMobile && <SideMenu {...props}> </SideMenu>}
 							<main
 								role='main'
-								className='dashboard col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-light border border-secondary'
+								className={`dashboard col-md-9 ml-sm-auto col-lg-10 ${
+									isMobile ? 'pt-2' : 'pt-3'
+								} px-4 bg-light border border-secondary`}
 							>
 								{menu === 'dashboard' && <Dashboard {...props} />}
 								{menu === 'spif' && (
@@ -111,7 +113,6 @@ const Home = ({menu, sub, ...props}) => {
 				.dashboard,
 				.side-menu {
 					border-radius: 5px px 0 0;
-					margin-top: 80px;
 				}
 			`}</style>
 		</React.Fragment>

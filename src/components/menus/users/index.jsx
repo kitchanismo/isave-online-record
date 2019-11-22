@@ -209,7 +209,7 @@ const Users = ({auth, ...props}) => {
 
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
 				<h1 className='h2'>User Record Management</h1>
-				<span>
+				<span className='mt-0 pt-0'>
 					{auth.canAccess('admin', 'general', 'manager') && (
 						<button
 							onClick={() => props.history.replace('/users/new')}
@@ -224,14 +224,14 @@ const Users = ({auth, ...props}) => {
 							onClick={() => props.history.replace('/users/user-logs')}
 							className='btn btn-sm btn-outline-secondary ml-1'
 						>
-							View Logs
+							<span className='fa fa-eye'></span> Logs
 						</button>
 					)}
 					<button
 						onClick={() => props.history.replace('/users/user-archived')}
 						className='btn btn-sm btn-outline-secondary ml-1'
 					>
-						View Archives
+						<span className='fa fa-eye'></span> Archives
 					</button>
 				</span>
 			</div>
@@ -270,7 +270,8 @@ const Users = ({auth, ...props}) => {
 				.spinner {
 					margin-bottom: 200px !important;
 				}
-				.fa-plus {
+				.fa-plus,
+				.fa-eye {
 					margin-top: 0 !important;
 				}
 			`}</style>
