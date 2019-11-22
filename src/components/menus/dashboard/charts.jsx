@@ -140,7 +140,7 @@ const Charts = props => {
 
 	const chart = () => (
 		<React.Fragment>
-			<Spinner isLoaded={isLoaded} className='spinner'>
+			<Spinner isLoaded={isLoaded && isLoadedStat} className='spinner'>
 				<div
 					className={`row d-flex justify-content-around mx-${
 						isMobile ? '0' : '2'
