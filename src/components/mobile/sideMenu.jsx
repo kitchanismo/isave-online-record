@@ -30,6 +30,7 @@ const SideMenuMobile = props => {
 				</NavLink>
 
 				<NavLink to='/settings/backup' className='fa fa-gear'></NavLink>
+				<NavLink to='/help' className='fa fa-question'></NavLink>
 			</div>
 			<style jsx=''>{`
 				.mobile-menu {
@@ -50,7 +51,8 @@ const SideMenuMobile = props => {
 				.fa-home,
 				.fa-users,
 				.fa-bar-chart,
-				.fa-gear {
+				.fa-gear,
+				.fa-question {
 					margin-top: 0 !important;
 					margin-bottom: 0 !important;
 					color: white;

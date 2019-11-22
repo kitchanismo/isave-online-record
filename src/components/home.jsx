@@ -39,7 +39,7 @@ const Home = ({menu, sub, ...props}) => {
 				<ClientProvider>
 					{isMobile && <SideMenuMobile {...props}> </SideMenuMobile>}
 
-					<div className='container-fluid '>
+					<div className={isMobile ? '' : 'container-fluid'}>
 						<div
 							className='row mx-2'
 							style={{backgroundColor: 'transparent', minHeight: '800px'}}
@@ -108,8 +108,10 @@ const Home = ({menu, sub, ...props}) => {
 			</UserProvider>
 
 			<style jsx=''>{`
-				.dashboard {
+				.dashboard,
+				.side-menu {
 					border-radius: 5px px 0 0;
+					margin-top: 80px;
 				}
 			`}</style>
 		</React.Fragment>

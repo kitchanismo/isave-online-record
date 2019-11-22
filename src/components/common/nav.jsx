@@ -1,14 +1,13 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
-import auth from '../../services/authService'
+import auth from './../../services/authService'
 import {cap} from '../../services/utilsService'
 import {theme} from '../../config.json'
 import ReactTooltip from 'react-tooltip'
+import {useMedia} from 'react-use'
 
 const Nav = props => {
-	const handleLogout = () => {
-		auth.logout()
-	}
+	const isMobile = useMedia('(max-width: 481px)')
 
 	const labelPosition = position => {
 		switch (position) {
@@ -40,7 +39,9 @@ const Nav = props => {
 								INFOMATECH &nbsp;
 							</NavLink>
 						</span>
-						: Hybrid Management Information System with SMS Notification
+						{isMobile
+							? ''
+							: ': Hybrid Management Information System with SMS Notification'}
 					</h6>
 
 					<div
@@ -83,6 +84,11 @@ const Nav = props => {
 
 					i {
 						cursor: pointer;
+					}
+					.navbar {
+						position: fixed !important;
+						z-index: 2;
+						width: 100% !important;
 					}
 				`}</style>
 			</nav>

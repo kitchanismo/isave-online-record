@@ -236,7 +236,7 @@ const Users = ({auth, ...props}) => {
 				</span>
 			</div>
 
-			<div className='col-12'>
+			<div className='col-12 m-0 p-0'>
 				<div className='mb-3'>
 					<SearchForm
 						handleSearch={handleSearch}

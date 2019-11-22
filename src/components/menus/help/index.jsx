@@ -5,12 +5,15 @@ import ClientHelp from './client'
 import SettingHelp from './setting'
 import InsentiveHelp from './insentive'
 import auth from '../../../services/authService'
+import {useMedia} from 'react-use'
 
 const Help = () => {
+	const isMobile = useMedia('(max-width: 600px)')
+
 	const instruction = ({question, steps}) => (
 		<React.Fragment>
 			<h5 className='card-title'>{question}</h5>
-			<ul className='ml-5'>
+			<ul className={`ml-${isMobile ? '3' : '5'}`}>
 				{steps.map((step, i) => (
 					<li key={i}>
 						<p className='card-subtitle mt-1'>{step}</p>{' '}
@@ -25,7 +28,7 @@ const Help = () => {
 				<h1 className='h2'>Help and Support</h1>
 			</div>
 			<div className='row mb-3'>
-				<div className='col-8 offset-2'>
+				<div className={isMobile ? 'col-12' : 'col-8 offset-2'}>
 					{!auth.canAccess('promo', 'sales') && (
 						<UserHelp instruction={instruction}></UserHelp>
 					)}
