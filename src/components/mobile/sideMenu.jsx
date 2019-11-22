@@ -198,6 +198,10 @@ const SideMenuMobile = props => {
 					font-size: 20px;
 					margin-top: 0px !important;
 				}
+				.dropdown-item.active,
+				.dropdown-item:active {
+					background-color: white;
+				}
 
 				.fa-file,
 				.fa-home,
