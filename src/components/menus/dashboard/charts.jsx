@@ -135,7 +135,7 @@ const Charts = props => {
 	}
 
 	const toTrim = str => {
-		return isMobile ? toElipse(str, 18) : str
+		return isMobile ? toElipse(str, 15) : str
 	}
 
 	const chart = () => (
@@ -239,14 +239,14 @@ const Charts = props => {
 						type='line'
 						options={fspOptions}
 						series={fsp}
-						width={isMobile ? '290px' : '410px'}
+						width={isMobile ? '285px' : '410px'}
 					/>
 					<Chart
 						key='FSF'
 						type='line'
 						options={gpaOptions}
 						series={gpa}
-						width={isMobile ? '290' : '410px'}
+						width={isMobile ? '285' : '410px'}
 					/>
 				</div>
 			</Spinner>

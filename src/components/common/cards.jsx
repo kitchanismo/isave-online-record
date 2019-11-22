@@ -11,7 +11,7 @@ const Cards = ({items, columns, props}) => {
 	return (
 		<React.Fragment>
 			{items.map(item => (
-				<div key={item.id} className='card mb-2' style={{width: 'auto'}}>
+				<div key={item.id} className='card mb-2 px-0' style={{width: 'auto'}}>
 					<div className='card-body text-center'>
 						{columns.map(column => (
 							<React.Fragment>
