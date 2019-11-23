@@ -296,6 +296,10 @@ const SideMenu = ({auth, ...props}) => {
 				</ul>
 
 				<style jsx=''>{`
+					.dropdown-item.active,
+					.dropdown-item:active {
+						background-color: white;
+					}
 					.fa-question {
 						font-size: 1.3em;
 					}

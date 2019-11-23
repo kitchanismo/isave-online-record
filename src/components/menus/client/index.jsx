@@ -127,7 +127,7 @@ const Reports = props => {
                 className="btn btn-sm btn-outline-danger ml-1"
                 name="delete"
               >
-                CANCELLED
+                CANCEL
               </button>
             </React.Fragment>
           )}
@@ -168,7 +168,7 @@ const Reports = props => {
           className="btn btn-sm btn-outline-success"
           name="delete"
         >
-          APPROVED
+          APPROVE
         </button>
       )
     }
@@ -218,7 +218,7 @@ const Reports = props => {
               className="btn btn-sm btn-outline-success"
               name="delete"
             >
-              ENFORCED
+              ENFORCE
             </button>
         
       )
@@ -282,7 +282,7 @@ const Reports = props => {
             className="btn btn-sm btn-outline-success"
             name="delete"
           >
-            ENFORCED
+            ENFORCE
           </button>
       
       )
@@ -374,7 +374,7 @@ const Reports = props => {
           className="btn btn-sm btn-outline-success ml-1"
           name="delete"
         >
-          RETRIEVED
+          RETRIEVE
         </button>
       )
     }
