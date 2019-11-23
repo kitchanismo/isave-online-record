@@ -82,7 +82,7 @@ const SMS = () => {
 			<Spinner className='mt-5 text-center' isLoaded={isLoaded}>
 				<form onSubmit={handleSetKey}>
 					<div className='form-group'>
-						<label htmlFor='code'>Code</label>
+						<label htmlFor='code'>Code:</label>
 						<div className='row m-0 p-0'>
 							<div className={isMobile ? 'col-12 mx-0 px-0' : 'col-4 m-0 p-0'}>
 								<input
