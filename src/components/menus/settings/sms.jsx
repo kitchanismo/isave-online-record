@@ -9,16 +9,26 @@ import {
 import {toast} from 'react-toastify'
 import {useMedia} from 'react-use'
 import {theme} from './../../../config.json'
+import Spinner from '../../common/spinner'
 
 const SMS = () => {
 	const [isChecked, setIsChecked] = useState(false)
 	const [code, setCode] = useState('')
 	const isMobile = useMedia('(max-width: 600px)')
 	const [isLoading, setIsLoading] = useState(false)
+	const [isLoaded, setIsLoaded] = useState(false)
 
 	useEffect(() => {
-		status().then(on => setIsChecked(on))
-		getCode().then(code => setCode(code))
+		setIsLoaded(false)
+		setIsLoading(true)
+		status().then(on => {
+			setIsChecked(on)
+			setIsLoading(false)
+		})
+		getCode().then(code => {
+			setCode(code)
+			setIsLoaded(true)
+		})
 	}, [])
 
 	const handleToggle = () => {
@@ -69,28 +79,30 @@ const SMS = () => {
 					/>
 				</span>
 			</div>
-			<form onSubmit={handleSetKey}>
-				<div className='form-group'>
-					<label htmlFor='code'>Code</label>
-					<div className='row m-0 p-0'>
-						<div className={isMobile ? 'col-12 mx-0 px-0' : 'col-4 m-0 p-0'}>
-							<input
-								type='text'
-								name='code'
-								value={code}
-								onChange={e => setCode(e.currentTarget.value)}
-								className='form-control'
-							/>
+			<Spinner className='mt-5 text-center' isLoaded={isLoaded}>
+				<form onSubmit={handleSetKey}>
+					<div className='form-group'>
+						<label htmlFor='code'>Code</label>
+						<div className='row m-0 p-0'>
+							<div className={isMobile ? 'col-12 mx-0 px-0' : 'col-4 m-0 p-0'}>
+								<input
+									type='text'
+									name='code'
+									value={code}
+									onChange={e => setCode(e.currentTarget.value)}
+									className='form-control'
+								/>
+							</div>
 						</div>
+						<p className='error-message text-danger p-1'>
+							{code ? '' : `"Code" is not allowed to be empty!`}
+						</p>
+						<button type='submit' className='btn btn-grad-primary d-flex mt-0'>
+							UPDATE
+						</button>
 					</div>
-					<p className='error-message text-danger p-1'>
-						{code ? '' : `"Code" is not allowed to be empty!`}
-					</p>
-					<button type='submit' className='btn btn-grad-primary d-flex mt-0'>
-						UPDATE
-					</button>
-				</div>
-			</form>
+				</form>
+			</Spinner>
 		</React.Fragment>
 	)
 }
