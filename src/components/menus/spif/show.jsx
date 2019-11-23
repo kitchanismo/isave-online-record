@@ -39,8 +39,8 @@ const ShowInsentive = props => {
 		<React.Fragment>
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
 				<span>
-					<h1 className='h2'>Sales Performance Insentive Funds</h1>
-					<h5 className='text-secondary'>Insentive Details</h5>
+					<h1 className='h2'>Sales Performance Incentive Funds</h1>
+					<h5 className='text-secondary'>Incentive Details</h5>
 				</span>
 				<button
 					onClick={() => props.history.replace('/dashboard')}

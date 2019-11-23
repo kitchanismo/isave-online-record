@@ -81,15 +81,15 @@ const Backup = () => {
 				key={file.date}
 				className={
 					isMobile
-						? 'list-group-item'
-						: 'list-group-item d-flex justify-content-between align-items-center'
+						? 'list-group-item text-center'
+						: 'list-group-item d-flex justify-content-center align-items-center'
 				}
 			>
 				<a className='text-secondary'>{file.name}</a>
 				<button
 					disabled={isLoading}
 					onClick={() => handleDownload(file.name)}
-					className='btn btn-outline-info btn-sm ml-5'
+					className='btn btn-outline-info btn-sm ml-5 '
 				>
 					<span className='fa fa-download '></span> Download
 				</button>

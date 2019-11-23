@@ -114,13 +114,13 @@ const SPIF = props => {
 		<React.Fragment>
 			{renderModal()}
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
-				<h1 className='h2'>Sales Performance Insentive Funds</h1>
+				<h1 className='h2'>Sales Performance Incentive Funds</h1>
 				<button
 					onClick={() => props.history.replace('/spif/new')}
 					className='btn btn-sm btn-grad-primary ml-1'
 				>
 					<span className='fa fa-plus mr-1'></span>
-					INSENTIVE
+					INCENTIVE
 				</button>
 			</div>
 			<div className='col-12 m-0 p-0'>

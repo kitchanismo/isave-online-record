@@ -194,7 +194,7 @@ const NewSPIF = props => {
 		}
 
 		storeInsentive(insentive)
-			.then(data => toast.info('Insentive Posted'))
+			.then(data => toast.info('Incentive Posted'))
 			.catch(data => toast.error(data.response.data.message))
 	}
 
@@ -232,8 +232,8 @@ const NewSPIF = props => {
 			{renderModal()}
 			<div className='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom'>
 				<span>
-					<h1 className='h2'>Sales Performance Insentive Funds</h1>
-					<h5 className='text-secondary'>Add New Insentive</h5>
+					<h1 className='h2'>Sales Performance Incentive Funds</h1>
+					<h5 className='text-secondary'>Add New Incentive</h5>
 				</span>
 
 				{/* <a data-tip data-for='spif'>

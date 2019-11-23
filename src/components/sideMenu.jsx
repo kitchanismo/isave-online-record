@@ -43,7 +43,7 @@ const SideMenu = ({auth, ...props}) => {
 				to={`/clients/${name}`}
 			>
 				{label}
-				<span className='badge badge-sm badge-danger ml-2 mt-0'>
+				<span className='client-menu badge badge-sm badge-danger ml-1 mt-0'>
 					{value ? value : ''}
 				</span>
 			</NavLink>
@@ -296,6 +296,10 @@ const SideMenu = ({auth, ...props}) => {
 				</ul>
 
 				<style jsx=''>{`
+					.client-menu {
+						position: relative;
+						top: -8px;
+					}
 					.dropdown-item.active,
 					.dropdown-item:active {
 						background-color: white;

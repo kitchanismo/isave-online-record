@@ -193,7 +193,7 @@ const Charts = props => {
 					<ul className={`list-group ${isMobile ? 'mt-3' : ''}`}>
 						<li className='header-list pb-0 list-group-item d-flex justify-content-between align-items-center'>
 							<span className='font-weight-bold'>
-								Sales Performance Insentive Fund
+								Sales Performance Incentive Fund
 							</span>
 							<span className='badge badge-danger badge-pill'>
 								{insentives.length ? insentives.length : ''}

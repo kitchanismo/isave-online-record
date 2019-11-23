@@ -38,7 +38,7 @@ const SideMenuMobile = props => {
 				to={`/clients/${name}`}
 			>
 				{label}
-				<span className='badge badge-sm badge-danger ml-2 mt-0'>
+				<span className='client-menu badge badge-sm badge-danger ml-1 mt-0'>
 					{value ? value : ''}
 				</span>
 			</NavLink>
@@ -49,7 +49,11 @@ const SideMenuMobile = props => {
 		<React.Fragment>
 			{toggleClient && (
 				<div className='sub-menu'>
-					<div className='dropdown mt-3 text-center'>
+					<h4 className='text-center text-white py-2 mb-0 title-client-menu'>
+						Infomatech
+					</h4>
+
+					<div className='dropdown pt-2 text-center'>
 						{auth.canAccess('sales') && (
 							<React.Fragment>
 								<NavLink
@@ -82,12 +86,12 @@ const SideMenuMobile = props => {
 						{clientMenu('near-expiration', 'Near Expiration', nearExpiration)}
 						{clientMenu('due', 'Due Policy', due)}
 						{clientMenu('lapsed', 'Lapsed Policy', lapsed)}
-						<hr className='mx-2' />
+						<hr className='mx-2  ' />
 						<a
 							onClick={() => {
 								setToggleClient(!toggleClient)
 							}}
-							className='fa fa-close dropdown-item text-danger '
+							className=' text-danger  fa fa-close'
 						></a>
 					</div>
 				</div>
@@ -129,7 +133,7 @@ const SideMenuMobile = props => {
 						to='/users'
 						className='fa fa-users ml-1 px-0 text-center '
 					>
-						<span className='notif-mobile badge badge-danger px-1 py-0 badge-pill ml-1'>
+						<span className='notif-mobile badge badge-danger px-1 py-0 badge-sm ml-1'>
 							{unverify > 9 ? '9+' : unverify === 0 ? '' : unverify}
 						</span>
 					</NavLink>
@@ -144,7 +148,7 @@ const SideMenuMobile = props => {
 							setToggleClient(!toggleClient)
 						}}
 					>
-						<span className='notif-mobile badge badge-danger px-1 py-0  badge-pill ml-1'>
+						<span className='notif-mobile badge badge-danger px-1 py-0  badge-sm ml-1'>
 							{total > 9 ? '9+' : total === 0 ? '' : total}
 						</span>
 					</a>
@@ -168,6 +172,10 @@ const SideMenuMobile = props => {
 				></NavLink>
 			</div>
 			<style jsx=''>{`
+				.client-menu {
+					position: relative;
+					top: -8px;
+				}
 				.sub-menu {
 					position: fixed;
 					bottom: 0;
@@ -186,6 +194,10 @@ const SideMenuMobile = props => {
 					z-index: 2;
 					opacity: 0.9;
 				}
+				.title-client-menu {
+					background-color: #343a40;
+					opacity: 0.9;
+				}
 				.active {
 					color: ${theme.secondary} !important;
 					cursor: hand;
@@ -200,6 +212,9 @@ const SideMenuMobile = props => {
 				.dropdown-item.active,
 				.dropdown-item:active {
 					background-color: white;
+				}
+				.dropdown {
+					margin-top: 0px !important;
 				}
 
 				.fa-file,
