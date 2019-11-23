@@ -259,18 +259,30 @@ const SideMenu = ({auth, ...props}) => {
 							</div>
 
 							{toggleSetting && (
-								<div className='dropdown'>
-									<NavLink
-										onClick={() => {
-											setToggleSetting(false)
-											setSettingIsActive(true)
-										}}
-										className='dropdown-item'
-										to={`/settings/backup`}
-									>
-										Backup Database
-									</NavLink>
-								</div>
+								<React.Fragment>
+									<div className='dropdown'>
+										<NavLink
+											onClick={() => {
+												setToggleSetting(false)
+												setSettingIsActive(true)
+											}}
+											className='dropdown-item'
+											to={`/settings/backup`}
+										>
+											Backup Database
+										</NavLink>
+										<NavLink
+											onClick={() => {
+												setToggleSetting(false)
+												setSettingIsActive(true)
+											}}
+											className='dropdown-item'
+											to={`/settings/sms`}
+										>
+											SMS Notification
+										</NavLink>
+									</div>
+								</React.Fragment>
 							)}
 						</li>
 					)}
