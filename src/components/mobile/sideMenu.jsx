@@ -68,7 +68,7 @@ const SideMenuMobile = props => {
 			toggleSetting && (
 				<div className='sub-menu'>
 					<h4 className='text-center text-white py-2 mb-0 title-menu'>
-						Infomatech
+						Settings
 					</h4>
 
 					<div className='dropdown pt-2 text-center'>
@@ -94,7 +94,7 @@ const SideMenuMobile = props => {
 			toggleClient && (
 				<div className='sub-menu'>
 					<h4 className='text-center text-white py-2 mb-0 title-menu'>
-						Infomatech
+						Clients
 					</h4>
 
 					<div className='dropdown pt-2 text-center'>
@@ -272,10 +272,16 @@ const SideMenuMobile = props => {
 					padding-top: 20px !important;
 					background-color: #343a40;
 					z-index: 2;
+					-webkit-box-shadow: 0px -3px 12px -4px rgba(0, 0, 0, 0.59);
+					-moz-box-shadow: 0px -3px 12px -4px rgba(0, 0, 0, 0.59);
+					box-shadow: 0px -3px 12px -4px rgba(0, 0, 0, 0.59);
 				}
 				.title-menu {
 					background-color: #343a40;
-					opacity: 0.95;
+
+					-webkit-box-shadow: 0px 3px 12px -4px rgba(0, 0, 0, 0.82);
+					-moz-box-shadow: 0px 3px 12px -4px rgba(0, 0, 0, 0.82);
+					box-shadow: 0px 3px 12px -4px rgba(0, 0, 0, 0.82);
 				}
 				.active {
 					color: ${theme.secondary} !important;
