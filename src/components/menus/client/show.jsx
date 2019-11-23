@@ -224,52 +224,46 @@ const ShowClient = props => {
 							</div>
 						</div>
 
-						{isFS && (
-							<div className='card mb-2' style={{width: 'auto'}}>
-								<h5 className='text-center mb-0 mt-3'>Other Information</h5>
-								<hr></hr>
-								<div className='card-body pt-0 text-center'>
-									<p className='card-title mt-2'>Policy Number:</p>
+						<div className='card mb-2' style={{width: 'auto'}}>
+							<h5 className='text-center mb-0 mt-3'>Other Information</h5>
+							<hr></hr>
+							<div className='card-body pt-0 text-center'>
+								<p className='card-title mt-2'>Policy Number:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{client.codeNo}
+								</p>
+								<p className='card-title mt-2'>
+									{isFS ? 'Mode of Payment' : 'Coverage'}:
+								</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{isFS ? cap(client.mode) : client.coverage}
+								</p>
+								<p className='card-title mt-2'>Date Insured:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{formatDate(client.dateInsured)}
+								</p>
+								{isFS && <p className='card-title mt-2'>Due Date:</p>}
+								{isFS && (
 									<p className='card-subtitle mt-2 text-secondary'>
-										{client.codeNo}
+										{formatDate(client.expiredDate)}
 									</p>
-									<p className='card-title mt-2'>
-										{isFS ? 'Mode of Payment' : 'Coverage'}:
-									</p>
+								)}
+								<p className='card-title mt-2'>Sales Officer:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{cap(client.insuredUser)}
+								</p>
+								{isFS && <p className='card-title mt-2'>Promo Officer:</p>}
+								{isFS && (
 									<p className='card-subtitle mt-2 text-secondary'>
-										{isFS ? cap(client.mode) : client.coverage}
+										{cap(client.promo.label)}
 									</p>
-									<p className='card-title mt-2'>Date Insured:</p>
-									<p className='card-subtitle mt-2 text-secondary'>
-										{formatDate(client.dateInsured)}
-									</p>
-									{isFS && <p className='card-title mt-2'>Due Date:</p>}
-									{isFS && (
-										<p className='card-subtitle mt-2 text-secondary'>
-											{formatDate(client.expiredDate)}
-										</p>
-									)}
-									<p className='card-title mt-2'>
-										{client.promo.position === 'manager'
-											? 'Manager:'
-											: 'Sales Officer:'}
-									</p>
-									<p className='card-subtitle mt-2 text-secondary'>
-										{cap(client.insuredUser)}
-									</p>
-									{isFS && <p className='card-title mt-2'>Promo Officer:</p>}
-									{isFS && (
-										<p className='card-subtitle mt-2 text-secondary'>
-											{cap(client.promo.label)}
-										</p>
-									)}
-									<p className='card-title mt-2'>Branch:</p>
-									<p className='card-subtitle mt-2 text-secondary'>
-										{cap(client.branch)}
-									</p>
-								</div>
+								)}
+								<p className='card-title mt-2'>Branch:</p>
+								<p className='card-subtitle mt-2 text-secondary'>
+									{cap(client.branch)}
+								</p>
 							</div>
-						)}
+						</div>
 					</React.Fragment>
 				)}
 			</Spinner>

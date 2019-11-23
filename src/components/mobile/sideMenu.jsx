@@ -15,7 +15,6 @@ const SideMenuMobile = props => {
 
 	useEffect(() => {
 		const url = props.match.url
-
 		if (url.match(/clients.*/)) {
 			setClientIsActive(true)
 		}
