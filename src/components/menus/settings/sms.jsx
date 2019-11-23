@@ -8,11 +8,13 @@ import {
 } from './../../../services/smsService'
 import {toast} from 'react-toastify'
 import {useMedia} from 'react-use'
+import {theme} from './../../../config.json'
 
 const SMS = () => {
 	const [isChecked, setIsChecked] = useState(false)
 	const [code, setCode] = useState('')
 	const isMobile = useMedia('(max-width: 600px)')
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
 		status().then(on => setIsChecked(on))
@@ -22,14 +24,17 @@ const SMS = () => {
 	const handleToggle = () => {
 		const origChecked = isChecked
 		setIsChecked(!isChecked)
+		setIsLoading(true)
 		toggle()
 			.then(on => {
 				setIsChecked(on)
 				toast.info(on ? 'SMS is On' : 'SMS is OFF')
+				setIsLoading(false)
 			})
 			.catch(() => {
 				toast.error('SMS status does not updated')
 				setIsChecked(origChecked)
+				setIsLoading(false)
 			})
 	}
 
@@ -46,7 +51,22 @@ const SMS = () => {
 				<span
 					title={isChecked ? 'Toggle to switch Off' : 'Toggle to switch On'}
 				>
-					<Switch onChange={handleToggle} checked={isChecked} />
+					<Switch
+						disabled={isLoading}
+						onColor={theme.secondary}
+						onChange={handleToggle}
+						checked={isChecked}
+						onHandleColor={theme.primary}
+						handleDiameter={30}
+						uncheckedIcon={false}
+						checkedIcon={false}
+						boxShadow='0px 1px 5px rgba(0, 0, 0, 0.6)'
+						activeBoxShadow='0px 0px 1px 10px rgba(0, 0, 0, 0.2)'
+						height={20}
+						width={48}
+						className='react-switch'
+						id='material-switch'
+					/>
 				</span>
 			</div>
 			<form onSubmit={handleSetKey}>
