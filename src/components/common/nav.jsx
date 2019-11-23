@@ -78,7 +78,11 @@ const Nav = props => {
 				</div>
 				<style jsx=''>{`
 					.navbar {
-						margin-bottom: 20px;
+						margin-bottom: ${isMobile ? '15px' : '20px'};
+
+						-webkit-box-shadow: 0px 3px 12px -4px rgba(0, 0, 0, 0.82);
+						-moz-box-shadow: 0px 3px 12px -4px rgba(0, 0, 0, 0.82);
+						box-shadow: 0px 3px 12px -4px rgba(0, 0, 0, 0.82);
 					}
 					.fa {
 						margin-top: 12px !important;
