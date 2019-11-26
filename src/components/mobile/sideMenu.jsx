@@ -206,7 +206,7 @@ const SideMenuMobile = props => {
 
 			{!auth.canAccess('admin') && (
 				<a
-					className={`fa fa-file nav-link text-white pt-0 px-0 text-center ${
+					className={`fa fa-file-text nav-link text-white pt-0 px-0 text-center ${
 						clientIsActive ? 'active' : ''
 					}`}
 					onClick={() => {
@@ -302,7 +302,7 @@ const SideMenuMobile = props => {
 					margin-top: 0px !important;
 				}
 
-				.fa-file,
+				.fa-file-text,
 				.fa-building,
 				.fa-users,
 				.fa-bar-chart,

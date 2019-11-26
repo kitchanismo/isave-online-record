@@ -163,7 +163,7 @@ const SideMenu = ({auth, ...props}) => {
 											clientIsActive ? 'active' : ''
 										}`}
 									>
-										<span className='fa fa-file mr-2'></span>
+										<span className='fa fa-file-text mr-2'></span>
 										Clients
 										<span
 											className={`fa fa-angle-${
