@@ -163,7 +163,7 @@ const SideMenuMobile = props => {
 					className='fa fa-bar-chart'
 				></NavLink>
 			)}
-			{auth.canAccess('admin') && (
+			{auth.canAccess('admin', 'general') && (
 				<NavLink
 					onClick={() => {
 						setToggleClient(false)

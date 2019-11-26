@@ -84,7 +84,8 @@ const SPIF = props => {
 		{
 			path: 'prize',
 			label: 'Prize Reward',
-			content: insentive => `₱${insentive.prize}`
+			content: insentive =>
+				`₱${insentive.prize.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
 		},
 		{
 			path: 'month',

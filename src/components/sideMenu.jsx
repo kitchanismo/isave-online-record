@@ -72,7 +72,7 @@ const SideMenu = ({auth, ...props}) => {
 							</NavLink>
 						</li>
 					)}
-					{auth.canAccess('admin') && (
+					{auth.canAccess('admin', 'general') && (
 						<li className='nav-item'>
 							<NavLink
 								onClick={() => {
