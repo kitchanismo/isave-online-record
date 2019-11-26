@@ -61,7 +61,7 @@ const Nav = props => {
 										<NavLink
 											data-tip
 											data-for='user'
-											className='nav-link active'
+											className='nav-link active profile-username'
 											to={`/profile/me`}
 										>
 											<span className='fa fa-user mr-2'></span>
@@ -95,11 +95,11 @@ const Nav = props => {
 					i {
 						cursor: pointer;
 					}
-					// .navbar {
-					// 	position: fixed !important;
-					// 	z-index: 2;
-					// 	width: 100% !important;
-					// }
+					.profile-username {
+						${isMobile
+							? 'font-size: 12px !important; padding: 0px !important;'
+							: ''}
+					}
 				`}</style>
 			</nav>
 		</React.Fragment>

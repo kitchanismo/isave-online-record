@@ -184,7 +184,7 @@ const SideMenuMobile = props => {
 						setSettingIsActive(false)
 					}}
 					to='/branches'
-					className='fa fa-home'
+					className='fa fa-building'
 				></NavLink>
 			)}
 			{!auth.canAccess('promo', 'sales') && (
@@ -196,7 +196,7 @@ const SideMenuMobile = props => {
 						setSettingIsActive(false)
 					}}
 					to='/users'
-					className='fa fa-users ml-1 px-0 text-center '
+					className={`fa fa-users ml-1 px-0 text-center`}
 				>
 					<span className='notif-mobile badge badge-danger px-1 py-0 badge-sm ml-1'>
 						{unverify > 9 ? '9+' : unverify === 0 ? '' : unverify}
@@ -303,7 +303,7 @@ const SideMenuMobile = props => {
 				}
 
 				.fa-file,
-				.fa-home,
+				.fa-building,
 				.fa-users,
 				.fa-bar-chart,
 				.fa-gear,
