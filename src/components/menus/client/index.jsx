@@ -477,7 +477,7 @@ const Reports = props => {
     {
       path: 'profile.branch.name',
       label: 'Branch',
-      content: user=>user.profile.branch?cap(user.profile.branch.name): 'All'
+      content: user=> user.profile.branch? cap(user.profile.branch.name): 'All'
     },
     {
       path: 'profile.codeNo',
