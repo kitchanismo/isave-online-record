@@ -11,7 +11,7 @@ axios.interceptors.response.use(
 const getAPIUrl = () => {
 	return process.env.NODE_ENV === 'development'
 		? 'http://127.0.0.1:3333'
-		: 'https://isave-online-record.herokuapp.com'
+		: 'https://infomatech.herokuapp.com'
 }
 
 axios.interceptors.request.use(config => {
