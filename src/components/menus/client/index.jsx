@@ -4,7 +4,7 @@ import useReport from '../../../hooks/useReport'
 import { sortBy, cap, labelPosition } from '../../../services/utilsService'
 import auth from './../../../services/authService'
 import { formatDate } from '../../../services/utilsService'
-import { restoreUser,getUser } from '../../../services/userService'
+import { restoreUser,getUser, getBranches } from '../../../services/userService'
 import { ClientContext } from '../../../context'
 import EnforcedModal from '../../common/modalEnforced'
 import ApprovedModal from '../../common/modalApproved'
@@ -15,6 +15,7 @@ import CustomModal from '../../common/modal'
 import Select from 'react-select'
 import ReactToPrint from 'react-to-print'
 import { useMedia } from 'react-use'
+import { toast } from 'react-toastify'
 
 
 const Reports = props => {
@@ -466,7 +467,7 @@ const Reports = props => {
       label: 'Fullname',
       content: user =>
         user.profile
-          ? `${user.profile.firstname}, ${user.profile.middlename} ${user.profile.lastname}`
+          ? `${user.profile.lastname}, ${user.profile.firstname} ${user.profile.middlename}`
           : ''
     },
     {
@@ -477,7 +478,12 @@ const Reports = props => {
     {
       path: 'profile.branch.name',
       label: 'Branch',
-      content: user=> user.profile.branch? cap(user.profile.branch.name): 'All'
+      content: user => {
+				if (user.position === 'admin' || user.position === 'general')
+					return 'All'
+
+				return user.profile.branch ? cap(user.profile.branch.name) : 'N/A'
+			}
     },
     {
       path: 'profile.codeNo',
@@ -492,8 +498,24 @@ const Reports = props => {
         <button
           onClick={e => {
             setSelectedUser(user)
-            setModalRestore(modalRestore => !modalRestore)
-          }}
+                
+            if (user.position !== 'manager') {
+              setModalRestore(modalRestore => !modalRestore)
+              return
+            }
+
+
+    getBranches('/api/branches/available').then(branches => {
+    
+      if (branches.length > 0) {
+        setModalRestore(modalRestore => !modalRestore)
+      }
+      else {
+        toast.error('No Available Branch!')
+      }
+    
+      })
+  }   }
           className="btn btn-sm btn-outline-primary ml-1"
         >
           RESTORE
@@ -668,10 +690,14 @@ const Reports = props => {
   const toggleRestore = e => {
     setModalRestore(modalRestore => !modalRestore)
     if (e.target && e.target.name === 'primary') {
-      restoreUser(selectedUser.id).then(data => {
+    
+    restoreUser(selectedUser.id).then(data => {
         setRefresh(r => !r)
         setSelectedUser(null)
-      })
+      }) 
+    
+      
+     
     }
   }
 
