@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Select from 'react-select'
 import Charts from './charts'
 import {useMedia} from 'react-use'
+import {insuredYears} from '../../../services/clientService'
 
 const Dashboard = props => {
 	const now = new Date(Date.now())
@@ -20,29 +21,43 @@ const Dashboard = props => {
 		{id: 11, label: 'November', value: 10},
 		{id: 12, label: 'December', value: 11}
 	]
+	const [years, setYears] = useState([])
 
-	const years = [
-		{
-			id: 1,
-			label: '2017',
-			value: '2017'
-		},
-		{
-			id: 2,
-			label: '2018',
-			value: '2018'
-		},
-		{
-			id: 3,
-			label: '2019',
-			value: '2019'
-		},
-		{
-			id: 4,
-			label: '2020',
-			value: '2020'
-		}
-	]
+	useEffect(() => {
+		insuredYears().then(years => {
+			const _years = years.map((year, i) => {
+				return {
+					id: i + 1,
+					value: '' + year,
+					label: '' + year
+				}
+			})
+			setYears(_years)
+		})
+	}, [])
+
+	// const years = [
+	// 	{
+	// 		id: 1,
+	// 		label: '2017',
+	// 		value: '2017'
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		label: '2018',
+	// 		value: '2018'
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		label: '2019',
+	// 		value: '2019'
+	// 	},
+	// 	{
+	// 		id: 4,
+	// 		label: '2020',
+	// 		value: '2020'
+	// 	}
+	// ]
 
 	const [year, setYear] = useState({
 		id: 1,
