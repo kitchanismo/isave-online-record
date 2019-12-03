@@ -18,11 +18,16 @@ const ModalRestore = ({
 }) => {
 	const [branches, setBranches] = useState([])
 	const [branch, setBranch] = useState(null)
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		getBranches('/api/branches/available').then(branches => {
-			setBranches(branches)
-		})
+		setIsLoading(true)
+		getBranches('/api/branches/available')
+			.then(branches => {
+				setBranches(branches)
+				setIsLoading(false)
+			})
+			.catch(() => setIsLoading(false))
 	}, [])
 
 	const handleOnChange = branch => setBranch(branch)
@@ -34,11 +39,11 @@ const ModalRestore = ({
 			<ModalBody>
 				<div className='form-group'>
 					<p>Username:</p>
-					<p className='text-secondary'>{cap(user.username)}</p>
+					<p className='text-secondary'>{user.username}</p>
 					<label htmlFor='branch'>Select Available Branch</label>
 					<Select
 						isSearchable
-						isClearable
+						isLoading={isLoading}
 						value={branch}
 						onChange={handleOnChange}
 						options={branches}
