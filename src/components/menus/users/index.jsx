@@ -46,7 +46,7 @@ const Users = ({auth, ...props}) => {
 					`${cap(user.profile.firstname)}, ${cap(
 						user.profile.middlename
 					)} ${cap(user.profile.lastname)}`,
-					25
+					23
 				)
 			}
 		},

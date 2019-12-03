@@ -16,6 +16,7 @@ import Select from 'react-select'
 import ReactToPrint from 'react-to-print'
 import { useMedia } from 'react-use'
 import { toast } from 'react-toastify'
+import ModalRestore from '../../common/modalRestore'
 
 
 const Reports = props => {
@@ -69,10 +70,10 @@ const Reports = props => {
 
   const enforcedCol = [
     {
-      path: 'firstname',
+      path: 'lastname',
       label: 'Fullname',
       content: client =>
-        `${cap(client.firstname)}, ${cap(client.lastname)} ${cap(client.middlename)}`
+        `${cap(client.lastname)}, ${cap(client.firstname)} ${cap(client.middlename)}`
     },
     {
       path: 'birthdate',
@@ -141,10 +142,10 @@ const Reports = props => {
 
   const forApprovalCol = [
     {
-      path: 'firstname',
+      path: 'lastname',
       label: 'Fullname',
       content: client =>
-        `${cap(client.firstname)}, ${cap(client.lastname)} ${cap(client.middlename)}`
+        `${cap(client.lastname)}, ${cap(client.firstname)} ${cap(client.middlename)}`
     },
     {
       path: 'birthdate',
@@ -181,10 +182,10 @@ const Reports = props => {
 
   const lapsedCol = [
     {
-      path: 'firstname',
+      path: 'lastname',
       label: 'Fullname',
       content: client =>
-        `${cap(client.firstname)}, ${cap(client.lastname)} ${cap(client.middlename)}`
+        `${cap(client.lastname)}, ${cap(client.firstname)} ${cap(client.middlename)}`
     },
     {
       path: 'birthdate',
@@ -247,10 +248,10 @@ const Reports = props => {
 
   const dueCol = [
     {
-      path: 'firstname',
+      path: 'lastname',
       label: 'Fullname',
       content: client =>
-        `${cap(client.firstname)}, ${cap(client.lastname)} ${cap(client.middlename)}`
+        `${cap(client.lastname)}, ${cap(client.firstname)} ${cap(client.middlename)}`
     },
     {
       path: 'birthdate',
@@ -313,10 +314,10 @@ const Reports = props => {
 
   const nearExpirationCol = [
     {
-      path: 'firstname',
+      path: 'lastname',
       label: 'Fullname',
       content: client =>
-        `${cap(client.firstname)}, ${cap(client.lastname)} ${cap(client.middlename)}`
+        `${cap(client.lastname)}, ${cap(client.firstname)} ${cap(client.middlename)}`
     },
     {
       path: 'birthdate',
@@ -362,7 +363,7 @@ const Reports = props => {
       path: 'firstname',
       label: 'Fullname',
       content: client =>
-        `${cap(client.firstname)}, ${cap(client.lastname)} ${cap(client.middlename)}`
+        `${cap(client.lastname)}, ${cap(client.firstname)} ${cap(client.middlename)}`
     },
 
     {
@@ -408,10 +409,10 @@ const Reports = props => {
 
   const gpaCol = [
     {
-      path: 'firstname',
+      path: 'lastname',
       label: 'Fullname',
       content: client =>
-        `${cap(client.firstname)}, ${cap(client.lastname)} ${cap(client.middlename)}`
+        `${cap(client.lastname)}, ${cap(client.firstname)} ${cap(client.middlename)}`
     },
     {
       path: 'birthdate',
@@ -504,18 +505,17 @@ const Reports = props => {
               return
             }
 
-
-    getBranches('/api/branches/available').then(branches => {
-    
-      if (branches.length > 0) {
-        setModalRestore(modalRestore => !modalRestore)
-      }
-      else {
-        toast.error('No Available Branch!')
-      }
-    
-      })
-  }   }
+            getBranches('/api/branches/available').then(branches => {
+            
+                if (branches.length > 0) {
+                  setModalRestore(modalRestore => !modalRestore)
+                }
+                else {
+                  toast.error('No Available Branch!')
+                }
+            
+            })
+         }}
           className="btn btn-sm btn-outline-primary ml-1"
         >
           RESTORE
@@ -575,16 +575,22 @@ const Reports = props => {
     }
   }
 
+
+
   const getLogStatus = log => {
     if (log.dateTimeOut) {
       return new Date(log.dateTimeOut).toLocaleString()
     }
 
     const now = new Date(Date.now())
+    
     const login = new Date(log.dateTimeIn)
-    const days = now.getDate() - login.getDate()
 
-    if (days > 0) {
+    const diff = now.getTime() - login.getTime()
+
+    const mins = Math.round(diff / 60000)
+
+    if (mins >= 30) {
       return 'session expired'
     }
     return 'active'
@@ -687,23 +693,34 @@ const Reports = props => {
 
   const [selectedUser, setSelectedUser] = useState(null)
 
-  const toggleRestore = e => {
+  const toggleRestore = (e,branch=null) => {
     setModalRestore(modalRestore => !modalRestore)
+  
     if (e.target && e.target.name === 'primary') {
-    
-    restoreUser(selectedUser.id).then(data => {
+      
+      restoreUser(selectedUser.id, branch? branch.id : null).then(data => {
         setRefresh(r => !r)
         setSelectedUser(null)
       }) 
     
       
-     
     }
   }
 
   const renderModalRestore = () => {
-    return (
-      <CustomModal
+    if (selectedUser.position === 'manager') {
+      return  ( <ModalRestore
+        user={selectedUser}
+        title="Infomatech"
+        modal={modalRestore}
+        toggle={toggleRestore}
+        label={`Are you sure to restore ${selectedUser.username}?`}
+        primary={{ type: 'primary', label: 'RESTORE' }}
+      />
+    )
+    }
+
+    return  ( <CustomModal
         title="Infomatech"
         modal={modalRestore}
         toggle={toggleRestore}

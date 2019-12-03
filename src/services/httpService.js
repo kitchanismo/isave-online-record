@@ -37,16 +37,18 @@ export default {
 }
 
 function throwError(error) {
-	toast.dismiss()
 	if (
 		error.response &&
 		error.response.data.status &&
 		error.response.data.status.name === 'ExpiredJwtToken'
 	) {
-		toast.error('Session Expired!')
+		toast.dismiss()
+		toast.error('Session Expired! Logging out...')
 		localStorage.removeItem('refresh-token')
 		localStorage.removeItem('access-token')
-		window.location.href = window.location.origin
+		setTimeout(() => {
+			window.location.href = window.location.origin
+		}, 3000)
 		return Promise.reject(error)
 	}
 
@@ -55,6 +57,7 @@ function throwError(error) {
 		error.response.status >= 400 &&
 		error.response.status < 500
 	if (!expectedError) {
+		toast.dismiss()
 		if (error.message === 'Network Error') {
 			toast.error('Connection failed!')
 		} else {
