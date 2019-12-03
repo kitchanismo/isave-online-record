@@ -510,7 +510,8 @@ const Reports = props => {
             getBranches('/api/branches/available').then(branches => {
             
                 if (branches.length > 0) {
-                  //setModalRestore(modalRestore => !modalRestore)
+                  //
+                  setModalRestore(modalRestore => !modalRestore)
                 }
                 else {
                   toast.error('No Available Branch!')
