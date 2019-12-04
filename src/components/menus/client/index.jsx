@@ -505,7 +505,7 @@ const Reports = props => {
               return
             }
 
-            setModalRestore(modalRestore => !modalRestore)
+            //setModalRestore(modalRestore => !modalRestore)
 
             getBranches('/api/branches/available').then(branches => {
             
@@ -578,7 +578,6 @@ const Reports = props => {
         break
     }
   }
-
 
 
   const getLogStatus = log => {
