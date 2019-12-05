@@ -60,8 +60,8 @@ const SPIF = props => {
 			label: 'Employee Name',
 			content: ({user}) => {
 				return toElipse(
-					`${cap(user.profile.lastname)}, ${cap(user.profile.middlename)} ${cap(
-						user.profile.firstname
+					`${cap(user.profile.lastname)}, ${cap(user.profile.firstname)} ${cap(
+						user.profile.lastname
 					)}`,
 					25
 				)
@@ -70,7 +70,10 @@ const SPIF = props => {
 		{
 			path: 'user.profile.branch.name',
 			label: 'Branch',
-			content: incentive => cap(incentive.user.profile.branch.name)
+			content: incentive =>
+				incentive.user.profile.branch
+					? cap(incentive.user.profile.branch.name)
+					: 'N/A'
 		},
 		{
 			path: 'user.position',

@@ -468,7 +468,7 @@ const Reports = props => {
       label: 'Fullname',
       content: user =>
         user.profile
-          ? `${user.profile.lastname}, ${user.profile.firstname} ${user.profile.middlename}`
+          ? `${cap(user.profile.lastname)}, ${cap(user.profile.firstname)} ${cap(user.profile.middlename)}`
           : ''
     },
     {
@@ -534,7 +534,7 @@ const Reports = props => {
       label: 'Fullname',
       content: ({ user }) => {
         return user
-          ? `${user.profile.lastname}, ${user.profile.firstname} ${user.profile.middlename}`
+          ? `${cap(user.profile.lastname)}, ${cap(user.profile.firstname)} ${cap(user.profile.middlename)}`
           : ''
       }
     },
