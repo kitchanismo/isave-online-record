@@ -9,9 +9,12 @@ import NotFound from './components/common/notFound'
 import AuthRoute from './components/common/authRoute'
 import GuestRoute from './components/common/guestRoute'
 
+import Covid from './covid'
+
 const Routes = props => {
 	return (
 		<Switch>
+			<Route path='/covid' render={props => <Covid />} />
 			<AuthRoute
 				path='/help'
 				render={props => <Home {...props} menu='help' />}

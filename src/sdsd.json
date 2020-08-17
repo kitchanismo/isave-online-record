@@ -1,0 +1,18 @@
+{
+	"case": 1,
+	"age": 38,
+	"sex": "F",
+	"nationality": "Chinese",
+	"status": "Recovered (February 8)",
+	"tested_positive": "2020-01-29T16:00:00.000Z",
+	"onset": "2020-01-20T16:00:00.000Z",
+	"symptoms": "cough,",
+	"other_conditions": "-",
+	"currently_at": "San Lazaro Hospital",
+	"resident_of": "Wuhan, China",
+	"travel_history": "Yes Wuhan -> Hong Kong -> Cebu -> Dumaguete -> Manila",
+	"case_links": "2",
+	"relationship_links": "wife",
+	"other_information": "First case of COVID-19 in PH",
+	"source": "https://www.doh.gov.ph/doh-press-release/doh-confirms-first-2019-nCoV-case-in-the-country"
+}
